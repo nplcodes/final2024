@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 
 
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
@@ -67,6 +67,7 @@ const LoginForm = () => {
                 Sign in
               </button>
             </div>
+            <p>Don't Have account? <Link to='/register' className='text-blue-500'>Sign Up</Link></p>
             </div>
             <div class="pt-5 text-center text-gray-400 text-xs">
               <span>

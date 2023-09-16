@@ -22,7 +22,7 @@ const Topnav = ({ toggleSidebar }) => {
         >
           <FaBars />
         </button>
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <h1 className="text-2xl font-semibold">Npc</h1>
       </div>
       <div className="flex items-center flex-grow justify-center">
         <div className="relative">

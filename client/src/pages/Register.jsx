@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
 
@@ -111,6 +112,7 @@ const RegisterForm = () => {
                     onChange={handleChange}
                     name="role"
                   >
+                    <option value=" ">Select role</option>
                     <option value="student">Student</option>
                     <option value="staff">Staff</option>
                   </select>
@@ -123,6 +125,7 @@ const RegisterForm = () => {
               >
                 Create account
               </button>
+              <p>Have account? <Link to='/' className='text-blue-500'>Login</Link></p>
             </form>
               
               <div className="pt-5 text-center text-gray-400 text-xs">

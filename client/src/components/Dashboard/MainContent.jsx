@@ -1,5 +1,3 @@
-import LoginForm from "../../pages/Login";
-
 const MainContent = () => {
   return (
     <div className="flex-grow p-8">
@@ -25,7 +23,6 @@ const MainContent = () => {
           </p>
         </div>
       </div>
-      <LoginForm />
     </div>
   );
 };

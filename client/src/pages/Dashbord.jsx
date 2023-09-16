@@ -1,22 +1,3 @@
-// import Sidebar from '../components/Dashboard/Sidebar';
-// import Topnav from '../components/Dashboard/Topnav';
-// import MainContent from '../components/Dashboard/MainContent';
-
-// const Dashbord = () => {
-//   return (
-//     <div className="flex">
-//       <Sidebar />
-//       <div className="flex flex-col w-full">
-//         <Topnav />
-//         <MainContent />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashbord;
-
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Dashboard/Sidebar';
 import Topnav from '../components/Dashboard/Topnav';
