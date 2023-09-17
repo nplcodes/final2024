@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function NewIssueForm() {
   return (
@@ -60,7 +61,9 @@ function NewIssueForm() {
     </div>
 
     <div className='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-      <button className='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancel</button>
+        <Link to="/Home/hero">
+          <button className='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancel</button>
+        </Link>
       <button className='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Create</button>
     </div>
 
