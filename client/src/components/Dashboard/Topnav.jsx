@@ -22,27 +22,27 @@ const Topnav = ({ toggleSidebar }) => {
         >
           <FaBars />
         </button>
-        <h1 className="text-2xl font-semibold">Npc</h1>
-      </div>
-      <div className="flex items-center flex-grow justify-center">
+        <div className="flex items-center flex-grow justify-center">
         <div className="relative">
           <input
             type="text"
             value={searchValue}
             onChange={handleSearchChange}
-            placeholder="Search..."
-            className="bg-gray-200 text-gray-700 rounded-full py-2 px-10 focus:outline-none focus:shadow-outline"
+            placeholder="Tap and search "
+            className="bg-gray-200 text-gray-700 rounded-md py-2 px-10 focus:outline-none focus:shadow-outline"
           />
           <FaSearch className="absolute left-3 top-2 text-gray-500" />
         </div>
       </div>
+      </div>
+
       <div className="flex items-center">
         <div className="relative group">
           <button
             onClick={toggleDropdown}
             className="flex items-center focus:outline-none"
           >
-            <span className="text-gray-700 ml-2">Welcome, Username</span>
+            <span className="text-gray-700 ml-2">Welcome, Leon</span>
 
             <img
               className="rounded-full w-10 h-10 object-cover"

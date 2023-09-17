@@ -3,6 +3,8 @@ import LoginForm from './pages/Login'; // Import your login component
 import RegisterForm from './pages/Register'; // Import your login component
 
 import Dashbord from './pages/Dashbord'
+import NewIssueForm from './components/Student/NewIssueForm';
+import HeroSectionStudent from './components/Student/HeroSectionStudent';
 
 const App = () => {
   return (
@@ -10,7 +12,10 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<LoginForm />} />
            <Route  path="/register" element={<RegisterForm />} />
-        <Route path="/Home" element={<Dashbord />} />
+        <Route path="/Home" element={<Dashbord />} >
+           <Route  path="new-issue" element={<NewIssueForm />} />
+           <Route exact path="hero" element={<HeroSectionStudent />} />
+        </Route>
       </Routes>
     </Router>
   );

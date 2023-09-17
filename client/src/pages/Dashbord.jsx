@@ -30,7 +30,7 @@ const App = () => {
       <Sidebar isSidebarOpen={isSidebarOpen} />
       <div className="flex flex-col w-full">
         <Topnav toggleSidebar={toggleSidebar} />
-        <MainContent />
+           <MainContent />
       </div>
     </div>
   );
