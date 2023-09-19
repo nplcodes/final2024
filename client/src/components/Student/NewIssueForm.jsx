@@ -13,7 +13,7 @@ function NewIssueForm() {
 
     <div className="flex justify-center">
       <div className="flex">
-        <h1 className="text-gray-600 font-bold md:text-2xl text-xl">Tailwind Form</h1>
+        <h1 className="text-gray-600 font-bold md:text-2xl text-xl">New Issue Form</h1>
       </div>
     </div>
 
