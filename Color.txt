@@ -1,2 +1,0 @@
-sideNav: #26248D
-main Content: #DFE9F1

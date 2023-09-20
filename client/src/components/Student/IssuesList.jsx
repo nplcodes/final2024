@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 function IssuesList() {
   return (
 <div className="flex mt-32 justify-center bg-white min-w-full">
-    <div>+</div>
   <div className="">
     <div className="overflow-auto lg:overflow-visible">
       <div className="flex lg:justify-between  border-b-2 border-fuchsia-900 pb-1 w-full">
@@ -13,11 +12,11 @@ function IssuesList() {
           <input
             type="text"
             name="name"
-            placeholder="Search..."
+            placeholder="Search.................."
             className="
               w-1/3
               py-2
-              border-b-2 border-blue-600
+              border-none
               outline-none
               focus:border-yellow-400
             "
@@ -98,10 +97,10 @@ function IssuesList() {
               >
             </td>
             <td className="p-3">
-              <a href="#jh" className="text-gray-500 hover:text-gray-100 mr-2">
+            <Link to="/Home/manage-issue" className="text-gray-500 hover:text-gray-100 mr-2">
                 <i className="material-icons-outlined text-base">visibility</i>
-              </a>
-              <Link to="/Home/manage-issue" className="text-yellow-400 hover:text-gray-100 mx-2">
+              </Link>
+              <Link to="/Home/update-issue" className="text-yellow-400 hover:text-gray-100 mx-2">
                 <i className="material-icons-outlined text-base">edit</i>
               </Link>
               <a

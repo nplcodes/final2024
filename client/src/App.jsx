@@ -7,6 +7,7 @@ import NewIssueForm from './components/Student/NewIssueForm';
 import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
 import ManageIssue from './components/Student/ManageIssue'
+import UpdateIssue from './components/Student/updateIssue';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
            <Route  path="/register" element={<RegisterForm />} />
         <Route path="/Home" element={<Dashbord />} >
            <Route  path="new-issue" element={<NewIssueForm />} />
+           <Route  path="update-issue" element={<UpdateIssue />} />
            <Route exact path="hero" element={<HeroSectionStudent />} />
            <Route exact path="issue-list" element={<IssuesList />} />
             <Route path="manage-issue" element={<ManageIssue />} />

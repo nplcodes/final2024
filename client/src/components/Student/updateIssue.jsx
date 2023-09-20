@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function NewIssueForm() {
+function UpdateIssue() {
   return (
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative pt-10">
         <div className="flex   z-10">
           <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
             <div>
-              <p className='text-2xl pt-5'>Forward new #Issue</p>
-              <p className='pb-5'>Create new issue to be solved by elders</p>
+              <p className='text-2xl pt-5'>Update #Issue</p>
+              <p className='pb-5'>Update issue to be solved by elders</p>
             </div>
             <form className="grid grid-cols-1 gap-4">
               <div className="grid grid-cols-2 gap-4">
@@ -36,7 +36,7 @@ function NewIssueForm() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Username</label>
+                  <label className="text-sm font-medium text-gray-700">Reasons</label>
                   <input
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
@@ -45,7 +45,7 @@ function NewIssueForm() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
+                  <label className="text-sm font-medium text-gray-700">how long does it started?</label>
                   <input
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
@@ -85,10 +85,11 @@ function NewIssueForm() {
                     <option value="Personal">Personal</option>
                   </select>
                 </div>
+                <input type="file" name="file" className="border rounded p-2" />
               </div>
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Rise
               </button>
@@ -103,4 +104,4 @@ function NewIssueForm() {
   );
 }
 
-export default NewIssueForm;
+export default UpdateIssue;
