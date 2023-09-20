@@ -8,6 +8,7 @@ import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
 import ManageIssue from './components/Student/ManageIssue'
 import UpdateIssue from './components/Student/updateIssue';
+import StaffMembers from './components/Student/StaffMembers';
 
 
 const App = () => {
@@ -16,9 +17,11 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<LoginForm />} />
            <Route  path="/register" element={<RegisterForm />} />
-        <Route path="/Home" element={<Dashbord />} >
+           <Route path="/Home" element={<Dashbord />} >
            <Route  path="new-issue" element={<NewIssueForm />} />
            <Route  path="update-issue" element={<UpdateIssue />} />
+           <Route  path="staff" element={<StaffMembers />} />
+
            <Route exact path="hero" element={<HeroSectionStudent />} />
            <Route exact path="issue-list" element={<IssuesList />} />
             <Route path="manage-issue" element={<ManageIssue />} />

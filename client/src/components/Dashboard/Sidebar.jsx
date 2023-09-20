@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaHome, FaUser, FaCog } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ isSidebarOpen }) => {
   return (
@@ -26,6 +27,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           <FaUser className="mr-2" />
           Issues
         </a>
+        <Link to="/Home/staff">
         <a
           href="f"
           className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
@@ -33,6 +35,8 @@ const Sidebar = ({ isSidebarOpen }) => {
           <FaCog className="mr-2" />
           Staff
         </a>
+        </Link>
+
         <a
           href="f"
           className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
