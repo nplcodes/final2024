@@ -10,6 +10,7 @@ import ManageIssue from './components/Student/ManageIssue'
 import UpdateIssue from './components/Student/updateIssue';
 import StaffMembers from './components/Student/StaffMembers';
 import AccountSettings from './components/Student/AccountSettings';
+import Board from './components/General/Board';
 
 
 const App = () => {
@@ -22,6 +23,8 @@ const App = () => {
            <Route  path="new-issue" element={<NewIssueForm />} />
            <Route  path="update-issue" element={<UpdateIssue />} />
            <Route  path="settings" element={<AccountSettings />} />
+           <Route  path="general-board" element={<Board />} />
+
            <Route  path="staff" element={<StaffMembers />} />
 
            <Route exact path="hero" element={<HeroSectionStudent />} />

@@ -86,7 +86,14 @@ function IssuesList() {
         <tbody>
       
           <tr className="bg-blue-200 lg:text-black">
-            <td className="p-3 font-medium capitalize">Gazi Rahad</td>
+            <td className="p-3 font-medium capitalize">
+              <div className='max-w-[400px]'>
+                <p>Gazi Rahad has came today to rescue my childress from fire occuredin the middle of night</p>
+                <p>
+                In publishing and graphic design, Lorem 
+                </p>
+              </div>
+            </td>
             <td className="p-3">gazi.rahad871@gmail.com</td>
             <td className="p-3">01648349009</td>
             <td className="p-3 uppercase">admin</td>
@@ -111,58 +118,6 @@ function IssuesList() {
               </a>
             </td>
           </tr>
-       {/* <tr className="bg-blue-200 lg:text-black">
-            <td className="p-3 font-medium capitalize">Arif Uddin</td>
-            <td className="p-3">gazi.rahad871@gmail.com</td>
-            <td className="p-3">01648349009</td>
-            <td className="p-3 uppercase">user</td>
-
-            <td className="p-3">
-              <span className="bg-green-400 text-gray-50 rounded-md px-2"
-                >ACTIVE</span
-              >
-            </td>
-            <td className="p-3">
-              <a href="#tt" className="text-gray-500 hover:text-gray-100 mr-2">
-                <i className="material-icons-outlined text-base">visibility</i>
-              </a>
-              <a href="#yy" className="text-yellow-400 hover:text-gray-100 mx-2">
-                <i className="material-icons-outlined text-base">edit</i>
-              </a>
-              <a
-                href="#gg"
-                className="text-red-400 hover:text-gray-100 ml-2"
-              >
-                <i className="material-icons-round text-base">delete_outline</i>
-              </a>
-            </td>
-          </tr> */}
-             {/* <tr className="bg-blue-200 lg:text-black">
-            <td className="p-3 font-medium capitalize">Rubel Amin</td>
-            <td className="p-3">gazi.rahad871@gmail.com</td>
-            <td className="p-3">01648349010</td>
-            <td className="p-3 uppercase">admin</td>
-
-            <td className="p-3">
-              <span className="bg-green-400 text-gray-50 rounded-md px-2"
-                >ACTIVE</span
-              >
-            </td>
-            <td className="p-3">
-              <a href="#v" className="text-gray-500 hover:text-gray-100 mr-2">
-                <i className="material-icons-outlined text-base">visibility</i>
-              </a>
-              <a href="#b" className="text-yellow-400 hover:text-gray-100 mx-2">
-                <i className="material-icons-outlined text-base">edit</i>
-              </a>
-              <a
-                href="#v"
-                className="text-red-400 hover:text-gray-100 ml-2"
-              >
-                <i className="material-icons-round text-base">delete_outline</i>
-              </a>
-            </td>
-          </tr> */}
         </tbody>
       </table>
     </div>
