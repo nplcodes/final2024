@@ -94,7 +94,7 @@ function UpdateIssue() {
                 Rise
               </button>
               <p>
-                <Link to='/Home/issue-list' className='text-blue-500'>Back</Link>
+                <Link to='/Home/manage-issue' className='text-blue-500'>Back</Link>
               </p>
             </form>
           </div>

@@ -15,14 +15,14 @@ const Sidebar = ({ isSidebarOpen }) => {
       <nav className="mt-6">
         <a
           href="w"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaHome className="mr-2" />
           Home
         </a>
         <a
           href="g"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaUser className="mr-2" />
           Issues
@@ -30,7 +30,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         <Link to="/Home/staff">
         <a
           href="f"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
           Staff
@@ -39,25 +39,31 @@ const Sidebar = ({ isSidebarOpen }) => {
 
         <a
           href="f"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
           Appointment
         </a>
         <a
           href="f"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
           Report
         </a>
         <a
           href="f"
-          className="flex items-center py-2 px-4 text-black hover:bg-gray-700"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
           Board
         </a>
+        <Link
+                to="/Home/settings"
+                className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+              >
+                Settings
+              </Link>
       </nav>
     </div>
   );

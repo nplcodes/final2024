@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaBars, FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Topnav = ({ toggleSidebar }) => {
   const [searchValue, setSearchValue] = useState('');
@@ -58,12 +59,12 @@ const Topnav = ({ toggleSidebar }) => {
               >
                 Profile
               </a>
-              <a
-                href="n"
+              <Link
+                to="/Home/settings"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
               >
                 Settings
-              </a>
+              </Link>
               <a
                 href="n"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-100"

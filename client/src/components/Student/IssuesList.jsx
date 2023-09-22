@@ -111,7 +111,7 @@ function IssuesList() {
               </a>
             </td>
           </tr>
-       <tr className="bg-blue-200 lg:text-black">
+       {/* <tr className="bg-blue-200 lg:text-black">
             <td className="p-3 font-medium capitalize">Arif Uddin</td>
             <td className="p-3">gazi.rahad871@gmail.com</td>
             <td className="p-3">01648349009</td>
@@ -136,8 +136,8 @@ function IssuesList() {
                 <i className="material-icons-round text-base">delete_outline</i>
               </a>
             </td>
-          </tr>
-             <tr className="bg-blue-200 lg:text-black">
+          </tr> */}
+             {/* <tr className="bg-blue-200 lg:text-black">
             <td className="p-3 font-medium capitalize">Rubel Amin</td>
             <td className="p-3">gazi.rahad871@gmail.com</td>
             <td className="p-3">01648349010</td>
@@ -162,7 +162,7 @@ function IssuesList() {
                 <i className="material-icons-round text-base">delete_outline</i>
               </a>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>

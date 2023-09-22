@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function ManageIssue() {
   return (
@@ -8,10 +9,10 @@ function ManageIssue() {
             <div className='pb-10'><p className='text-2xl italic'>Class window have already broken, recently</p></div>
             <div className='p-5 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
                 <p>
-                orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sh
+                placeholder text commonly used to demonstrate the visual form of a document or a typefac
                 </p>
-                <div className='flex p-2 '>
-                    <p className='cursor-pointer'> &#128512; &#128516; &#128525; &#128151;</p>
+                <div className='flex p-2'>
+                    <p className='cursor-pointer'> &#128512; &#128516;</p>
                     </div>
             </div>
             <div className='pt-3'>Assigned to: </div>
@@ -20,6 +21,7 @@ function ManageIssue() {
             </div>
             <div>
             <div>
+                <Link to="/Home/update-issue">
                <button
               className="
                 bg-blue-500
@@ -33,6 +35,7 @@ function ManageIssue() {
             >
               edit
             </button>
+            </Link>
                </div>
             </div>
         </div>

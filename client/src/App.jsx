@@ -9,6 +9,7 @@ import IssuesList from './components/Student/IssuesList';
 import ManageIssue from './components/Student/ManageIssue'
 import UpdateIssue from './components/Student/updateIssue';
 import StaffMembers from './components/Student/StaffMembers';
+import AccountSettings from './components/Student/AccountSettings';
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
            <Route path="/Home" element={<Dashbord />} >
            <Route  path="new-issue" element={<NewIssueForm />} />
            <Route  path="update-issue" element={<UpdateIssue />} />
+           <Route  path="settings" element={<AccountSettings />} />
            <Route  path="staff" element={<StaffMembers />} />
 
            <Route exact path="hero" element={<HeroSectionStudent />} />
