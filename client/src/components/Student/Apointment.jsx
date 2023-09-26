@@ -18,7 +18,7 @@ function Apointment() {
                 {/* Leaders info left part */}
                 {/* ...................................... */}
                 <div className='h-auto bg-slate-100 col-span-1 flex flex-col p-5'>
-                    <img className='w-32 h-32 rounded-md'src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="div" />
+                    <img className='w-32 h-32 rounded-md'src="https://police.gov.rw/fileadmin/user_upload/KANYA2.png" alt="div" />
                     <p className='self-center text-md'>Admin</p>
                     <div className='bg-white mt-3'>
                         <div className='p-2 bg-blue-500 mb-1 flex justify-between items-center'>

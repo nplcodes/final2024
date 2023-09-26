@@ -32,15 +32,22 @@ const Sidebar = ({ isSidebarOpen }) => {
         </a>
         </Link>
 
-        <a
-          href="f"
+        <Link
+          to="/Home/book"
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
           Book
-        </a>
+        </Link>
+        <Link
+          to="/Home/book-list"
+          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
+        >
+          <FaCog className="mr-2" />
+          Book Lists
+        </Link>
         <a
-          href="f"
+          href="#f"
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />

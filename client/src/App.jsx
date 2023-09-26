@@ -12,6 +12,7 @@ import StaffMembers from './components/Student/StaffMembers';
 import AccountSettings from './components/Student/AccountSettings';
 import Board from './components/General/Board';
 import Apointment from './components/Student/Apointment';
+import AppointmentsList from './components/Student/AppointmentsList';
 
 
 const App = () => {
@@ -24,7 +25,7 @@ const App = () => {
            <Route  path="new-issue" element={<NewIssueForm />} />
            <Route  path="update-issue" element={<UpdateIssue />} />
            <Route  path="book" element={<Apointment />} />
-
+           <Route  path="book-list" element={<AppointmentsList />} />
            <Route  path="settings" element={<AccountSettings />} />
            <Route  path="general-board" element={<Board />} />
 
