@@ -3,16 +3,16 @@ import { PiDotsThreeOutlineThin } from "react-icons/pi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import { RxShare2 } from "react-icons/rx";
-
+import { BsSend } from "react-icons/bs";
 function Board() {
   return (
     <div className='Wrapper flex justify-center pt-10'>
         <div className='grid grid-cols-10 max-w-[70%] '>
         <div className='grid col-span-6 '>
-            <div className='flex justify-between p-2  border-b-2'>
+            <div className='flex justify-between p-2'>
                 <div className='flex items-center gap-3'>
                     <img  className="w-10 h-10 rounded-full" src="https://media.istockphoto.com/id/938709362/photo/portrait-of-a-girl.webp?s=2048x2048&w=is&k=20&c=GAKRAkeiut6MTnyYbrIhwSyq_bPbq49YqgpK7JWpvno=" alt="poster" />
-                    <p>Luis montesky 2d</p>
+                    <p>Luis 2min</p>
                 </div>
                 <div>
                     <span className='cursor-pointer'><PiDotsThreeOutlineThin /></span>
@@ -31,15 +31,16 @@ function Board() {
                     <p>20 likes</p>
                     <div>10 comments</div>
                 </div>
-                <div>
-                    <input className='bg-transparent border-none focus:border-none border-b-1 pb-2 w-full' type="text" placeholder='type comment ....' />
+                <div className='relative'>
+                    <input className='bg-transparent border-none focus:border-none border-b-1 pb-2 w-full ' type="text" placeholder='type comment ....' />
+                    <button className='absolute  right-2 my-1 hover:bg-blue-500 p-1 hover:rounded-md hover:text-white '><BsSend /></button>
                 </div>
                 
             </div>
         </div>
         <div className='grid col-span-4'>
             <div>
-               <p>New Notifications</p>
+               <p>Notifications</p>
             </div>
             {/* Notificatins */}
             <div class="flex flex-col space-y-2 ">
@@ -60,7 +61,7 @@ function Board() {
                     <div class="flex items-center space-x-4">
                         <img src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" class="rounded-full h-14 w-14" alt="" />
                         <div class="flex flex-col space-y-1">
-                            <span class="font-bold">Yao</span>
+                            <span class="font-bold">Naomie Queen</span>
                             <span class="text-sm">Lorem ipsum dolor sit</span>
                         </div>
                     </div>

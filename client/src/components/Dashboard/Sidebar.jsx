@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaUser, FaCog } from 'react-icons/fa';
+import { FaHome, FaCog } from 'react-icons/fa';
 import { BsPeople } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
@@ -14,20 +14,14 @@ const Sidebar = ({ isSidebarOpen }) => {
         <span className="text-lg font-semibold text-black">DasbBord</span>
       </div>
       <nav className="mt-6">
-        <a
-          href="w"
+        <Link
+          to="/Home"
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaHome className="mr-2" />
           Home
-        </a>
-        <a
-          href="g"
-          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
-        >
-          <FaUser className="mr-2" />
-          Issues
-        </a>
+        </Link>
+        
         <Link to="/Home/staff">
         <a
           href="f"
@@ -43,7 +37,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaCog className="mr-2" />
-          Appointment
+          Book
         </a>
         <a
           href="f"

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function ManageIssue() {
   return (
     <div className='grid grid-cols-2 grid-rows-1 gap-4 min-h-screen p-10'>
-        <div className='p-10 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
+        <div className='p-10 '>
             <div className='pb-5'>Me/ Admin</div>
             <div className='pb-10'><p className='text-2xl italic'>Class window have already broken, recently</p></div>
             <div className='p-5 shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
@@ -39,7 +39,7 @@ function ManageIssue() {
                </div>
             </div>
         </div>
-        <div className=''>
+        <div className='shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
             <div className='p-10'>
                 <p>Attached Documents.... </p>
                     <div className="grid grid-cols-4 grid-rows-3 gap-4">

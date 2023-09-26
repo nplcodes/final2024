@@ -7,12 +7,12 @@ function IssuesList() {
   <div className="">
     <div className="overflow-auto lg:overflow-visible">
       <div className="flex lg:justify-between  border-b-2 border-fuchsia-900 pb-1 w-full">
-        <h2 className="text-2xl text-gray-500 font-bold">My Issues</h2>
+        <h2 className="text-2xl text-gray-500 font-bold">My issues</h2>
         <div className="text-center flex-auto">
           <input
             type="text"
             name="name"
-            placeholder="Search.................."
+            placeholder="Search............."
             className="
               w-1/3
               py-2
@@ -23,7 +23,7 @@ function IssuesList() {
           />
         </div>
 
-        <div>
+        <div className='space-x-2'>
           <a href="#b">
             <button
               className="
@@ -33,7 +33,7 @@ function IssuesList() {
                 py-1
                 px-3
                 sm
-                rounded-full
+                rounded-md
               "
             >
               All
@@ -48,7 +48,7 @@ function IssuesList() {
                 py-1
                 px-3
                 sm
-                rounded-full
+                rounded-md
               "
             >
               In Progress
@@ -63,12 +63,11 @@ function IssuesList() {
                 py-1
                 px-3
                 sm
-                rounded-full
+                rounded-md
               "
             >
               Solved
-            </button></a
-          >
+            </button></a>
         </div>
       </div>
       <table className="table text-gray-400 border-separate space-y-6 text-sm">
@@ -135,7 +134,7 @@ function IssuesList() {
                 rounded-md
               "
             >
-              + Add New
+              + New
             </button>
     </Link>
   </div>
