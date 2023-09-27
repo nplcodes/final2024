@@ -33,7 +33,7 @@ function ManageIssue() {
                 rounded-md
               "
             >
-              edit
+              Mark as seen
             </button>
             </Link>
                </div>

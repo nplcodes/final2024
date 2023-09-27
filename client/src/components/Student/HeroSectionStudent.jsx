@@ -9,7 +9,7 @@ const HeroSectionStudent = () => {
         <p className="text-lg mb-12 text-center text-gray-600">
           Get insights, manage your tasks, and stay organized.
         </p>
-        <Link to="/Home/issue-list">
+        <Link to="/Home/issue-page">
         <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md">
           Get Started
         </button>

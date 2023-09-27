@@ -60,13 +60,26 @@ const Sidebar = ({ isSidebarOpen }) => {
               >
                 Board
               </Link>
-        <Link
+             <Link
                 to="/Home/settings"
                 className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
               >
                 Settings
-              </Link>
+            </Link>
       </nav>
+      <div>Staff</div>
+              <Link
+                  to="/Home/staff-home"
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                Home-staff
+              </Link>
+              <Link
+                  to="/Home/timeslots"
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                Set Timeslots
+              </Link>
     </div>
   );
 };
