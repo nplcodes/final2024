@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function StaffMembers() {
   return (
@@ -18,8 +19,10 @@ function StaffMembers() {
                     <p className="text-xl text-gray-700 font-bold mb-2">Dany Bailey</p>
                     <p className="text-base text-gray-400 font-normal">Deputy </p>
                     <div className='add '>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-md w-full"> Appoint
-                        </button>
+                        <Link to="/Home/book-list">
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-md w-full"> Appoint
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -31,8 +34,10 @@ function StaffMembers() {
                     <p className="text-xl text-gray-700 font-bold mb-2">Lucy Carter</p>
                     <p className="text-base text-gray-400 font-normal">Graphic Designer</p>
                     <div className='add '>
+                        <Link to="/Home/book-list">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-md w-full"> Appoint
                         </button>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import { BsEye } from "react-icons/bs";
 function AppointmentsList() {
   return (
     <div className='p-10'>
+        <div>Recents Appointments </div>
         {/* Booking left part */}
         {/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */}
         <div className='w-full flex p-10'>

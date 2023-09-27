@@ -2,6 +2,7 @@ import React from 'react';
 import { FaHome, FaCog } from 'react-icons/fa';
 import { BsPeople } from "react-icons/bs";
 import { Link } from 'react-router-dom';
+import { IoNotificationsOutline } from "react-icons/io5";
 
 const Sidebar = ({ isSidebarOpen }) => {
   return (
@@ -15,7 +16,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       </div>
       <nav className="mt-6">
         <Link
-          to="/Home"
+          to="/Home/issue-page"
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
           <FaHome className="mr-2" />
@@ -46,13 +47,13 @@ const Sidebar = ({ isSidebarOpen }) => {
           <FaCog className="mr-2" />
           Book Lists
         </Link>
-        <a
-          href="#f"
+        <Link
+          to="/Home/notifications"
           className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
         >
-          <FaCog className="mr-2" />
-          Report
-        </a>
+          <IoNotificationsOutline className="mr-2" />
+          Notifications
+        </Link>
         <Link
                 to="/Home/general-board"
                 className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
