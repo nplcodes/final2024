@@ -78,7 +78,26 @@ const Sidebar = ({ isSidebarOpen }) => {
                   to="/Home/timeslots"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
-                Set Timeslots
+                 Timeslots
+              </Link>
+              <Link
+                  to=""
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                 Settings
+              </Link>
+              <div className='text-black'>Admin Menus</div>
+              <Link
+                  to="/Home/staff/manage"
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                 Manage
+              </Link>
+              <Link
+                  to="/Home/staff/setting"
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                 Settings
               </Link>
     </div>
   );

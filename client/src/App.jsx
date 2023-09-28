@@ -19,6 +19,8 @@ import StaffHomePage from './components/Staff/StaffHomePage';
 import Appointments from './components/Staff/Appointments';
 import IssuePageStaff from './components/Staff/IssuePage';
 import TimeSlots from './components/Staff/TimeSlots';
+import ManageSystem from './components/Admin/ManageSystem';
+import AccountSettingsAdmin from './components/Admin/Settings';
 
 
 const App = () => {
@@ -48,10 +50,9 @@ const App = () => {
            <Route  path="staff-book-list" element={<Appointments />} />
            <Route  path="staff-notifications" element={<Notifications />} />
            <Route  path="timeslots" element={<TimeSlots />} />
-
            <Route exact path="staff-issue-page" element={<IssuePageStaff />} />
-
-
+           <Route exact path="staff/manage" element={<ManageSystem />} />
+           <Route exact path="staff/setting" element={<AccountSettingsAdmin />} />
 
 
         </Route>

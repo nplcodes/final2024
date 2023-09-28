@@ -2,7 +2,7 @@ import React from 'react'
 import { BsDot, BsEye, BsListTask } from "react-icons/bs";
 import { BiMessage, BiCommentEdit } from "react-icons/bi";
 import { TiDeleteOutline } from "react-icons/ti";
-
+import { RiShareForwardBoxLine } from "react-icons/ri";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 
@@ -44,6 +44,7 @@ function IssuePageStaff() {
                                 <Link to="/Home/update-issue">
                                     <p className='cursor-pointer'><BiCommentEdit /></p>
                                 </Link>
+                                <p className='cursor-pointer'><RiShareForwardBoxLine /></p>
                               <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
 
                             </div>
@@ -68,6 +69,7 @@ function IssuePageStaff() {
                             <div className='flex flex-col gap-1'>
                               <p className='cursor-pointer'><BsEye /></p>
                               <p className='cursor-pointer'><BiCommentEdit /></p>
+                              <p className='cursor-pointer'><RiShareForwardBoxLine /></p>
                               <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
 
                             </div>
