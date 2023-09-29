@@ -21,6 +21,8 @@ import IssuePageStaff from './components/Staff/IssuePage';
 import TimeSlots from './components/Staff/TimeSlots';
 import ManageSystem from './components/Admin/ManageSystem';
 import AccountSettingsAdmin from './components/Admin/Settings';
+import Users from './components/Admin/UsersList';
+import IssuesToAssign from './components/Admin/IssuesList';
 
 
 const App = () => {
@@ -44,16 +46,19 @@ const App = () => {
            <Route exact path="issue-page" element={<IssuePage />} />
            <Route path="manage-issue" element={<ManageIssue />} />
 
-
            {/* Staff Routes */}
            <Route  path="staff-home" element={<StaffHomePage />} />
            <Route  path="staff-book-list" element={<Appointments />} />
            <Route  path="staff-notifications" element={<Notifications />} />
            <Route  path="timeslots" element={<TimeSlots />} />
            <Route exact path="staff-issue-page" element={<IssuePageStaff />} />
-           <Route exact path="staff/manage" element={<ManageSystem />} />
-           <Route exact path="staff/setting" element={<AccountSettingsAdmin />} />
 
+           {/* Admin of the system */}
+           {/* ............................... */}
+           <Route  path="admin/manage" element={<ManageSystem />} />
+           <Route  path="admin/users" element={<Users />} />
+           <Route  path="admin/issues" element={<IssuesToAssign />} />
+           <Route  path="admin/setting" element={<AccountSettingsAdmin />} />
 
         </Route>
       </Routes>

@@ -81,20 +81,20 @@ const Sidebar = ({ isSidebarOpen }) => {
                  Timeslots
               </Link>
               <Link
-                  to=""
+                  to="/Home/settings"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                  Settings
               </Link>
               <div className='text-black'>Admin Menus</div>
               <Link
-                  to="/Home/staff/manage"
+                  to="/Home/admin/manage"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                  Manage
               </Link>
               <Link
-                  to="/Home/staff/setting"
+                  to="/Home/admin/setting"
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                  Settings
