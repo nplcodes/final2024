@@ -35,21 +35,21 @@ function AccountSettingsAdmin() {
       </div>
 
       <div className='w-full flex p-10'>
-        <div className='bg-gray-200 min-w-[20%] h-auto flex flex-col items-center gap-2 justify-center'>
+        <div className='min-w-[20%] h-full flex flex-col items-center pt-10 gap-2'>
           <p
-            className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
+            className='text-5xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
             onClick={() => handleSettingClick('user-detail')}
           >
             <BiSolidUserDetail />
           </p>
           <p
-            className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
+            className='text-5xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
             onClick={() => handleSettingClick('image')}
           >
             <GoImage />
           </p>
           <p
-            className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
+            className='text-5xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
             onClick={() => handleSettingClick('password')}
           >
             <PiPasswordLight />

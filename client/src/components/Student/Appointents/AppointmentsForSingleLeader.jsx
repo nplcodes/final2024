@@ -1,4 +1,11 @@
-<div className='p-5'>
+import React from 'react'
+import { AiOutlineClockCircle } from 'react-icons/ai'
+import { FcCancel } from 'react-icons/fc'
+import { CiLocationOn } from 'react-icons/ci'
+
+function AppointmentsForSingleLeader() {
+  return (
+        <div className=''>
                         <div className= 'flex flex-row justify-between p-10 mb-1  border-b border-b-1'>
                             <div className='flex gap-5'>
                                 <img className='w-10 h-10 rounded-full' src="https://police.gov.rw/fileadmin/user_upload/jc-ujeneza.jpg" alt="" />
@@ -13,8 +20,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                              <p><BsEye /></p>
+                            <div className='cursor-pointer'>
+                              <p><FcCancel /></p>
                             </div>
                         </div>
                         <div className= 'flex flex-row justify-between p-10 mb-1  border-b border-b-1'>
@@ -31,8 +38,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                              <p className='cursor-pointer'><BsEye /></p>
+                            <div className='cursor-pointer'>
+                              <p className='cursor-pointer'><FcCancel /></p>
                             </div>
                         </div>
                     </div> 
+  )
+}
+
+export default AppointmentsForSingleLeader
+

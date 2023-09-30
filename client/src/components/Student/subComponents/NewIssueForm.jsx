@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 function NewIssueForm() {
   return (
     <div>
-      <div className="bg-no-repeat bg-cover bg-center relative pt-10">
+      <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex   z-10">
-          <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
+          <div className="p-1 bg-white rounded-2xl w-100 ">
             <div>
-              <p className='text-2xl pt-5'>Forward new #Issue</p>
+              <p className='text-2xl pt-1 pb-10'>Forward new #Issue</p>
               <p className='pb-5'>Create new issue to be solved by elders</p>
             </div>
             <form className="grid grid-cols-1 gap-4">

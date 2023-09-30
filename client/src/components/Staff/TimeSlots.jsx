@@ -24,8 +24,8 @@ function TimeSlots() {
         <p className="text-blue-500 text-2xl">Time Slots</p>
       </div>
 
-      <div className="flex">
-        <div className="bg-gray-200 w-16 flex flex-col items-center gap-2 justify-center">
+      <div className="flex pt-20">
+        <div className="bg-gray-200 w-32 flex flex-col items-center gap-2 pt-10 ">
           <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white">
             <AiOutlineStar />
           </p>

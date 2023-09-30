@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaBars, FaSearch } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 const Topnav = ({ toggleSidebar }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -36,43 +32,16 @@ const Topnav = ({ toggleSidebar }) => {
         </div>
       </div>
       </div>
-
       <div className="flex items-center">
         <div className="relative group">
           <button
-            onClick={toggleDropdown}
             className="flex items-center focus:outline-none"
           >
-            <span className="text-gray-700 ml-2">Welcome, Leon</span>
-
-            <img
-              className="rounded-full w-10 h-10 object-cover"
-              src="https://via.placeholder.com/150"
-              alt="User"
-            />
-          </button>
-          {isDropdownOpen && (
-            <div className="absolute mt-2 py-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-              <a
-                href="n"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Profile
-              </a>
-              <Link
-                to="/Home/settings"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Settings
-              </Link>
-              <a
-                href="n"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Logout
-              </a>
+            <div className='mr-3'>
+            <IoMdNotificationsOutline className="text-2xl" />
             </div>
-          )}
+            <MdPowerSettingsNew className="text-2xl" />
+          </button>
         </div>
       </div>
     </div>

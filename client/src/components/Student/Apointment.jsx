@@ -1,5 +1,5 @@
 import React from 'react'
-import { AiOutlineClockCircle, AiOutlineStar } from 'react-icons/ai'
+import { AiOutlineClockCircle, AiOutlineUnorderedList } from 'react-icons/ai'
 import { SlCalender } from "react-icons/sl";
 import { BiMessageAltEdit } from "react-icons/bi";
 
@@ -10,7 +10,7 @@ function Apointment() {
         {/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */}
         <div className='w-full flex p-10'>
             <div className='bg-gray-200 min-w-[5%] h-auto flex flex-col items-center gap-2 justify-center'>
-                <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'><AiOutlineStar /></p>
+                <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'><AiOutlineUnorderedList /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'> <SlCalender /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'> <BiMessageAltEdit /></p>
             </div>

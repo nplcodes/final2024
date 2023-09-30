@@ -3,7 +3,6 @@ import LoginForm from './pages/Login'; // Import your login component
 import RegisterForm from './pages/Register'; // Import your login component
 
 import Dashbord from './pages/Dashbord'
-import NewIssueForm from './components/Student/NewIssueForm';
 import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
 import ManageIssue from './components/Student/ManageIssue'
@@ -33,7 +32,6 @@ const App = () => {
            <Route  path="/register" element={<RegisterForm />} />
            <Route path="/Home" element={<Dashbord />} >
             {/* Students routes */}
-           <Route  path="new-issue" element={<NewIssueForm />} />
            <Route  path="update-issue" element={<UpdateIssue />} />
            <Route  path="book" element={<Apointment />} />
            <Route  path="book-list" element={<AppointmentsList />} />

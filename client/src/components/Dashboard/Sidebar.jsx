@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCog } from 'react-icons/fa';
+import { GrAlarm } from "react-icons/gr";
 import { LuCalendarClock } from "react-icons/lu";
-
 import { BsPeople } from "react-icons/bs";
 import { AiOutlineHome, AiOutlineSetting } from "react-icons/ai";
 import { PiNewspaperClipping } from "react-icons/pi";
@@ -28,49 +28,45 @@ const Sidebar = ({ isSidebarOpen }) => {
           to="/Home/issue-page"
           className="text-gray-500"
         >
-          <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+          <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <AiOutlineHome className="text-3xl" />
           </div>
         </Link>
         
         <Link to="/Home/staff" className="text-gray-500">
-        <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <BsPeople className="text-3xl" />
           </div>
         </Link>
 
         <Link to="/Home/book" className="text-gray-500">
-        <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <LuCalendarClock className="text-3xl" />
           </div>
         </Link>
 
 
-        <Link
-          to="/Home/book-list"
-          className="flex items-center py-2 px-4 text-black hover:bg-blue-500 hover:text-white"
-        >
-          <FaCog className="mr-2" />
-          {/* Book Lists */}
-        </Link>
-
-
         <Link to="/Home/notifications" className="text-gray-500">
-        <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoNotificationsOutline className="text-3xl" />
           </div>
         </Link>
 
         <Link to="/Home/general-board" className="text-gray-500">
-        <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <PiNewspaperClipping className="text-3xl" />
           </div>
         </Link>
 
-
         <Link to="/Home/settings" className="text-gray-500">
-        <div className='p-3 shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md hover:bg-blue-300 hover:text-white'>
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <AiOutlineSetting className="text-3xl" />
+          </div>
+        </Link>
+
+        <Link to="/Home/timeslots" className="text-gray-500">
+        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
+            <GrAlarm className="text-3xl" />
           </div>
         </Link>
       </div>
