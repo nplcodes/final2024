@@ -105,5 +105,4 @@ const Sidebar = ({ isSidebarOpen }) => {
     </div>
   );
 };
-
 export default Sidebar;

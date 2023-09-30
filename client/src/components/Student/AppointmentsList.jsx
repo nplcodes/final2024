@@ -36,7 +36,7 @@ function AppointmentsList() {
         {/* Booking left part */}
         <div className='w-full flex p-10'>
             <div className='bg-gray-200 min-w-[10%] h-auto flex flex-col items-center pt-10 gap-2'>
-            <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white bg-blue-500 text-white'  onClick={() => handleSettingClick('single-leader-appointments')}><PiNumberCircleOneThin /></p>
+            <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white bg-blue-500 text-white' onClick={() => handleSettingClick('single-leader-appointments')}><PiNumberCircleOneThin /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'  onClick={() => handleSettingClick('all-appointments')}><AiOutlineUnorderedList /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'  onClick={() => handleSettingClick('make-appointment')}> <SlCalender /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'  onClick={() => handleSettingClick('edit-appointment')}> <BiMessageAltEdit /></p>
