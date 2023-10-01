@@ -2,7 +2,7 @@ import React from 'react'
 
 function Rejected() {
   return (
-    <div>Rejected Issues</div>
+    <div className='text-red-500 p-20 text-2xl'>Rejected Issues</div>
   )
 }
 

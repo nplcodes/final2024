@@ -29,7 +29,7 @@ function Users() {
   return (
     <div className='grid grid-cols-12 grid-rows-1 p-20 gap-20'>
         <div className='pt-10 col-span-2 p-10 gap-3'>
-            <div  className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('pending-users')}><PiNotificationThin /></div>
+            <div  className='p-5 bg-blue-500 text-white text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('pending-users')}><PiNotificationThin /></div>
             <div  className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('recent-aproved-users')}><RiChatSettingsLine /></div>
             <div className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('manage-users')}><AiOutlineProfile /></div>
         </div>
