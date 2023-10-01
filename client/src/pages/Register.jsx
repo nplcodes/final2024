@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SocialIcons from '../components/social-media-icons/SocialIcons';
 
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
 
@@ -41,18 +42,14 @@ const RegisterForm = () => {
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" alt=''/>
-              <h1 className="mb-3 font-bold text-5xl">Hi , Welcome To NPC </h1>
+              <h1 className="mb-3 font-bold text-5xl">Hi! welcome to npc </h1>
               <p className="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
                 and publishing industries for previewing layouts and visual mockups</p>
               <p className='mt-5'>Join npc on #social medias:</p>
-              <div className="py-6 space-x-2">
-                <span className="w-10 h-10  items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">f</span>
-                <span className="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">G+</span>
-                <span className="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">in</span>
-              </div>
+                 <SocialIcons />
             </div>
           </div>
-          <div className="flex justify-center self-center  z-10">
+          <div className="flex justify-center self-center z-10">
             <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
               <div>
                 <p className='text-2xl pt-5'>Sign Up here</p>
@@ -141,5 +138,4 @@ const RegisterForm = () => {
     </div>
   );
 };
-
 export default RegisterForm;

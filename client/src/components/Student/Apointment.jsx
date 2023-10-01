@@ -1,23 +1,21 @@
 import React from 'react'
-import { AiOutlineClockCircle, AiOutlineUnorderedList } from 'react-icons/ai'
-import { SlCalender } from "react-icons/sl";
-import { BiMessageAltEdit } from "react-icons/bi";
+import { AiOutlineClockCircle } from 'react-icons/ai'
+
 
 function Apointment() {
   return (
     <div className='p-10'>
         {/* Booking left part */}
-        {/* ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, */}
         <div className='w-full flex p-10'>
-            <div className='bg-gray-200 min-w-[5%] h-auto flex flex-col items-center gap-2 justify-center'>
+            {/* <div className='bg-gray-200 min-w-[5%] h-auto flex flex-col items-center gap-2 justify-center'>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'><AiOutlineUnorderedList /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'> <SlCalender /></p>
                 <p className='text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'> <BiMessageAltEdit /></p>
-            </div>
+            </div> */}
             <div className='w-[95%] h-auto grid grid-cols-6'>
                 {/* Leaders info left part */}
                 {/* ...................................... */}
-                <div className='h-auto bg-slate-100 col-span-1 flex flex-col p-5'>
+                <div className='h-auto col-span-1 flex flex-col p-5 border'>
                     <img className='w-32 h-32 rounded-md'src="https://police.gov.rw/fileadmin/user_upload/KANYA2.png" alt="div" />
                     <p className='self-center text-md'>Admin</p>
                     <div className='bg-white mt-3'>

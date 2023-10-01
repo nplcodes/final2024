@@ -27,7 +27,7 @@ function TimeSlots() {
       <div className="flex justify-between items-center mb-6">
         <p className="text-blue-500 text-2xl">Time Slots</p>
       </div>
-      <div className="flex pt-10">
+      <div className="flex pt-3">
         <div className="w-32 flex flex-col items-center gap-2 pt-10 ">
           <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 text-white bg-blue-500 hover:text-white" onClick={() => handleSettingClick('my-slots')}>
             <AiOutlineStar />

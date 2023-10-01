@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCog } from 'react-icons/fa';
+import { BiLogoDrupal } from 'react-icons/bi';
 import { GrAlarm } from "react-icons/gr";
 import { LuCalendarClock } from "react-icons/lu";
 import { BsPeople } from "react-icons/bs";
@@ -19,7 +19,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       <div className="flex flex-col items-center p-4">
         <Link to="/Home/issue-page">
         <div className="p-3">
-          <p className='text-black text-4xl font-bold'>NPC</p>
+          <p className='text-black text-4xl font-bold'><BiLogoDrupal className='text-6xl'/></p>
         </div>
         </Link>
       </div>
@@ -29,44 +29,44 @@ const Sidebar = ({ isSidebarOpen }) => {
           className="text-gray-500"
         >
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <AiOutlineHome className="text-3xl" />
+            <AiOutlineHome className="text-xl" />
           </div>
         </Link>
         
         <Link to="/Home/staff" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <BsPeople className="text-3xl" />
+            <BsPeople className="text-xl" />
           </div>
         </Link>
 
         <Link to="/Home/book" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <LuCalendarClock className="text-3xl" />
+            <LuCalendarClock className="text-xl" />
           </div>
         </Link>
 
 
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <IoNotificationsOutline className="text-3xl" />
+            <IoNotificationsOutline className="text-xl" />
           </div>
         </Link>
 
         <Link to="/Home/general-board" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <PiNewspaperClipping className="text-3xl" />
+            <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
 
         <Link to="/Home/settings" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <AiOutlineSetting className="text-3xl" />
+            <AiOutlineSetting className="text-xl" />
           </div>
         </Link>
 
         <Link to="/Home/timeslots" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <GrAlarm className="text-3xl" />
+            <GrAlarm className="text-xl" />
           </div>
         </Link>
       </div>

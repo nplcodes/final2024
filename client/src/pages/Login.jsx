@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SocialIcons from '../components/social-media-icons/SocialIcons';
 
 
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
@@ -21,15 +22,12 @@ const LoginForm = () => {
       <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
         <div class="self-start hidden lg:flex flex-col  text-white">
           <img src="" class="mb-3" alt=''/>
-          <h1 class="mb-3 font-bold text-5xl">Hi ? Welcome To NPC </h1>
+          <h1 class="mb-3 font-bold text-5xl">Hey! welcome to npc </h1>
           <p class="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
             and publishing industries for previewing layouts and visual mockups</p>
             <p className='mt-5'>Join npc on #social medias:</p>
-            <div class="py-6 space-x-2">
-                    <span class="w-10 h-10  items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">f</span>
-                    <span class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">G+</span>
-                    <span class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white cursor-pointer">in</span>
-                </div>
+            <SocialIcons />
+
         </div>
       </div>
       <div class="flex justify-center self-center  z-10">
