@@ -6,8 +6,22 @@ import authController from '../controllers/authController.js';
 
 const router = express.Router();
 
+// User
 router.post('/register', authController.registerUser);
 router.post('/login', authController.loginUser);
 router.get('/protected', verifyToken, authController.protectedRoute);
+router.put('/users/:userId', authController.updateUser);
+router.put('/users/:userId/approve', authController.updateApprovalStatus);
+router.get('/users', authController.getUsers);
+router.get('/users/pending', authController.getPendingUsers);
+router.delete('/users/pending/:userId', authController.rejectUser);
+
+
+// Issue
+
+
+
+
+
 
 export default router;
