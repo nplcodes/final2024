@@ -5,6 +5,8 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import issueRoutes from './routes/issueRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+
 
 
 
@@ -17,6 +19,8 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/issue', issueRoutes);
 app.use('/comment', commentRoutes);
+app.use('/post', postRoutes);
+
 
 
 app.listen(PORT, () => {
