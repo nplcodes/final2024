@@ -2,6 +2,17 @@
 
 import mongoose from 'mongoose';
 
+const attachmentSchema = new mongoose.Schema({
+  filename: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+});
+
 const issueSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -10,9 +21,9 @@ const issueSchema = new mongoose.Schema({
   reporter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   dateReported: { type: Date, default: Date.now },
   dateUpdated: { type: Date },
-  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   priority: { type: String },
-  attachments: { type: [String] } // Assuming file URLs
+  attachments: [attachmentSchema], // Array of attachment objects
 });
 
 const Issue = mongoose.model('Issue', issueSchema);
