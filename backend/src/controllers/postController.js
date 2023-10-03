@@ -84,7 +84,8 @@ import { upload } from '../middleware/multer.js';
 
 const addComment = async (req, res) => {
     try {
-      const { postId, content, userId } = req.body;
+      const postId = req.params.postId
+      const { content, userId } = req.body;
   
       const post = await Post.findById(postId);
       if (!post) {
@@ -109,32 +110,35 @@ const addComment = async (req, res) => {
 //   Like a post
 
 const addLike = async (req, res) => {
-    try {
-        const postId = req.params
-      const {  userId } = req.body;
-  
-      const post = await Post.findById(postId);
-      if (!post) {
-        return res.status(404).json({ error: 'Post not found too',postId });
+  try {
+    const postId = req.params.postId;
+    const { userId } = req.body;
 
-      }
-  
-      if (!post.likes.includes(userId)) {
-        post.likes.push(userId);
-        await post.save();
-      }
-  
-      res.json({ message: 'Like added successfully', post });
-    } catch (error) {
-      console.error('Error adding like:', error);
-      res.status(500).json({ error: 'An error occurred while adding the like.' });
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found', postId });
     }
+
+    if (!post.likes.includes(userId)) {
+      post.likes.push(userId);
+      await post.save();
+    }
+
+    const likeCount = post.likes.length;  // Count the number of likes
+
+    res.json({ message: 'Like added successfully', post, likeCount });
+  } catch (error) {
+    console.error('Error adding like:', error);
+    res.status(500).json({ error: 'An error occurred while adding the like.' });
   }
+};
+
 
 //   Unlike a post
 const removeLike = async (req, res) => {
     try {
-      const { postId, userId } = req.body;
+      const postId = req.params.postId;
+      const { userId } = req.body;
   
       const post = await Post.findById(postId);
       if (!post) {
@@ -154,6 +158,66 @@ const removeLike = async (req, res) => {
     }
   };
 
+  // Display comments
+  const getCommentsForPost = async (req, res) => {
+    try {
+      const postId = req.params.postId;
+  
+      const post = await Post.findById(postId);
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found', postId });
+      }
+  
+      const comments = post.comments;  // Retrieve comments for the post
+  
+      res.json({ comments });
+    } catch (error) {
+      console.error('Error getting comments:', error);
+      res.status(500).json({ error: 'An error occurred while getting comments.' });
+    }
+  };
+
+  // Update post
+const updatePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const { title, content } = req.body;
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { title, content },
+      { new: true }
+    );
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: 'Post not found', postId });
+    }
+
+    res.json({ message: 'Post updated successfully', updatedPost });
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ error: 'An error occurred while updating the post.' });
+  }
+};
+
+// Delete a post
+const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+
+    const deletedPost = await Post.findByIdAndDelete(postId);
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found', postId });
+    }
+
+    res.json({ message: 'Post deleted successfully', deletedPost });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the post.' });
+  }
+};
+
 
 export default{
     commentOnPost,
@@ -161,6 +225,9 @@ export default{
     createPost,
     addComment,
     addLike,
-    removeLike
+    removeLike,
+    getCommentsForPost,
+    updatePost,
+    deletePost
 
 }

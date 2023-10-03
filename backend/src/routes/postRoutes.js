@@ -9,7 +9,13 @@ const router = express.Router();
 
 router.post('/', upload.single('image'), postController.createPost);
 router.post('/comment/:postId', postController.addComment);
-router.post('/:postId/like', postController.addLike);
-router.delete('/:postId/like', postController.removeLike);
+router.post('/like/:postId', postController.addLike);
+router.delete('/dislike/:postId', postController.removeLike);
+router.get('/comments/:postId', postController.getCommentsForPost);
+router.put('/:postId', postController.updatePost);
+router.delete('/:postId', postController.deletePost);
+
+
+
 
 export default router;
