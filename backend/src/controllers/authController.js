@@ -109,11 +109,23 @@ const updateApprovalStatus = async (req, res) => {
     user.approvalStatus = approvalStatus;
     await user.save();
 
+    // Create a notification
+    const notification = new Notification({
+      notificationType: 'Account Approval',
+      content: `Your account has been ${approvalStatus === 'approved' ? 'approved' : 'rejected'}.`,
+      sender: req.user._id, // Assuming you have a logged-in user
+      recipient: userId,
+    });
+
+    // Save the notification
+    await notification.save();
+
     res.json({ message: 'Approval status updated successfully.', user });
   } catch (error) {
     res.status(500).json({ error: 'Could not update approval status.' });
   }
 };
+
 
 // Admin display all users
 const getUsers = async (req, res) => {

@@ -1,7 +1,6 @@
 // controllers/postController.js
 import Post from '../models/Post.js';
-import { upload } from '../middleware/multer.js';
-
+import { notifyAllStudentsAboutNewPost } from '../middleware/notificationService.js';
 
 // Function to create a post with image upload
  const createPost =  async (req, res) => {
@@ -21,6 +20,8 @@ import { upload } from '../middleware/multer.js';
       });
   
       await post.save();
+          // Notify all students
+    await notifyAllStudentsAboutNewPost(post);
   
       res.json({ message: 'Post created successfully', post });
     } catch (error) {
