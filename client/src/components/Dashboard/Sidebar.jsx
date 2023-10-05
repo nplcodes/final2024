@@ -38,11 +38,11 @@ const Sidebar = ({ isSidebarOpen }) => {
           </div>
         </Link>
 
-        <Link to="/Home/book" className="text-gray-500">
+        {/* <Link to="/Home/book" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <LuCalendarClock className="text-xl" />
           </div>
-        </Link>
+        </Link> */}
 
 
         <Link to="/Home/notifications" className="text-gray-500">

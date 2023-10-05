@@ -25,7 +25,7 @@ const Topnav = ({ toggleSidebar }) => {
             type="text"
             value={searchValue}
             onChange={handleSearchChange}
-            placeholder=" search "
+            placeholder="Search ... "
             className="bg-transparent text-gray-700 rounded-md py-2 px-10 focus:outline-none focus:shadow-outline border-none"
           />
           <FaSearch className="absolute left-3 top-2 text-gray-500" />
