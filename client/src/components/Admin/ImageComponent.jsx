@@ -17,20 +17,19 @@ function ImageComponent() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl mb-4">Update Profile Image</h2>
+      <h2 className="text-2xl mb-4 pb-7">Edit Profile Image</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="image" className="block mb-2">Select Image</label>
           <input
             type="file"
             accept="image/*"
             id="image"
             onChange={handleImageChange}
-            className="border p-2 w-full"
+            className="border p-2 w-full rounded-md"
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Update Image
+          Edit
         </button>
       </form>
     </div>

@@ -1,10 +1,9 @@
 import React from 'react';
-import { BiLogoDrupal } from 'react-icons/bi';
 import { GrAlarm } from "react-icons/gr";
 import { LuCalendarClock } from "react-icons/lu";
-import { BsPeople } from "react-icons/bs";
-import { AiOutlineHome, AiOutlineSetting } from "react-icons/ai";
-import { PiNewspaperClipping } from "react-icons/pi";
+import { BsInfoCircle, BsPeople } from "react-icons/bs";
+import { AiOutlineHome } from "react-icons/ai";
+import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
 
 import { Link } from 'react-router-dom';
 import { IoNotificationsOutline } from "react-icons/io5";
@@ -19,7 +18,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       <div className="flex flex-col items-center p-4">
         <Link to="/Home/issue-page">
         <div className="p-3">
-          <p className='text-black text-4xl font-bold'><BiLogoDrupal className='text-6xl'/></p>
+          <p className='text-black text-4xl font-bold'><PiNotionLogoThin className='text-4xl'/></p>
         </div>
         </Link>
       </div>
@@ -60,7 +59,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
         <Link to="/Home/settings" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <AiOutlineSetting className="text-xl" />
+            <BsInfoCircle className="text-xl" />
           </div>
         </Link>
 
@@ -82,6 +81,12 @@ const Sidebar = ({ isSidebarOpen }) => {
                   className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
                 >
                  Timeslots
+              </Link>
+              <Link
+                  to="/Home/staf-post"
+                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
+                >
+                 Post
               </Link>
               <Link
                   to="/Home/settings"

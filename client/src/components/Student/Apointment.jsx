@@ -1,8 +1,35 @@
 import React from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 
+// Validaton uing yup
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import  {object , string}  from "yup";
+
+// Validation Form schema
+const validationSchema = object().shape({
+  
+  reason: string()
+  .matches(/^[A-Za-z\s]+$/, 'Reason can only contain letters and spaces')
+  .max(200, 'Reason must be at most 200 characters')
+  .required('Reason is required')
+  
+  });
 
 function Apointment() {
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(validationSchema),
+      });
+      const onSubmitHandler = async(data) => {
+        try {
+          console.log('Data saved to MongoDB');
+        } catch (error) {
+          console.error('Error saving data to MongoDB', error);
+        }
+        reset();
+      };
+
   return (
     <div className='p-10'>
         {/* Booking left part */}
@@ -41,83 +68,39 @@ function Apointment() {
                     <div className="flex z-10">
                     <div className="p-12 bg-white mx-auto w-100 ">
                         <div className='pb-7'>
-                        <p className='text-2xl pt-5'>Request Appointment</p>
+                        <p className='text-2xl pt-5'>Request Appointment <span className='text-sm'>jun 6, 2023</span></p>
                         </div>
-                        <form className="grid grid-cols-1 gap-4">
+                        <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmitHandler)}>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                            <label className="text-sm font-medium text-gray-700">Title</label>
+                            <label className="text-sm font-medium text-gray-700">Start Time</label>
                             <input
                                 type="text"
                                 className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                placeholder="We want to see you"
-                                name="title"
+                                placeholder="1:00-3:00 p.m"
+                                name="startTime"
+                                disabled
                             />
                             </div>
                             <div>
-                            <label className="text-sm font-medium text-gray-700">Priority</label>
-                            <select
-                                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                name="role"
-                            >
-                                <option value=" ">Select priority</option>
-                                <option value="Low">Low</option>
-                                <option value="High">High</option>
-                                <option value="Urgency">Urgency</option>
-
-                            </select>
-                            </div>
-                            <div>
-                            <label className="text-sm font-medium text-gray-700">Reasons</label>
+                            <label className="text-sm font-medium text-gray-700">End Time</label>
                             <input
                                 type="text"
                                 className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                placeholder="Your username"
-                                name="username"
+                                placeholder="2:00-3:00 p.m"
+                                name="endTime"
+                                disabled
                             />
                             </div>
-                            <div>
-                            <label className="text-sm font-medium text-gray-700">how long does it started?</label>
-                            <input
-                                type="text"
-                                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                placeholder="Your full name"
-                                name="fullName"
-                            />
-                            </div>
-                            <div>
-                            <label className="text-sm font-medium text-gray-700">Role</label>
-                            <select
-                                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                name="role"
-                            >
-                                <option value=" ">Select role</option>
-                                <option value="student">Student</option>
-                                <option value="staff">Staff</option>
-                            </select>
-                            </div>
-                            <div>
-                            <label className="text-sm font-medium text-gray-700">Description</label>
-                            <textarea
+                            <div className='col-span-2'>
+                            <label className="text-sm font-medium text-gray-700">Reason</label>
+                            <textarea  rows="6" {...register("reason")}
                                 className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                                 placeholder="Enter issue description"
                                 name="description"
                             ></textarea>
+                             <label className="text-sm font-medium text-red-500">{errors.reason?.message}</label>
                             </div>
-                            <div>
-                            <label className="text-sm font-medium text-gray-700">Category</label>
-                            <select
-                                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                                name="category"
-                            >
-                                <option value="">Select category</option>
-                                <option value="Welfare">Welfare</option>
-                                <option value="Academic">Academic</option>
-                                <option value="Rogistics">Rogistics</option>
-                                <option value="Personal">Personal</option>
-                            </select>
-                            </div>
-                            <input type="file" name="file" className="border rounded p-2" />
                         </div>
                         <button
                             type="submit"

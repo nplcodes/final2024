@@ -23,32 +23,31 @@ function PasswordComponent() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl mb-4">Update Password</h2>
+      <h2 className="text-2xl mb-4 pb-7">Edit Password</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="currentPassword" className="block mb-2">Current Password</label>
-          <input
+          <input 
             type="password"
             id="currentPassword"
             name="currentPassword"
             value={formData.currentPassword}
             onChange={handleChange}
-            className="border p-2 w-full"
+            className="border p-2 w-full rounded-md"
+            placeholder='Current Password'
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="newPassword" className="block mb-2">New Password</label>
           <input
             type="password"
             id="newPassword"
             name="newPassword"
             value={formData.newPassword}
             onChange={handleChange}
-            className="border p-2 w-full"
+            className="border p-2 w-full rounded-md"
+            placeholder='New Password'
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="confirmNewPassword" className="block mb-2">Confirm New Password</label>
           <input
             type="password"
             id="confirmNewPassword"
@@ -56,10 +55,11 @@ function PasswordComponent() {
             value={formData.confirmNewPassword}
             onChange={handleChange}
             className="border p-2 w-full"
+            placeholder='Confirm New Password'
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Update Password
+           Edit
         </button>
       </form>
     </div>

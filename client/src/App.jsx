@@ -22,6 +22,7 @@ import ManageSystem from './components/Admin/ManageSystem';
 import AccountSettingsAdmin from './components/Admin/Settings';
 import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
+import CreatePost from './components/General/CreatePost';
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
            <Route  path="staff-home" element={<StaffHomePage />} />
            <Route  path="staff-book-list" element={<Appointments />} />
            <Route  path="staff-notifications" element={<Notifications />} />
+           <Route  path="staf-post" element={<CreatePost />} />
            <Route  path="timeslots" element={<TimeSlots />} />
            <Route exact path="staff-issue-page" element={<IssuePageStaff />} />
 
