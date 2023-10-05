@@ -2,6 +2,34 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SocialIcons from '../components/social-media-icons/SocialIcons';
 
+// Validaton uing yup
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {object, string}  from "yup";
+
+// Validation Form schema
+const validationSchema = object().shape({
+  username: string()
+  .required('username is required'),
+ 
+fullName: string()
+  .matches(/^[A-Za-z\s]+$/, 'Full name can only contain letters and spaces')
+  .required('Full name is required'),
+  
+email: string()
+  .email('Invalid email format')
+  .required('Please enter email'),
+
+password: string()
+  .min(8, 'Password must be at least 8 characters')
+  .required('Please enter password')   
+  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+  ),
+
+role: string().required("select your role"),
+
+});
+
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
 
 const containerStyle = {
@@ -13,6 +41,17 @@ const containerStyle = {
 };
 
 const RegisterForm = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+  const onSubmitHandler = async(data) => {
+    try {
+      console.log('Data saved to MongoDB',);
+    } catch (error) {
+      console.error('Error saving data to MongoDB', error);
+    }
+    reset();
+  };
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,11 +66,6 @@ const RegisterForm = () => {
       ...formData,
       [name]: value,
     });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
   };
 
   return (
@@ -55,11 +89,12 @@ const RegisterForm = () => {
                 <p className='text-2xl pt-5'>Sign Up here</p>
                 <p className='pb-5'>Create your new account so that you explore #App</p>
               </div>
-            <form className="grid grid-cols-1 gap-4">
+            <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
+                  <label className="text-sm font-thin text-red-500">{errors.email?.message}</label>
                   <input
+                   {...register("email")}
                     type="email"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="mail@gmail.com"
@@ -69,8 +104,9 @@ const RegisterForm = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Password</label>
+                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
                   <input
+                    {...register("password")}
                     type="password"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter your password"
@@ -80,8 +116,9 @@ const RegisterForm = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Username</label>
+                <label className="text-sm font-thin text-red-500">{errors.username?.message}</label>
                   <input
+                  {...register("username")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Your username"
@@ -91,8 +128,9 @@ const RegisterForm = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
+                <label className="text-sm font-thin text-red-500">{errors.fullName?.message}</label>
                   <input
+                  {...register("fullName")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Your full name"
@@ -102,8 +140,9 @@ const RegisterForm = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Role</label>
+                <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
                   <select
+                  {...register("role")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     value={formData.role}
                     onChange={handleChange}
@@ -118,7 +157,6 @@ const RegisterForm = () => {
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                onClick={handleSubmit}
               >
                 Create account
               </button>

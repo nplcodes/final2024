@@ -189,6 +189,9 @@ const deactivateUser = async (req, res) => {
   }
 };
 
+// Logout 
+
+
 export default {
   registerUser,
   loginUser,
