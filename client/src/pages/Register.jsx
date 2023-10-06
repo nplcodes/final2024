@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SocialIcons from '../components/social-media-icons/SocialIcons';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 // Validaton uing yup
 import { useForm } from "react-hook-form";
@@ -41,24 +44,20 @@ const containerStyle = {
 };
 
 const RegisterForm = () => {
+  const navigate = useNavigate()
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const onSubmitHandler = async(data) => {
-    try {
-      console.log('Data saved to MongoDB',);
-    } catch (error) {
-      console.error('Error saving data to MongoDB', error);
-    }
-    reset();
-  };
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     username: '',
     fullName: '',
-    role: 'student',
+    role: '',
   });
+  const [error, setError] = useState(null); // Add error state
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,6 +65,22 @@ const RegisterForm = () => {
       ...formData,
       [name]: value,
     });
+  };
+  const onSubmitHandler = async(formData) => {
+    try {
+      const response = await axios.post('http://localhost:8080/auth/register', formData);
+      navigate('/');
+      console.log('Data saved to MongoDB', response.data);
+    } 
+    catch (error) {
+      console.error('Error saving data to MongoDB', error);
+      if (error.response.data.error ==="Email has already taken.") {
+        setError('Email is already taken. Please use a different email.');
+      } else {
+        setError('An error occurred during registration. Please try again.');
+      }
+    }
+    reset();
   };
 
   return (
@@ -84,7 +99,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="flex justify-center self-center z-10">
-            <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
+            <div className="p-12 bg-white mx-auto rounded-2xl w-[100%] ">
               <div>
                 <p className='text-2xl pt-5'>Sign Up here</p>
                 <p className='pb-5'>Create your new account so that you explore #App</p>
@@ -148,12 +163,14 @@ const RegisterForm = () => {
                     onChange={handleChange}
                     name="role"
                   >
-                    <option value=" ">Select role</option>
+                    <option value="">Select role</option>
                     <option value="student">Student</option>
                     <option value="staff">Staff</option>
                   </select>
                 </div>
               </div>
+              {/* Display error message if there's an error */}
+              {error && <div style={{ color: 'red' }}>{ error }</div>}
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"

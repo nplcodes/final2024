@@ -1,6 +1,5 @@
 import React from 'react';
 import { GrAlarm } from "react-icons/gr";
-import { LuCalendarClock } from "react-icons/lu";
 import { BsInfoCircle, BsPeople } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
@@ -17,7 +16,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     >
       <div className="flex flex-col items-center p-4">
         <Link to="/Home/issue-page">
-        <div className="p-3">
+        <div className="p-3 border-b border-1">
           <p className='text-black text-4xl font-bold'><PiNotionLogoThin className='text-4xl'/></p>
         </div>
         </Link>

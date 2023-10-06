@@ -9,9 +9,9 @@ const registerUser = async (req, res) => {
 
   try {
     // Check if the username or email is already taken
-    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: 'Username or email is already in use.' });
+      return res.status(400).json({ error: 'Email has already taken.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,7 +26,7 @@ const registerUser = async (req, res) => {
     });
 
     await user.save();
-    res.status(201).json({ message: 'User registered successfully.' });
+    res.status(201).json({ message: 'User registered successfully.', user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Could not register user.' });
@@ -34,17 +34,17 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
-    if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ username: user.username }, SECRET_KEY);
+    if (user && bcrypt.compare(password, user.password)) {
+      const token = jwt.sign({ email: user.email }, SECRET_KEY);
       res.setHeader('Authorization', `Bearer ${token}`);
       res.json({ message: 'Login successful.', token });
     } else {
-      res.status(401).json({ error: 'Invalid credentials.' });
+      res.status(401).json({ error: 'Invalid credentials.'});
     }
   } catch (error) {
     res.status(500).json({ error: 'Could not login.' });

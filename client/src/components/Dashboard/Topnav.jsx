@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaBars, FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Topnav = ({ toggleSidebar }) => {
   const [searchValue, setSearchValue] = useState('');
@@ -40,7 +41,9 @@ const Topnav = ({ toggleSidebar }) => {
             <div className='mr-3'>
             <IoMdNotificationsOutline className="text-2xl" />
             </div>
-            <MdPowerSettingsNew className="text-2xl" />
+            <Link to="/">
+               <MdPowerSettingsNew className="text-2xl" />
+            </Link>
           </button>
         </div>
       </div>

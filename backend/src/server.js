@@ -8,7 +8,7 @@ import commentRoutes from './routes/commentRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import availabilityRoutes from './routes/availabilityRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
-
+import cors from 'cors'
 
 
 
@@ -20,6 +20,9 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 
 app.use(express.json());
+app.use(cors());
+
+
 app.use('/auth', authRoutes);
 app.use('/issue', issueRoutes);
 app.use('/comment', commentRoutes);

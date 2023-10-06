@@ -4,7 +4,7 @@ const HeroSectionStudent = () => {
     return (
       <div className="flex-grow p-32 flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
-          Welcome to Your Dashboard
+          Hi Leon, Welcome to Your Dashboard
         </h1>
         <p className="text-lg mb-12 text-center text-gray-600">
           Get insights, manage your tasks, and stay organized.

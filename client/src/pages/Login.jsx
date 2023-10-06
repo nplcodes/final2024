@@ -41,7 +41,7 @@ const LoginForm = () => {
                               <label class="text-sm font-medium text-gray-700 tracking-wide">Email</label>
               <input class=" w-full text-base px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" type="" placeholder="mail@gmail.com" />
               </div>
-                          <div class="space-y-2">
+              <div class="space-y-2">
               <label class="mb-5 text-sm font-medium text-gray-700 tracking-wide">
                 Password
               </label>
