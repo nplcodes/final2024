@@ -23,6 +23,7 @@ import AccountSettingsAdmin from './components/Admin/Settings';
 import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
+import Pending from './pages/Pending';
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<LoginForm />} />
            <Route  path="/register" element={<RegisterForm />} />
+           <Route  path="/pending" element={<Pending />} />
            <Route path="/Home" element={<Dashbord />} >
             {/* Students routes */}
            <Route  path="update-issue" element={<UpdateIssue />} />
@@ -44,6 +46,7 @@ const App = () => {
            <Route exact path="issue-list" element={<IssuesList />} />
            <Route exact path="issue-page" element={<IssuePage />} />
            <Route path="manage-issue" element={<ManageIssue />} />
+
 
            {/* Staff Routes */}
            <Route  path="staff-home" element={<StaffHomePage />} />

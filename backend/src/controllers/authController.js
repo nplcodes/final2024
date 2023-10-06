@@ -39,17 +39,30 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (user && bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ email: user.email }, SECRET_KEY);
-      res.setHeader('Authorization', `Bearer ${token}`);
-      res.json({ message: 'Login successful.', token });
+    if (!user) {
+      return res.status(401).json({ error: 'User not exist.' });
+    }
+
+    const checkPassword = await bcrypt.compare(password, user.password);
+
+    if (checkPassword) {
+      if (user.approvalStatus === 'pending') {
+        return res.status(403).json({ error: 'Your account is pending.' });
+      } else {
+        const token = jwt.sign({ email: user.email }, SECRET_KEY);
+        res.setHeader('Authorization', `Bearer ${token}`);
+        return res.json({ message: 'Login successful.', token });
+      }
     } else {
-      res.status(401).json({ error: 'Invalid credentials.'});
+      return res.status(401).json({ error: 'Invalid credentials.' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Could not login.' });
+    console.log('Login failed', error);
+    return res.status(500).json({ error: 'Could not login.' });
   }
 };
+
+
 
 const protectedRoute = (req, res) => {
   res.json({ message: 'This is a protected route.', user: req.user });
