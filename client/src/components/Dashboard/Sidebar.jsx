@@ -70,11 +70,13 @@ const Sidebar = ({ isSidebarOpen }) => {
             <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
+        {user.state.user.role === 'staff' && (
         <Link to="/Home/staf-post" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoCreateOutline className="text-xl" />
           </div>
         </Link>
+        )}
 
         <Link to="/Home/settings" className="text-gray-500">
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
