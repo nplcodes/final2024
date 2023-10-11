@@ -1,4 +1,4 @@
-import React,{useContext, useState} from 'react';
+import React,{useContext, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import SocialIcons from '../components/social-media-icons/SocialIcons';
 import axios from 'axios';
@@ -35,31 +35,51 @@ const LoginForm = () => {
     });
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.post('http://localhost:8080/auth/login', formData);
+        const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
+        const userData = userDataResponse.data;
+        
+            // Assuming response.data contains user data including the role
+    if (userData.role === 'student') {
+      login(userData);
+      navigate('/Home/issue-page');
+    } else if (userData.role === 'staff') {
+      login(userData);
+      navigate('/Home/staff-home');
+    } else if (userData.role === 'admin') {
+      login(userData);
+      navigate('/Home/admin/manage');
+    } else {
+      // Handle other roles or cases if needed
+    }
+        
+        // navigate('/Home/issue-page');
+      } catch (error) {
+        console.error('Login failed', error);
+        if (error.response.data.error === 'Your account is pending.') {
+          setError('Wait ..., Your account is pending.');
+        } else if (error.response.data.error === 'User not exist.') {
+          setError('User account not exist.');
+        } else if (error.response.data.error === 'Invalid credentials.') {
+          setError('Invalid credentials.');
+        }
+      }
+    };
+
+    if (formData.email && formData.password) {
+      fetchData();
+    }
+  }, [formData, navigate, login]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:8080/auth/login', formData);
-      console.log('Login successful', response.data);
-      navigate('/Home/issue-page')
-
-      // Redirect or handle success based on response
-      // Replace this with your own logic based on the response
-      login(formData);
-
-    } 
-    catch (error) {
-      console.error('Login failed', error);
-      if (error.response.data.error ==='Your account is pending.') {
-        setError('Wait ...,  Your account is pending.');
-      } else if(error.response.data.error ==='User not exist.') {
-        setError('User account not exist.');
-      }
-      else if(error.response.data.error ==='Invalid credentials.'){
-        setError('Invalid credentials.');
-      }
-    }
   };
+
+
+
   return (
    <form onSubmit={handleSubmit}>
 <div class="bg-no-repeat bg-cover bg-center relative" style={containerStyle}>

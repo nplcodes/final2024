@@ -30,6 +30,8 @@ function IssuePage() {
       }
     };
     console.log(user.state.user.email);
+    console.log(user);
+
     return (
     <div className='p-20 gap-20 w-full  grid grid-cols-6'>
         <div className='pt-10 flex flex-col p-10 gap-3 col-span-1'>
@@ -42,7 +44,7 @@ function IssuePage() {
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
             <div className='pb-10'>
-                <p className='text-blue-500'>My Issue Page , welcome :{user.state.user.email} </p>
+                <p className='text-blue-500'>My Issue Page , welcome: {user.state.user.fullName}</p>
             </div>
             {renderSettingContent()}
 

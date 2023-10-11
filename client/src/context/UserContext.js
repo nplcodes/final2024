@@ -2,15 +2,17 @@
 import React, { createContext, useReducer } from 'react';
 
 const initialState = {
-  user: null,
-  loggedIn: false,
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  loggedIn: !!localStorage.getItem('user'),
 };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
+      localStorage.setItem('user', JSON.stringify(action.payload));
       return { ...state, user: action.payload, loggedIn: true };
     case 'LOGOUT':
+      localStorage.removeItem('user');
       return { ...state, user: null, loggedIn: false };
     default:
       throw new Error('Unknown action type');

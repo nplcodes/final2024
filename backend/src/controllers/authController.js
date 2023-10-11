@@ -202,6 +202,34 @@ const deactivateUser = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const user = await User.findById(email);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Could not retrieve user details.' });
+  }
+};
+
+// Get user by email and password
+const getUserByEmailAndPassword = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Logout 
 
 
@@ -214,5 +242,7 @@ export default {
   getUsers,
   getPendingUsers,
   rejectUser,
-  deactivateUser
+  deactivateUser,
+  getUserById,
+  getUserByEmailAndPassword
 };

@@ -1,13 +1,31 @@
-import React from 'react';
-import { GrAlarm } from "react-icons/gr";
+import { GrAlarm, GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle, BsPeople } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
 
 import { Link } from 'react-router-dom';
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext";
+import { RxDashboard } from "react-icons/rx";
 
 const Sidebar = ({ isSidebarOpen }) => {
+  const user = useContext(UserContext);
+  const [link, setLink] = useState(null);
+
+ 
+  useEffect(() => {
+    if (user) {
+      if (user.state.user.role === 'student') {
+        setLink('/Home/issue-page');
+      } else if (user.state.user.role === 'admin') {
+        setLink('/Home/admin/manage');
+      } else {
+        setLink('/Home/staff-home');
+      }
+    }
+  }, [user]);
+
   return (
     <div
       className={`bg-white text-white h-screen w-40 border border-r-1${
@@ -15,7 +33,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       }`}
     >
       <div className="flex flex-col items-center p-4">
-        <Link to="/Home/issue-page">
+        <Link to="#">
         <div className="p-3 border-b border-1">
           <p className='text-black text-4xl font-bold'><PiNotionLogoThin className='text-4xl'/></p>
         </div>
@@ -23,89 +41,66 @@ const Sidebar = ({ isSidebarOpen }) => {
       </div>
       <div className="mt-6 flex flex-col items-center gap-2 justify-center">
         <Link
-          to="/Home/issue-page"
+          to={link}
           className="text-gray-500"
         >
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <AiOutlineHome className="text-xl" />
           </div>
         </Link>
-        
+
+        {user.state.user.role === 'student' && (
         <Link to="/Home/staff" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <BsPeople className="text-xl" />
-          </div>
+        </div>
         </Link>
+        )}
 
-        {/* <Link to="/Home/book" className="text-gray-500">
-        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <LuCalendarClock className="text-xl" />
-          </div>
-        </Link> */}
-
-
+        {user.state.user.role === 'student' && (
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoNotificationsOutline className="text-xl" />
           </div>
         </Link>
+        )}
 
         <Link to="/Home/general-board" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
-
-        <Link to="/Home/settings" className="text-gray-500">
+        <Link to="/Home/staf-post" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <BsInfoCircle className="text-xl" />
+            <IoCreateOutline className="text-xl" />
           </div>
         </Link>
 
+        <Link to="/Home/settings" className="text-gray-500">
+          <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
+            <BsInfoCircle className="text-xl" />
+          </div>
+        </Link>
+        <Link to="/Home/admin/setting" className="text-gray-500">
+              <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
+                  <GrUserSettings className="text-xl" />
+              </div>
+        </Link>
+        {user.state.user.role === 'staff' && (
         <Link to="/Home/timeslots" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <GrAlarm className="text-xl" />
           </div>
         </Link>
+        )}
+        {user.state.user.role === 'admin' && (
+            <Link to="/Home/admin/manage" className="text-gray-500">
+                    <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
+                      <RxDashboard className="text-xl" />
+                    </div>
+            </Link>
+        )}
       </div>
-      <div>Staff</div>
-              <Link
-                  to="/Home/staff-home"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                Home-staff
-              </Link>
-              <Link
-                  to="/Home/timeslots"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                 Timeslots
-              </Link>
-              <Link
-                  to="/Home/staf-post"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                 Post
-              </Link>
-              <Link
-                  to="/Home/settings"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                 Settings
-              </Link>
-              <div className='text-black'>Admin Menus</div>
-              <Link
-                  to="/Home/admin/manage"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                 Manage
-              </Link>
-              <Link
-                  to="/Home/admin/setting"
-                  className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white"
-                >
-                 Settings
-              </Link>
     </div>
   );
 };

@@ -15,6 +15,8 @@ router.put('/users/:userId/approve', authController.updateApprovalStatus);
 router.get('/users', authController.getUsers);
 router.get('/users/pending', authController.getPendingUsers);
 router.delete('/users/pending/:userId', authController.rejectUser);
+router.get('/:userId', authController.getUserById);
+router.get('/login/:email', authController.getUserByEmailAndPassword);
 
 
 // Issue
