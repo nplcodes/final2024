@@ -1,2 +1,2 @@
-# final2024
-This is for final year project
+# Online Issue Dispatch
+in this project, iam implementing MERN stack technology, with other technology used in web development like typeScript, vite, etc....
