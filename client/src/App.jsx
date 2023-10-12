@@ -24,11 +24,13 @@ import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
 import Pending from './pages/Pending';
+import { IssueProvider } from './context/IssueContext';
 
 
 const App = () => {
 
   return (
+    <IssueProvider>
     <Router>
       <Routes>
         <Route exact path="/" element={<LoginForm />} />
@@ -67,6 +69,8 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
+    </IssueProvider>
+
   );
 };
 

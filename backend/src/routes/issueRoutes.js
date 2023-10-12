@@ -14,6 +14,8 @@ router.delete('/delete/:id', issueController.deleteIssue);
 router.put('/reject-issue/:id', issueController.rejectIssue);
 router.get('/view/:id', issueController.getIssueDetails);
 router.get('/reporter/:reporterId', issueController.getIssuesByReporterId);
+router.get('/open', issueController.getAllOpenIssues);
+
 
 
 

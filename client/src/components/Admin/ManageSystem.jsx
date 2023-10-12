@@ -3,10 +3,12 @@ import { AiOutlineIssuesClose } from 'react-icons/ai'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import { IssueContext } from '../../context/IssueContext'
 import { UserContext } from '../../context/UserContext'
 
 
 function ManageSystem() {
+  const { issues } = useContext(IssueContext);
   const user = useContext(UserContext);
 
   console.log(user)

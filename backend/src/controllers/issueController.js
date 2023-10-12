@@ -160,6 +160,15 @@ const updateIssue = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while getting the issues.' });
     }
   };
+
+  const getAllOpenIssues = async (req, res) => {
+    try {
+      const openIssues = await Issue.find({ status: 'open' });
+      res.status(200).json(openIssues);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
   
   
 
@@ -170,5 +179,6 @@ export default {
      deleteIssue,
       rejectIssue , 
       getIssueDetails,
-      getIssuesByReporterId
+      getIssuesByReporterId,
+      getAllOpenIssues
 };
