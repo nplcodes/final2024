@@ -1,49 +1,58 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-// Validaton uing yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import  {object,mixed , string}  from "yup";
-const allowedFileExtensions = ['pdf', 'docx', 'txt', 'jpg', 'jpeg', 'png'];
+import { object, string } from "yup";
+import axios from 'axios';
+import { UserContext } from '../../../context/UserContext';
+import Modal from '../pop_up/Model';
 
 
-// Validation Form schema
 const validationSchema = object().shape({
   title: string()
-  .max(30, 'Issue title must be at most 30 characters')
-  .required('title is required'),
-
-description: string()
-.matches(/^[A-Za-z\s]+$/, 'Description can only contain letters and spaces')
-.max(200, 'Description must be at most 200 characters')
-.required('Full name is required'),
-
-  category: string().required("select your role"),
-
-
-attachment:mixed()
-.test('fileType', 'Invalid file type', (value) => {
-  if (!value) return true;  // Allow empty attachment
-  const fileExtension = value.split('.').pop().toLowerCase();
-  return allowedFileExtensions.includes(fileExtension);
-}),
-
+    .max(30, 'Issue title must be at most 30 characters')
+    .required('Title is required'),
+    reporter: string()
+    .required('Title is required'),
+  description: string()
+    .max(200, 'Description must be at most 200 characters')
+    .required('Description is required'),
+  category: string().required('Select your category'),
 });
 
 function NewIssueForm() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const onSubmitHandler = async(data) => {
+
+  const user = useContext(UserContext); // Retrieve user info from context
+
+
+  const onSubmitHandler = async (data) => {
     try {
-      console.log('Data saved to MongoDB',);
+      const response = await axios.post('http://localhost:8080/issue/new-issue', data);
+      console.log('Issue created successfully:', response.data);
+        // After successful issue creation, open the modal
+        openModal();
+      // Handle success (e.g., show a success message)
     } catch (error) {
-      console.error('Error saving data to MongoDB', error);
+      console.error('Error creating issue:', error);
+      // Handle error (e.g., show an error message)
     }
     reset();
   };
-
 
   return (
     <div>
@@ -59,7 +68,7 @@ function NewIssueForm() {
                 <div>
                   <label className="text-sm font-medium text-gray-700">Title</label>
                   <input
-                  {...register("title")}
+                    {...register("title")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="We want to see you"
@@ -68,59 +77,18 @@ function NewIssueForm() {
                   <label className="text-sm font-medium text-red-500">{errors.title?.message}</label>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Priority</label>
-                  <select 
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    name="role"
-                  >
-                    <option value=" ">Select priority</option>
-                    <option value="Low">Low</option>
-                    <option value="High">High</option>
-                    <option value="Urgency">Urgency</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Username</label>
-                  <input
-                    type="text"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your username"
-                    name="username"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
-                  <input
-                    type="text"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your full name"
-                    name="fullName"
-                  />
-                </div>
-                <div>
-                <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
-                  <select  {...register("role")}
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    name="role"
-                  >
-                    <option value=" ">Select role</option>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
-                  </select>
-                </div>
-                <div>
                   <label className="text-sm font-medium text-gray-700">Description</label>
                   <textarea {...register("description")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter issue description"
                     name="description"
                   ></textarea>
-                    <p className="text-sm font-medium text-red-500">{errors.description?.message}</p>
-
+                  <p className="text-sm font-medium text-red-500">{errors.description?.message}</p>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Category</label>
                   <select
+                    {...register("category")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     name="category"
                   >
@@ -135,8 +103,20 @@ function NewIssueForm() {
                   <label className="text-sm font-medium text-gray-700">Files</label>
                   <input
                     type="file"
+                    {...register("attachment")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                   />
+                </div>
+                <div>
+                  <input
+                  {...register('reporter')}
+                    type="text"
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="We want to see you"
+                    name="reporter"
+                    value={user? user.state.user._id : null}
+                  />
+                  <label className="text-sm font-medium text-red-500">{errors.reporter?.message}</label>
                 </div>
               </div>
               <button
@@ -146,12 +126,13 @@ function NewIssueForm() {
                 Rise
               </button>
               <p>
-                <Link to='/Home/issue-list' className='text-blue-500'>Back</Link>
+                <Link to='#' className='text-blue-500'>Back</Link>
               </p>
             </form>
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }

@@ -22,7 +22,6 @@ const issueSchema = new mongoose.Schema({
   dateReported: { type: Date, default: Date.now },
   dateUpdated: { type: Date },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
-  priority: { type: String },
   attachments: [attachmentSchema], // Array of attachment objects
 });
 
