@@ -14,6 +14,9 @@ const userReducer = (state, action) => {
     case 'LOGOUT':
       localStorage.removeItem('user');
       return { ...state, user: null, loggedIn: false };
+    case 'UPDATE_USER':
+        localStorage.setItem('user', JSON.stringify(action.payload));
+        return { ...state, user: action.payload };
     default:
       throw new Error('Unknown action type');
   }
@@ -28,15 +31,22 @@ const UserProvider = ({ children }) => {
     dispatch({ type: 'LOGIN', payload: userData });
   };
 
+  const updateUser = (updatedUserData) => {
+    dispatch({ type: 'UPDATE_USER', payload: updatedUserData });
+  };
+
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
   };
 
   return (
-    <UserContext.Provider value={{ state, login, logout }}>
+    <UserContext.Provider value={{ state, login, logout, updateUser  }}>
       {children}
     </UserContext.Provider>
   );
 };
 
 export { UserProvider, UserContext };
+
+
+

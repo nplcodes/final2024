@@ -29,8 +29,6 @@ function IssuePage() {
           return null;
       }
     };
-    console.log(user.state.user.email);
-    console.log(user);
 
     return (
     <div className='p-20 gap-20 w-full  grid grid-cols-6'>

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // Validaton uing yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {object, string}  from "yup";
+import { UserContext } from '../../context/UserContext';
+import axios from 'axios';
+
 
 
 const validationSchema = object().shape({
@@ -19,13 +22,13 @@ const validationSchema = object().shape({
     .email('Invalid email format')
     .required('Please enter email'),
   
-  password: string()
-    .min(8, 'Password must be at least 8 characters')
-    .required('Please enter password')   
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-    ),
+  // password: string()
+  //   .min(8, 'Password must be at least 8 characters')
+  //   .required('Please enter password')   
+  //   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+  //   ),
   
-  role: string().required("select your role"),
+    class_role: string().required("select your role"),
 
   faculty: string().required("select your Faculty"),
 
@@ -35,17 +38,43 @@ const validationSchema = object().shape({
   
   });
 function AccountSettings() {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const user  = useContext(UserContext);
+
+
+    const { register, handleSubmit,setValue, formState: { errors }, reset } = useForm({
         resolver: yupResolver(validationSchema),
-      });
-      const onSubmitHandler = async(data) => {
+      }); 
+
+        // Pre-fill the form with user data when the user is available
+  useEffect(() => {
+    if (user) {
+      // Pre-fill form fields with user data
+      setValue('username', user.state.user.username);
+      setValue('fullName', user.state.user.fullName);
+      setValue('email', user.state.user.email);
+      setValue('role', user.state.user.role);
+      setValue('faculty', user.state.user.faculty);
+      setValue('class', user.state.user.class);
+    }
+  }, [user, setValue]);
+  
+      const onSubmitHandler = async (data) => {
         try {
-          console.log('Data saved to MongoDB',);
+          // Send a PUT request to update user data
+          const response = await axios.put(`http://localhost:8080/auth/users/${user.state.user._id}`, data);
+          setValue('faculty', data.faculty);
+          setValue('class', data.class);
+
+
+          console.log('User data updated:', response.data);
+          // Redirect to the appropriate page
+        //   navigate(link);
         } catch (error) {
-          console.error('Error saving data to MongoDB', error);
+          console.error('Error updating user data:', error);
         }
         reset();
       };
+
   return (
     <div className='flex gap-3 p-12'>
          <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col justify-center items-center shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
@@ -77,7 +106,7 @@ function AccountSettings() {
                             type="text"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Muneza Ben"
-                            name="title"
+                            name="fullName"
                         />
                         </div>
                         <div>
@@ -88,12 +117,13 @@ function AccountSettings() {
                         {...register("faculty")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             name="faculty"
+                            value={user.state.user?.faculty}
                         >
                             <option value="">Select Fuculty</option>
-                            <option value="Low">Law</option>
-                            <option value="High">Ict</option>
-                            <option value="Urgency">Languages</option>
-                            <option value="Urgency">Pps</option>
+                            <option value="Law">Law</option>
+                            <option value="Ict">Ict</option>
+                            <option value="Languages">Languages</option>
+                            <option value="Pps">Pps</option>
 
 
                         </select>
@@ -119,23 +149,21 @@ function AccountSettings() {
                         />
                         </div>
                         <div>
-                        <label className="text-sm font-medium text-gray-700">Password</label>
-                        <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
+                        <label className="text-sm font-medium text-gray-700">reserved 1</label>
                         <input
-                        {...register("password")}
-                            type="password"
+                            type="text"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Your password @123"
-                            name="fullName"
+                            name="reserved"
                         />
                         </div>
                         <div>
-                        <label className="text-sm font-medium text-gray-700">Comfirm Password</label>
+                        <label className="text-sm font-medium text-gray-700">reserved 2</label>
                         <input
                             type="password"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Comfirm  password @123"
-                            name="fullName"
+                            name="reserved"
                         />
                         </div>
                         <div>
@@ -144,32 +172,31 @@ function AccountSettings() {
                         <select
                         {...register("class")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="role"
+                            name="class"
+                            value={user.state.user?.class}  // Pre-fills the select with a value prop
                         >
                             <option value="">Select Class</option>
-                            <option value="student">Law 1</option>
-                            <option value="student">Law 2</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
 
-                            <option value="student">Ict 1</option>
-                            <option value="student">Ict 2</option>
-
-                            <option value="staff">Pps 1</option>
                         </select>
                         </div>
                         <div>
                         <label className="text-sm font-medium text-gray-700">Role in class</label>
                         <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
                         <select
-                        {...register("role")}
+                        {...register("class_role")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="category"
+                            name="class_role"
+                            value={user.state.user?.class_role}
                         >
                             <option value="">Select Role</option>
-                            <option value="Welfare">Cep</option>
-                            <option value="Academic">Pltn </option>
-                            <option value="Personal">Oc</option>
-                            <option value="Personal">Cc</option>
-
+                            <option value="Cep">Cep</option>
+                            <option value="Pltn">Pltn </option>
+                            <option value="Oc">Oc</option>
+                            <option value="Cc">Cc</option>
                         </select>
                         </div>
                     </div>
