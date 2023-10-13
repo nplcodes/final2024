@@ -1,55 +1,113 @@
-import React, { useContext } from 'react'
-import { BsDot } from "react-icons/bs";
-import {IssueContext} from '../../context/IssueContext'
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { IssueContext } from '../../context/IssueContext';
 
+const IssuesToAssign = () => {
+  const staff = 'staff'
+  const { state, assignIssueToStaff, rejectIssue } = useContext(IssueContext);
+  const { issues } = state;
 
-function IssuesToAssign() {
-    const { issues } = useContext(IssueContext);
+  const [selectedIssueId, setSelectedIssueId] = useState(null);
+  const [selectedStaffId, setSelectedStaffId] = useState('');
+  const [staffData, setStaffData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Fetch staff data from the API
+    axios.get(`http://localhost:8080/auth/staffs/${staff}`)
+      .then(response => {
+        setStaffData(response.data); // Assuming the API response contains staff data with positions
+      })
+      .catch(error => console.error('Error fetching staff data:', error));
+  }, []);
+
+  const handleAssignIssue = (issueId) => {
+    setSelectedIssueId(issueId);
+    setIsModalOpen(true);
+  };
+
+  const handleAssignToStaff = async () => {
+    try {
+      // Make an API call to update the issue's assignedTo and status fields
+      await axios.put(`http://localhost:8080/issue/assign/${selectedIssueId}`, {
+        assignedTo: selectedStaffId,
+      });
+  
+      // Remove the assigned issue from the context
+      const updatedIssues = issues.filter((issue) => issue._id !== selectedIssueId);
+      assignIssueToStaff(updatedIssues);
+  
+      // Remove the assigned issue from local storage
+      localStorage.setItem('issues', JSON.stringify(updatedIssues));
+  
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error assigning issue to staff:', error);
+    }
+  };
+    
+
+  const handleRejectIssue = async(issueId) => {
+    await axios.delete(`http://localhost:8080/issue/delete/${issueId}`);
+
+    rejectIssue(issueId);
+  };
 
   return (
-    <div className='flex p-20 gap-20'>
-        
-        {/* Main part with IssuesToAssign   */}
-        <div className='flex flex-col mx-auto justify-center'>
-        <p className='text-blue-500'>Assign Issue To Leader</p>
-            <div className='pb-10'>
+    <div className="container mx-auto p-10">
+      <h1 className="text-2xl mb-4">Issue Management</h1>
+      <ul>
+        {issues.map((issue) => (
+          <li key={issue.id} className="bg-white p-4 mb-4 shadow-md rounded-lg">
+            <div className="mb-2">
+              <strong>Issue ID:</strong> {issue.id}
             </div>
-            <p className='pb-3 font-bold'>Today</p>
-            {issues.map((issue) => (
-                    <div className='border w-full flex items-center justify-between pr-4 mb-3  cursor-pointer'>
-                    {/* eft contents */}
-                    <div className='flex flex-row p-6 items-center gap-2'>
-                        <div className='text-red-500 text-4xl'><BsDot /></div>
-                        <div><img className='w-7 h-7 rounded-full' src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixdivb=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="" /></div>
-                        <div>Amin Yazid</div>
-                        <div className='text-slate-400'>{issue.title}</div>
-                    </div>
-                        <div>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white p-1 mt-3 rounded-sm"> Assign</button>
-                    </div>            
-                 </div>
-            
-          ))}
+            <div className="mb-2">
+              <strong>Description:</strong> {issue.description}
+            </div>
+            <div className="mb-2">
+              <strong>Status:</strong> {issue.status}
+            </div>
+            <button onClick={() => handleAssignIssue(issue._id)} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mr-2 rounded">
+              Assign to Staff
+            </button>
+            <button onClick={() => handleRejectIssue(issue._id)} className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">
+              Reject
+            </button>
+          </li>
+        ))}
+      </ul>
 
-            {/* Yestarday */}
-            <p className='pb-3 font-bold'>Yestarday</p>
-            {/* Notification card */}
-            <div className='border w-full flex items-center justify-between pr-4 mb-3 cursor-pointer'>
-                {/* eft contents */}
-                <div className='flex flex-row p-6 items-center gap-2'>
-                    <div className='text-blue-500 text-4xl'><BsDot /></div>
-                    <div><img className='w-7 h-7 rounded-full' src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="" /></div>
-                    <div>Megan Keza</div>
-                    <div className='text-slate-400'>Comment on #topic</div>
-                </div>
-               <div>
-                 <button className="bg-blue-500 hover:bg-blue-700 text-white p-1 mt-3 rounded-sm"> Assign</button>
-               </div>
+      {isModalOpen && (
+        <div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black opacity-50"></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="modal bg-white p-6 rounded shadow-lg">
+              <h2 className="text-xl mb-4">Assign Issue to Staff</h2>
+              <select
+                value={selectedStaffId}
+                onChange={(e) => setSelectedStaffId(e.target.value)}
+                className="block w-full py-2 px-3 mb-4 border rounded"
+              >
+                <option value="">Select Staff</option>
+                {staffData.map((staff) => (
+                  <option key={staff._id} value={staff._id}>
+                    {staff.position}
+                  </option>
+                ))}
+              </select>
+              <button onClick={() => setIsModalOpen(false)} className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded mr-2">
+                Cancel
+              </button>
+              <button onClick={handleAssignToStaff} className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                OK
+              </button>
             </div>
+          </div>
         </div>
-
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default IssuesToAssign
+export default IssuesToAssign;

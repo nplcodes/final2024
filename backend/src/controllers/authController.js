@@ -230,6 +230,25 @@ const getUserByEmailAndPassword = async (req, res) => {
   }
 };
 
+// Get user by email and password
+const getAllStaffs = async (req, res) => {
+  try {
+    const { staff } = req.params;
+
+    const staffs = await User.find({ role: staff });
+
+    if (!staff) {
+      return res.status(404).json({ error: 'Staff not found' });
+    }
+
+    res.status(200).json(staffs);
+  } catch (error) {
+    console.error('Error fetching staff data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 // Logout 
 
 
@@ -244,5 +263,6 @@ export default {
   rejectUser,
   deactivateUser,
   getUserById,
-  getUserByEmailAndPassword
+  getUserByEmailAndPassword,
+  getAllStaffs
 };

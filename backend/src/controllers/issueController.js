@@ -17,7 +17,6 @@ const createIssue = async (req, res) => {
 };
 
 // Assign issue to Staff
-
 const updateAssignedTo = async (req, res) => {
     const { id } = req.params;  // Extract the issue ID from the route parameter
     const { assignedTo, senderId } = req.body;
@@ -90,22 +89,22 @@ const updateIssue = async (req, res) => {
 };
 // Student can Deltete issue 
 
- const deleteIssue = async (req, res) => {
-    try {
-      const { id } = req.params;
+//  const deleteIssue = async (req, res) => {
+//     try {
+//       const { id } = req.params;
   
-      const deletedIssue = await Issue.findByIdAndRemove(id);
+//       const deletedIssue = await Issue.findByIdAndRemove(id);
   
-      if (!deletedIssue) {
-        return res.status(404).json({ message: 'Issue not found' });
-      }
+//       if (!deletedIssue) {
+//         return res.status(404).json({ message: 'Issue not found' });
+//       }
   
-      res.json({ message: 'Issue deleted successfully', deletedIssue });
-    } catch (error) {
-      console.error('Error deleting issue:', error);
-      res.status(500).json({ error: 'An error occurred while deleting the issue.' });
-    }
-  };
+//       res.json({ message: 'Issue deleted successfully', deletedIssue });
+//     } catch (error) {
+//       console.error('Error deleting issue:', error);
+//       res.status(500).json({ error: 'An error occurred while deleting the issue.' });
+//     }
+//   };
 
 //   Middleman can reject an issue 
 // ...
@@ -170,15 +169,28 @@ const updateIssue = async (req, res) => {
     }
   };
   
+  const deleteIssueById = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deletedIssue = await Issue.findByIdAndDelete(id);
+      if (!deletedIssue) {
+        return res.status(404).json({ message: 'Issue not found' });
+      }
+      res.status(200).json({ message: 'Issue deleted successfully' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+  
   
 
 export default { 
     createIssue, 
     updateAssignedTo,
      updateIssue,
-     deleteIssue,
       rejectIssue , 
       getIssueDetails,
       getIssuesByReporterId,
-      getAllOpenIssues
+      getAllOpenIssues,
+      deleteIssueById
 };

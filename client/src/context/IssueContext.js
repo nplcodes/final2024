@@ -1,56 +1,77 @@
-// IssueContext.js
-
+// src/IssueContext.js
 import React, { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 
-const initialState = {
-  issues: [], // Array to store issues fetched from MongoDB
-  totalIssues: 0, // Initialize totalIssues to 0
+const IssueContext = createContext();
 
+const initialState = {
+  issues: [],
 };
 
 const issueReducer = (state, action) => {
-    switch (action.type) {
-      case 'SET_ISSUES':
-        return {
-          ...state,
-          issues: action.payload,
-          totalIssues: action.payload.length, // Update totalIssues
-        };
-      case 'ASSIGN_STAFF':
-        const updatedIssues = state.issues.filter((issue) => issue._id !== action.payload);
-        localStorage.setItem('issues', JSON.stringify(updatedIssues));
-        return {
-          ...state,
-          issues: updatedIssues,
-          totalIssues: state.totalIssues - 1, // Decrement totalIssues
+  switch (action.type) {
+    case 'FETCH_ISSUES':
+      return { ...state, issues: action.payload };
+    case 'ASSIGN_ISSUE':
+      const assignedIssueId = action.payload;
+      return {
+        ...state,
+        issues: state.issues.filter(issue => issue._id !== assignedIssueId)
+      };
+    case 'REJECT_ISSUE':
+      const rejectedIssueId = action.payload;
+      return {
+        ...state,
+        issues: state.issues.filter(issue => issue._id !== rejectedIssueId)
+      };
+    default:
+      return state;
+  }
+};
 
-        };
-      default:
-        throw new Error('Unknown action type');
-    }
-  };
+const loadFromLocalStorage = () => {
+  const storedIssues = localStorage.getItem('issues');
+  return storedIssues ? JSON.parse(storedIssues) : [];
+};
 
-const IssueContext = createContext();
+const saveToLocalStorage = (issues) => {
+  localStorage.setItem('issues', JSON.stringify(issues));
+};
 
 const IssueProvider = ({ children }) => {
   const [state, dispatch] = useReducer(issueReducer, initialState);
 
   useEffect(() => {
-    // Fetch issues using Axios from your MongoDB API and set them in the state
-    const fetchIssues = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/issue/open');
-        dispatch({ type: 'SET_ISSUES', payload: response.data });
-      } catch (error) {
-        console.error('Error fetching issues:', error);
-      }
-    };
+    const issues = loadFromLocalStorage();
+    dispatch({ type: 'FETCH_ISSUES', payload: issues });
 
-    fetchIssues();
+    // Simulated API call
+    axios.get('http://localhost:8080/issue/open')
+      .then(response => {
+        dispatch({ type: 'FETCH_ISSUES', payload: response.data });
+      })
+      .catch(error => {
+        console.error('Error fetching issues:', error);
+      });
   }, []);
 
-  return <IssueContext.Provider value={state }>{children}</IssueContext.Provider>;
+  const assignIssueToStaff = (issueId) => {
+    dispatch({ type: 'ASSIGN_ISSUE', payload: issueId });
+  };
+
+  const rejectIssue = (issueId) => {
+    dispatch({ type: 'REJECT_ISSUE', payload: issueId });
+  };
+
+  useEffect(() => {
+    saveToLocalStorage(state.issues);
+  }, [state.issues]);
+
+  return (
+    <IssueContext.Provider value={{ state, assignIssueToStaff, rejectIssue }}>
+      {children}
+    </IssueContext.Provider>
+  );
 };
 
-export { IssueProvider, IssueContext };
+export { IssueContext, IssueProvider };
