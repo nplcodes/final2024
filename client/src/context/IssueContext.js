@@ -55,9 +55,10 @@ const IssueProvider = ({ children }) => {
       });
   }, []);
 
-  const assignIssueToStaff = (issueId) => {
-    dispatch({ type: 'ASSIGN_ISSUE', payload: issueId });
+  const assignIssueToStaff = (updatedIssues) => {
+    dispatch({ type: 'ASSIGN_ISSUE', payload: updatedIssues });
   };
+  
 
   const rejectIssue = (issueId) => {
     dispatch({ type: 'REJECT_ISSUE', payload: issueId });

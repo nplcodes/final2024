@@ -26,17 +26,42 @@ const IssuesToAssign = () => {
     setIsModalOpen(true);
   };
 
+  // const handleAssignToStaff = async () => {
+  //   try {
+  //     // Make an API call to update the issue's assignedTo and status fields
+  //     await axios.put(`http://localhost:8080/issue/assign/${selectedIssueId}`, {
+  //       assignedTo: selectedStaffId,
+  //     });
+  
+  //     // Remove the assigned issue from the context
+  //     const updatedIssues = issues.filter((issue) => issue._id !== selectedIssueId);
+  //     assignIssueToStaff(updatedIssues);
+  
+  //     // Remove the assigned issue from local storage
+  //     localStorage.setItem('issues', JSON.stringify(updatedIssues));
+  
+  //     setIsModalOpen(false);
+  //   } catch (error) {
+  //     console.error('Error assigning issue to staff:', error);
+  //   }
+  // };
+
   const handleAssignToStaff = async () => {
     try {
+      if (!selectedStaffId) {
+        console.error('Please select a staff.');
+        return;
+      }
+  
       // Make an API call to update the issue's assignedTo and status fields
       await axios.put(`http://localhost:8080/issue/assign/${selectedIssueId}`, {
         assignedTo: selectedStaffId,
       });
   
-      // Remove the assigned issue from the context
+      // Update the context to remove the assigned issue
       const updatedIssues = issues.filter((issue) => issue._id !== selectedIssueId);
       assignIssueToStaff(updatedIssues);
-  
+       console.log(updatedIssues)
       // Remove the assigned issue from local storage
       localStorage.setItem('issues', JSON.stringify(updatedIssues));
   
@@ -45,11 +70,11 @@ const IssuesToAssign = () => {
       console.error('Error assigning issue to staff:', error);
     }
   };
+  
     
 
   const handleRejectIssue = async(issueId) => {
     await axios.delete(`http://localhost:8080/issue/delete/${issueId}`);
-
     rejectIssue(issueId);
   };
 

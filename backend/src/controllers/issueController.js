@@ -188,6 +188,7 @@ export default {
     createIssue, 
     updateAssignedTo,
      updateIssue,
+
       rejectIssue , 
       getIssueDetails,
       getIssuesByReporterId,
