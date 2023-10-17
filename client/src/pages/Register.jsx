@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import SocialIcons from '../components/social-media-icons/SocialIcons';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useDispatch} from 'react-redux';
+import { authActions } from '../redux/auth/authSlice';
+
+
 
 
 // Validaton uing yup
@@ -44,6 +48,7 @@ const containerStyle = {
 };
 
 const RegisterForm = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -68,9 +73,10 @@ const RegisterForm = () => {
   };
   const onSubmitHandler = async(formData) => {
     try {
+      dispatch(authActions.registerUserStart());
       const response = await axios.post('http://localhost:8080/auth/register', formData);
+      dispatch(authActions.registerUserSuccess(response.data));
       navigate('/');
-      console.log('Data saved to MongoDB', response.data);
     } 
     catch (error) {
       console.error('Error saving data to MongoDB', error);
@@ -79,6 +85,8 @@ const RegisterForm = () => {
       } else {
         setError('An error occurred during registration. Please try again.');
       }
+      dispatch(authActions.registerUserFailure(error.message));
+
     }
     reset();
   };

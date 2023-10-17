@@ -1,22 +1,17 @@
-import React, { useContext } from 'react'
 import { AiOutlineIssuesClose } from 'react-icons/ai'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { IssueContext } from '../../context/IssueContext'
-import { UserContext } from '../../context/UserContext'
+import { useSelector } from 'react-redux';
 
 
 function ManageSystem() {
-  const { issues } = useContext(IssueContext);
-  const user = useContext(UserContext);
-
-  console.log(user)
+  const userInfo = useSelector((state)=> state.auth.user);
 
   return (
     <div className='bg-gray-100'>
       <div className='bg-slate-200 p-5'>
-            <p>Welcome M.r {user.state.user.fullName}</p>
+            <p>Welcome M.r: {userInfo.fullName} </p>
         </div>
       <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
         <Link to="/Home/admin/users">

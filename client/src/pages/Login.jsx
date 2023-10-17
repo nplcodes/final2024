@@ -1,12 +1,10 @@
-import React,{useContext, useState, useEffect} from 'react';
+import React,{ useState} from 'react';
 import { Link } from 'react-router-dom';
 import SocialIcons from '../components/social-media-icons/SocialIcons';
-import axios from 'axios';
+import { useDispatch, useSelector} from 'react-redux';
+import { authActions } from '../redux/auth/authSlice';
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
-
-
-
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
 
 const containerStyle = {
@@ -17,10 +15,11 @@ const containerStyle = {
   position: 'relative',
 };
 
-const LoginForm = () => {
-  const { login } = useContext(UserContext);
 
-  const navigate = useNavigate()
+const LoginForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);  // Use isLoading from Redux store
   const [error, setError] = useState(null)
   const [formData, setFormData] = useState({
     email: '',
@@ -35,53 +34,48 @@ const LoginForm = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios.post('http://localhost:8080/auth/login', formData);
-        const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
-        const userData = userDataResponse.data;
-        
-            // Assuming response.data contains user data including the role
-    if (userData.role === 'student') {
-      login(userData);
-      navigate('/Home/issue-page');
-    } else if (userData.role === 'staff') {
-      login(userData);
-      navigate('/Home/staff-home');
-    } else if (userData.role === 'admin') {
-      login(userData);
-      navigate('/Home/admin/manage');
-    } else {
-      // Handle other roles or cases if needed
-    }
-        
-        // navigate('/Home/issue-page');
-      } catch (error) {
-        console.error('Login failed', error);
-        if (error.response.data.error === 'Your account is pending.') {
-          setError('Wait ..., Your account is pending.');
-        } else if (error.response.data.error === 'User not exist.') {
-          setError('User account not exist.');
-        } else if (error.response.data.error === 'Invalid credentials.') {
-          setError('Invalid credentials.');
-        }
-      }
-    };
-
-    if (formData.email && formData.password) {
-      fetchData();
-    }
-  }, [formData, navigate, login]);
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      // Dispatch the loginUserStart action to set loading state
+      dispatch(authActions.loginUserStart());
+
+      // Make an API call to fetch user information based on the login credentials
+      await axios.post('http://localhost:8080/auth/login', formData);
+      const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
+      const userData = userDataResponse.data;
+
+      // Assuming response.data contains user data including the role
+      if (userData.role === 'student') {
+        dispatch(authActions.loginUserSuccess(userData));
+        navigate('/Home/issue-page');
+      } else if (userData.role === 'staff') {
+        dispatch(authActions.loginUserSuccess(userData));
+        navigate('/Home/staff-home');
+      } else if (userData.role === 'admin') {
+        dispatch(authActions.loginUserSuccess(userData));
+        navigate('/Home/admin/manage');
+      } else {
+        // Handle other roles or cases if needed
+      }
+    } catch (error) {
+      console.error('Login failed', error);
+      if (error.response.data.error === 'Your account is pending.') {
+        setError('Wait ..., Your account is pending.');
+      } else if (error.response.data.error === 'User not exist.') {
+        setError('User account not exist.');
+      } else if (error.response.data.error === 'Invalid credentials.') {
+        setError('Invalid credentials.');
+      }
+
+      // Dispatch the loginUserFailure action with the error message
+      dispatch(authActions.loginUserFailure(error.message));
+    }
   };
-
-
+  
 
   return (
-   <form onSubmit={handleSubmit}>
+<form onSubmit={handleLogin}>
 <div class="bg-no-repeat bg-cover bg-center relative" style={containerStyle}>
     <div class="absolute bg-gradient-to-b from-blue-700 to-black opacity-75 inset-0 z-0"></div>
   <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
@@ -138,8 +132,9 @@ const LoginForm = () => {
               </div>
             </div>
             <div>
-              <button type="submit" class="w-full flex justify-center bg-blue-500  hover:bg-black text-gray-100 p-3  rounded-md tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
-                Sign in
+              <button onClick={handleLogin} type="submit" class="w-full flex justify-center bg-blue-500  hover:bg-black text-gray-100 p-3  rounded-md tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+                {loading ? 'Logging in...' : 'Login'}
+
               </button>
             </div>
             <p>Don't Have account? <Link to='/register' className='text-blue-500'>Sign Up</Link></p>

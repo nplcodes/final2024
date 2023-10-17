@@ -1,19 +1,18 @@
-import React, { useContext } from 'react'
 import { FaBell } from 'react-icons/fa';
 import NotificationBadge from './notification/UseableNotifactionIcon';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
+import { useSelector, } from 'react-redux';
 
 function StaffHomePage() {
-    const user = useContext(UserContext);
-
+const userInfo = useSelector((state)=> state.auth.user);
+console.log("User from store redux",userInfo);
     const notificationCount = 5; // Example notification count
 
   return (
     <div className=''>
         <div className='bg-slate-200 p-5'>
-            <p>Welcome Mr. Staff {user.state.user.fullName}</p>
+            <p>Welcome Mr. Staff {userInfo.fullName} </p>
         </div>
         {/* Three cards ........ */}
 

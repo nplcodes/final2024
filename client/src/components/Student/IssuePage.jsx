@@ -1,18 +1,17 @@
-import React, {useContext, useState} from 'react'
+import React, { useState} from 'react'
 import { BsListTask, BsPlus } from "react-icons/bs";
 import {  FcCancel } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import IssuePageMenuAllIssues from './IssuePage_menu_All_issues';
 import NewIssueForm from './subComponents/NewIssueForm';
 import Rejected from './subComponents/Rejected';
-import {UserContext} from '../../context/UserContext';
+import { useSelector } from 'react-redux';
 
 
 function IssuePage() {
-  const user = useContext(UserContext);
+  const userInfo = useSelector((state)=> state.auth.user);
 
     const [selectedSetting, setSelectedSetting] = useState('all-issues');
-
     const handleSettingClick = (setting) => {
       setSelectedSetting(setting);
     };
@@ -42,7 +41,7 @@ function IssuePage() {
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
             <div className='pb-10'>
-                <p className='text-blue-500'>My Issue Page , welcome: {user.state.user.fullName}</p>
+                <p className='text-blue-500'>My Issue Page , welcome: {userInfo.fullName}</p>
             </div>
             {renderSettingContent()}
 

@@ -1,11 +1,9 @@
-import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // Validaton uing yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {object, string}  from "yup";
-import { UserContext } from '../../context/UserContext';
 import axios from 'axios';
 
 
@@ -22,12 +20,6 @@ const validationSchema = object().shape({
     .email('Invalid email format')
     .required('Please enter email'),
   
-  // password: string()
-  //   .min(8, 'Password must be at least 8 characters')
-  //   .required('Please enter password')   
-  //   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-  //   ),
-  
     class_role: string().required("select your role"),
 
   faculty: string().required("select your Faculty"),
@@ -38,30 +30,16 @@ const validationSchema = object().shape({
   
   });
 function AccountSettings() {
-    const user  = useContext(UserContext);
 
 
     const { register, handleSubmit,setValue, formState: { errors }, reset } = useForm({
         resolver: yupResolver(validationSchema),
       }); 
-
-        // Pre-fill the form with user data when the user is available
-  useEffect(() => {
-    if (user) {
-      // Pre-fill form fields with user data
-      setValue('username', user.state.user.username);
-      setValue('fullName', user.state.user.fullName);
-      setValue('email', user.state.user.email);
-      setValue('role', user.state.user.role);
-      setValue('faculty', user.state.user.faculty);
-      setValue('class', user.state.user.class);
-    }
-  }, [user, setValue]);
   
       const onSubmitHandler = async (data) => {
         try {
           // Send a PUT request to update user data
-          const response = await axios.put(`http://localhost:8080/auth/users/${user.state.user._id}`, data);
+          const response = await axios.put(`http://localhost:8080/auth/users`, data);
           setValue('faculty', data.faculty);
           setValue('class', data.class);
 
@@ -117,7 +95,6 @@ function AccountSettings() {
                         {...register("faculty")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             name="faculty"
-                            value={user.state.user?.faculty}
                         >
                             <option value="">Select Fuculty</option>
                             <option value="Law">Law</option>
@@ -173,7 +150,6 @@ function AccountSettings() {
                         {...register("class")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             name="class"
-                            value={user.state.user?.class}  // Pre-fills the select with a value prop
                         >
                             <option value="">Select Class</option>
                             <option value="1">1</option>
@@ -190,7 +166,6 @@ function AccountSettings() {
                         {...register("class_role")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             name="class_role"
-                            value={user.state.user?.class_role}
                         >
                             <option value="">Select Role</option>
                             <option value="Cep">Cep</option>

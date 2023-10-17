@@ -1,55 +1,42 @@
-// import React, { useContext } from 'react'
-// import { BsDot } from "react-icons/bs";
-// import {IssueContext} from '../../context/IssueContext'
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Dispatch the loginUserStart action to set loading state
+        dispatch(authActions.loginUserStart());
 
+        await axios.post('http://localhost:8080/auth/login', formData);
+        const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
+        const userData = userDataResponse.data;
 
-// function IssuesToAssign() {
-//     const { issues } = useContext(IssueContext);
+        // Assuming response.data contains user data including the role
+        if (userData.role === 'student') {
+          dispatch(authActions.loginUserSuccess(userData));
+          navigate('/Home/issue-page');
+        } else if (userData.role === 'staff') {
+          dispatch(authActions.loginUserSuccess(userData));
+          navigate('/Home/staff-home');
+        } else if (userData.role === 'admin') {
+          dispatch(authActions.loginUserSuccess(userData));
+          navigate('/Home/admin/manage');
+        } else {
+          // Handle other roles or cases if needed
+        }
+      } catch (error) {
+        console.error('Login failed', error);
+        if (error.response.data.error === 'Your account is pending.') {
+          setError('Wait ..., Your account is pending.');
+        } else if (error.response.data.error === 'User not exist.') {
+          setError('User account not exist.');
+        } else if (error.response.data.error === 'Invalid credentials.') {
+          setError('Invalid credentials.');
+        }
 
-//   return (
-//     <div className='flex p-20 gap-20'>
-        
-//         {/* Main part with IssuesToAssign   */}
-//         <div className='flex flex-col mx-auto justify-center'>
-//         <p className='text-blue-500'>Assign Issue To Leader</p>
-//             <div className='pb-10'>
-//             </div>
-//             <p className='pb-3 font-bold'>Today</p>
-//             {issues.map((issue) => (
-//                     <div className='border w-full flex items-center justify-between pr-4 mb-3  cursor-pointer'>
-//                     {/* eft contents */}
-//                     <div className='flex flex-row p-6 items-center gap-2'>
-//                         <div className='text-red-500 text-4xl'><BsDot /></div>
-//                         <div><img className='w-7 h-7 rounded-full' src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixdivb=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="" /></div>
-//                         <div>Amin Yazid</div>
-//                         <div className='text-slate-400'>{issue.title}</div>
-//                     </div>
-//                         <div>
-//                         <button className="bg-blue-500 hover:bg-blue-700 text-white p-1 mt-3 rounded-sm"> Assign</button>
-//                     </div>            
-//                  </div>
-            
-//           ))}
+        // Dispatch the loginUserFailure action with the error message
+        dispatch(authActions.loginUserFailure(error.message));
+      }
+    };
 
-//             {/* Yestarday */}
-//             <p className='pb-3 font-bold'>Yestarday</p>
-//             {/* Notification card */}
-//             <div className='border w-full flex items-center justify-between pr-4 mb-3 cursor-pointer'>
-//                 {/* eft contents */}
-//                 <div className='flex flex-row p-6 items-center gap-2'>
-//                     <div className='text-blue-500 text-4xl'><BsDot /></div>
-//                     <div><img className='w-7 h-7 rounded-full' src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="" /></div>
-//                     <div>Megan Keza</div>
-//                     <div className='text-slate-400'>Comment on #topic</div>
-//                 </div>
-//                <div>
-//                  <button className="bg-blue-500 hover:bg-blue-700 text-white p-1 mt-3 rounded-sm"> Assign</button>
-//                </div>
-//             </div>
-//         </div>
-
-//     </div>
-//   )
-// }
-
-// export default IssuesToAssign
+    if (formData.email && formData.password) {
+      fetchData();
+    }
+  }, [formData, navigate, dispatch]); 

@@ -1,23 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaBars, FaSearch } from 'react-icons/fa';
-import { UserContext } from '../../context/UserContext'; // Import the UserContext
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../redux/auth/authSlice';
+
 
 const Topnav = ({ toggleSidebar }) => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
-  const { logout } = useContext(UserContext); // Get the logout function from UserContext
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleLogout = () => {
-    // Call the logout function to clear user data and token
-    logout();
-    navigate('/');
+  const handleLogout = (e) => {
+    dispatch(authActions.logoutUser());
+    e.preventDefault();
+    window.location.replace('/');
     
   };
 

@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import axios from 'axios';
-import { UserContext } from '../../../context/UserContext';
 import Modal from '../pop_up/Model';
 
 
@@ -36,9 +35,6 @@ function NewIssueForm() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
-
-  const user = useContext(UserContext); // Retrieve user info from context
-
 
   const onSubmitHandler = async (data) => {
     try {
@@ -114,7 +110,6 @@ function NewIssueForm() {
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="We want to see you"
                     name="reporter"
-                    value={user? user.state.user._id : null}
                   />
                   <label className="text-sm font-medium text-red-500">{errors.reporter?.message}</label>
                 </div>

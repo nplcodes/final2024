@@ -5,26 +5,11 @@ import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
 
 import { Link } from 'react-router-dom';
 import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import { useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 
 const Sidebar = ({ isSidebarOpen }) => {
-  const user = useContext(UserContext);
-  const [link, setLink] = useState(null);
-
- 
-  useEffect(() => {
-    if (user) {
-      if (user.state.user.role === 'student') {
-        setLink('/Home/issue-page');
-      } else if (user.state.user.role === 'admin') {
-        setLink('/Home/admin/manage');
-      } else {
-        setLink('/Home/staff-home');
-      }
-    }
-  }, [user]);
+  const [link] = useState(null);
 
   return (
     <div
@@ -49,34 +34,28 @@ const Sidebar = ({ isSidebarOpen }) => {
           </div>
         </Link>
 
-        {user.state.user.role === 'student' && (
         <Link to="/Home/staff" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <BsPeople className="text-xl" />
         </div>
         </Link>
-        )}
 
-        {user.state.user.role === 'student' && (
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoNotificationsOutline className="text-xl" />
           </div>
         </Link>
-        )}
 
         <Link to="/Home/general-board" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
-        {user.state.user.role === 'staff' && (
         <Link to="/Home/staf-post" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoCreateOutline className="text-xl" />
           </div>
         </Link>
-        )}
 
         <Link to="/Home/settings" className="text-gray-500">
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
@@ -88,20 +67,16 @@ const Sidebar = ({ isSidebarOpen }) => {
                   <GrUserSettings className="text-xl" />
               </div>
         </Link>
-        {user.state.user.role === 'staff' && (
         <Link to="/Home/timeslots" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <GrAlarm className="text-xl" />
           </div>
         </Link>
-        )}
-        {user.state.user.role === 'admin' && (
             <Link to="/Home/admin/manage" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
                       <RxDashboard className="text-xl" />
                     </div>
             </Link>
-        )}
       </div>
     </div>
   );

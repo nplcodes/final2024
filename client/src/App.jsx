@@ -1,11 +1,14 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './pages/Login'; // Import your login component
-import RegisterForm from './pages/Register'; // Import your login component
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import Dashbord from './pages/Dashbord'
+// Import your components
+import LoginForm from './pages/Login';
+import RegisterForm from './pages/Register';
+import Dashbord from './pages/Dashbord';
 import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
-import ManageIssue from './components/Student/ManageIssue'
+import ManageIssue from './components/Student/ManageIssue';
 import UpdateIssue from './components/Student/updateIssue';
 import StaffMembers from './components/Student/StaffMembers';
 import AccountSettings from './components/Student/AccountSettings';
@@ -23,54 +26,46 @@ import AccountSettingsAdmin from './components/Admin/Settings';
 import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
-import Pending from './pages/Pending';
-import { IssueProvider } from './context/IssueContext';
-
 
 const App = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
-    <IssueProvider>
     <Router>
       <Routes>
-        <Route exact path="/" element={<LoginForm />} />
-           <Route  path="/register" element={<RegisterForm />} />
-           <Route  path="/pending" element={<Pending />} />
-           <Route path="/Home" element={<Dashbord />} >
-            {/* Students routes */}
-           <Route  path="update-issue" element={<UpdateIssue />} />
-           <Route  path="book" element={<Apointment />} />
-           <Route  path="book-list" element={<AppointmentsList />} />
-           <Route  path="notifications" element={<Notifications />} />
-           <Route  path="settings" element={<AccountSettings />} />
-           <Route  path="general-board" element={<Board />} />
-           <Route  path="staff" element={<StaffMembers />} />
-           <Route exact path="hero" element={<HeroSectionStudent />} />
-           <Route exact path="issue-list" element={<IssuesList />} />
-           <Route exact path="issue-page" element={<IssuePage />} />
-           <Route path="manage-issue" element={<ManageIssue />} />
+        <Route
+          path="/"
+          element={!isLoggedIn && <LoginForm />}
+        />
+        <Route path="/register" element={<RegisterForm />} />
 
+        <Route path="/Home" element={!isLoggedIn ? <Navigate to="/" /> :<Dashbord />}>
+          <Route path="update-issue" element={<UpdateIssue />} />
+          <Route path="book" element={<Apointment />} />
+          <Route path="book-list" element={<AppointmentsList />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="settings" element={<AccountSettings />} />
+          <Route path="general-board" element={<Board />} />
+          <Route path="staff" element={<StaffMembers />} />
+          <Route path="hero" element={<HeroSectionStudent />} />
+          <Route path="issue-list" element={<IssuesList />} />
+          <Route path="issue-page" element={!isLoggedIn ? <Navigate to="/" /> : <IssuePage />} />
+          <Route path="manage-issue" element={<ManageIssue />} />
 
-           {/* Staff Routes */}
-           <Route  path="staff-home" element={<StaffHomePage />} />
-           <Route  path="staff-book-list" element={<Appointments />} />
-           <Route  path="staff-notifications" element={<Notifications />} />
-           <Route  path="staf-post" element={<CreatePost />} />
-           <Route  path="timeslots" element={<TimeSlots />} />
-           <Route exact path="staff-issue-page" element={<IssuePageStaff />} />
+          <Route path="staff-home" element={<StaffHomePage />} />
+          <Route path="staff-book-list" element={<Appointments />} />
+          <Route path="staff-notifications" element={<Notifications />} />
+          <Route path="staf-post" element={<CreatePost />} />
+          <Route path="timeslots" element={<TimeSlots />} />
+          <Route path="staff-issue-page" element={<IssuePageStaff />} />
 
-           {/* Admin of the system */}
-           {/* ............................... */}
-           <Route  path="admin/manage" element={<ManageSystem />} />
-           <Route  path="admin/users" element={<Users />} />
-           <Route  path="admin/issues" element={<IssuesToAssign />} />
-           <Route  path="admin/setting" element={<AccountSettingsAdmin />} />
-
+          <Route path="admin/manage" element={<ManageSystem />} />
+          <Route path="admin/users" element={<Users />} />
+          <Route path="admin/issues" element={<IssuesToAssign />} />
+          <Route path="admin/setting" element={<AccountSettingsAdmin />} />
         </Route>
       </Routes>
     </Router>
-    </IssueProvider>
-
   );
 };
 
