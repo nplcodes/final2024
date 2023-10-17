@@ -2,14 +2,29 @@ import { GrAlarm, GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle, BsPeople } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
-
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 
 const Sidebar = ({ isSidebarOpen }) => {
-  const [link] = useState(null);
+  const userInfo = useSelector((state)=> state.auth.user);
+
+  const [link, setLink] = useState(null);
+
+ 
+  useEffect(() => {
+    if (userInfo) {
+      if (userInfo.role === 'student') {
+        setLink('/Home/issue-page');
+      } else if (userInfo.role === 'admin') {
+        setLink('/Home/admin/manage');
+      } else {
+        setLink('/Home/staff-home');
+      }
+    }
+  }, [userInfo]);
 
   return (
     <div
@@ -34,28 +49,34 @@ const Sidebar = ({ isSidebarOpen }) => {
           </div>
         </Link>
 
+        {userInfo.role === 'student' && (
         <Link to="/Home/staff" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <BsPeople className="text-xl" />
         </div>
         </Link>
+        )}
 
+        {userInfo.role === 'student' && (
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoNotificationsOutline className="text-xl" />
           </div>
         </Link>
+        )}
 
         <Link to="/Home/general-board" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
+        {userInfo.role === 'staff' && (
         <Link to="/Home/staf-post" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoCreateOutline className="text-xl" />
           </div>
         </Link>
+        )}
 
         <Link to="/Home/settings" className="text-gray-500">
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
@@ -67,16 +88,20 @@ const Sidebar = ({ isSidebarOpen }) => {
                   <GrUserSettings className="text-xl" />
               </div>
         </Link>
+        {userInfo.role === 'staff' && (
         <Link to="/Home/timeslots" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <GrAlarm className="text-xl" />
           </div>
         </Link>
+        )}
+        {userInfo.role === 'admin' && (
             <Link to="/Home/admin/manage" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
                       <RxDashboard className="text-xl" />
                     </div>
             </Link>
+        )}
       </div>
     </div>
   );
