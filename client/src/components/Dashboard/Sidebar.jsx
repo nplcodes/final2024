@@ -13,9 +13,8 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   const [link, setLink] = useState(null);
 
- 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo.role) {
       if (userInfo.role === 'student') {
         setLink('/Home/issue-page');
       } else if (userInfo.role === 'admin') {
@@ -25,6 +24,7 @@ const Sidebar = ({ isSidebarOpen }) => {
       }
     }
   }, [userInfo]);
+  
 
   return (
     <div

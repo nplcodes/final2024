@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -26,19 +25,30 @@ import AccountSettingsAdmin from './components/Admin/Settings';
 import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
+import { useEffect, useState } from 'react';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
+  const [userState, setUserState] = useState(null);
+
+  useEffect(() => {
+    // Retrieve the saved state from localStorage
+    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+
+    // Check if there's a saved state and if the user is logged in
+    if (storedUserInfo && storedUserInfo.isLoggedIn) {
+      setUserState(storedUserInfo.isLoggedIn);
+    }
+  }, []);
+
+  console.log(userState, isLoggedIn);
+
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={!isLoggedIn && <LoginForm />}
-        />
+        <Route path="/" element={!isLoggedIn && <LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-
         <Route path="/Home" element={!isLoggedIn ? <Navigate to="/" /> :<Dashbord />}>
           <Route path="update-issue" element={<UpdateIssue />} />
           <Route path="book" element={<Apointment />} />

@@ -1,42 +1,13 @@
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Dispatch the loginUserStart action to set loading state
-        dispatch(authActions.loginUserStart());
+  // const [userState, setUserState] = useState(null);
 
-        await axios.post('http://localhost:8080/auth/login', formData);
-        const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
-        const userData = userDataResponse.data;
+  // useEffect(() => {
+  //   // Retrieve the saved state from localStorage
+  //   const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
 
-        // Assuming response.data contains user data including the role
-        if (userData.role === 'student') {
-          dispatch(authActions.loginUserSuccess(userData));
-          navigate('/Home/issue-page');
-        } else if (userData.role === 'staff') {
-          dispatch(authActions.loginUserSuccess(userData));
-          navigate('/Home/staff-home');
-        } else if (userData.role === 'admin') {
-          dispatch(authActions.loginUserSuccess(userData));
-          navigate('/Home/admin/manage');
-        } else {
-          // Handle other roles or cases if needed
-        }
-      } catch (error) {
-        console.error('Login failed', error);
-        if (error.response.data.error === 'Your account is pending.') {
-          setError('Wait ..., Your account is pending.');
-        } else if (error.response.data.error === 'User not exist.') {
-          setError('User account not exist.');
-        } else if (error.response.data.error === 'Invalid credentials.') {
-          setError('Invalid credentials.');
-        }
+  //   // Check if there's a saved state and if the user is logged in
+  //   if (storedUserInfo && storedUserInfo.isLoggedIn) {
+  //     setUserState(storedUserInfo);
+  //   }
+  // }, []);
 
-        // Dispatch the loginUserFailure action with the error message
-        dispatch(authActions.loginUserFailure(error.message));
-      }
-    };
-
-    if (formData.email && formData.password) {
-      fetchData();
-    }
-  }, [formData, navigate, dispatch]); 
+  // const isLoggedIn = userState?.isLoggedIn;

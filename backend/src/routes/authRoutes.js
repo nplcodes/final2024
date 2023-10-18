@@ -18,6 +18,10 @@ router.delete('/users/pending/:userId', authController.rejectUser);
 router.get('/:userId', authController.getUserById);
 router.get('/login/:email', authController.getUserByEmailAndPassword);
 router.get('/staffs/:staff', authController.getAllStaffs);
+router.put('/user/setting/:userId', authController.updateUserDetails);
+router.put('/user/setting/:userId/password', authController.updateUserPassword);
+
+
 
 
 

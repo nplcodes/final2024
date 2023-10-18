@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { authActions } from '../../redux/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function PasswordComponent() {
-  const [formData, setFormData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmNewPassword: '',
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+   const dispatch = useDispatch()
+  const userInfo = useSelector((state) => state.auth.user);
+  const userId = userInfo._id;
 
-  const handleSubmit = (e) => {
+  const [password, setPassword] = useState('');
+
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Add logic to handle password update (e.g., send the data to the server)
-    console.log('Password update submitted:', formData);
+    
+      await axios.put(`http://localhost:8080/auth/user/setting/${userId}/password`, {
+        password,
+      })
+      .then(()=>{
+        dispatch(authActions.updatePassword(password));
+        console.log(password)
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+
   };
 
   return (
@@ -29,11 +37,10 @@ function PasswordComponent() {
           <input 
             type="password"
             id="currentPassword"
-            name="currentPassword"
-            value={formData.currentPassword}
-            onChange={handleChange}
+            name="password"
+            onChange={(e)=> setPassword (e.target.value)}
             className="border p-2 w-full rounded-md"
-            placeholder='Current Password'
+            placeholder='Type new password'
           />
         </div>
         <div className="mb-4">
@@ -41,10 +48,8 @@ function PasswordComponent() {
             type="password"
             id="newPassword"
             name="newPassword"
-            value={formData.newPassword}
-            onChange={handleChange}
+            value=''
             className="border p-2 w-full rounded-md"
-            placeholder='New Password'
           />
         </div>
         <div className="mb-4">
@@ -52,10 +57,7 @@ function PasswordComponent() {
             type="password"
             id="confirmNewPassword"
             name="confirmNewPassword"
-            value={formData.confirmNewPassword}
-            onChange={handleChange}
             className="border p-2 w-full"
-            placeholder='Confirm New Password'
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">

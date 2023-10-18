@@ -203,9 +203,9 @@ const deactivateUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const email = req.params.email;
+  const {userId} = req.params;
   try {
-    const user = await User.findById(email);
+    const user = await User.findById(userId);
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: 'Could not retrieve user details.' });
@@ -247,7 +247,40 @@ const getAllStaffs = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+// update 
+const updateUserDetails = async (req, res) => {
+  const { userId } = req.params;
+  const { username, fullName, email } = req.body;
 
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { username, fullName, email },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user details', error: error.message });
+  }
+};
+
+const updateUserPassword = async (req, res) => {
+  const { password } = req.body;
+  const { userId } = req.params;
+
+  try {
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the user's password
+    await User.findByIdAndUpdate(userId, { password: hashedPassword });
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to update password' });
+  }
+};
 
 // Logout 
 
@@ -264,5 +297,7 @@ export default {
   deactivateUser,
   getUserById,
   getUserByEmailAndPassword,
-  getAllStaffs
+  getAllStaffs,
+  updateUserDetails,
+  updateUserPassword
 };
