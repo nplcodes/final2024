@@ -71,37 +71,18 @@ const protectedRoute = (req, res) => {
 // Update user
 const updateUser = async (req, res) => {
   const { userId } = req.params;
-  const updateFields = req.body;
-  const { isApproved } = updateFields;
+  const { username, fullName, email, role, faculty, position, level } = req.body;
 
   try {
-    // Check if the user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found.' });
-    }
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { username, fullName, email, role, faculty, position, level },
+      { new: true }
+    );
 
-    // Update common fields (username, password, etc.) regardless of approval
-    user.username = updateFields.username || user.username;
-    user.password = updateFields.password ? await bcrypt.hash(updateFields.password, 10) : user.password;
-    user.fullName = updateFields.fullName || user.fullName;
-    user.email = updateFields.email || user.email;
-    user.role = updateFields.role || user.role;
-
-    // Update additional fields if the user is approved
-    if (isApproved) {
-      user.position = updateFields.position || user.position;
-      user.faculty = updateFields.faculty || user.faculty;
-      user.level = updateFields.level || user.level;
-      user.accountStatus = updateFields.accountStatus || user.accountStatus;
-      user.approvalStatus = updateFields.approvalStatus || user.approvalStatus;
-    }
-
-    await user.save();
-
-    res.json({ message: 'User updated successfully.', user });
+    res.json(updatedUser);
   } catch (error) {
-    res.status(500).json({ error: 'Could not update user.' });
+    res.status(500).json({ message: 'Error updating user details', error: error.message });
   }
 };
 

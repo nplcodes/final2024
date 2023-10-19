@@ -1,56 +1,63 @@
 import { Link } from 'react-router-dom'
-
-// Validaton uing yup
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import {object, string}  from "yup";
 import axios from 'axios';
-
-
-
-const validationSchema = object().shape({
-    username: string()
-    .required('username is required'),
-   
-  fullName: string()
-    .matches(/^[A-Za-z\s]+$/, 'Full name can only contain letters and spaces')
-    .required('Full name is required'),
-    
-  email: string()
-    .email('Invalid email format')
-    .required('Please enter email'),
-  
-    class_role: string().required("select your role"),
-
-  faculty: string().required("select your Faculty"),
-
-  class: string().required("select your Class"),
-
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { authActions } from '../../redux/auth/authSlice';
 
   
-  });
 function AccountSettings() {
+    const dispatch = useDispatch()
+    const userInfo = useSelector((state) => state.auth.user);
+    const userId = userInfo._id;
+    const [formData, setFormData] = useState({
+      fullName: '',
+      email: '',
+      username: '',
+      faculty: '',
+      role: '',
+      position: '',
+      level: ''
+    });
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8080/auth/${userId}`);
+            setFormData({
+              fullName: response.data.fullName || '',
+              email: response.data.email || '',
+              username: response.data.username || '',
+              level: response.data.level || '',
+              role: response.data.role || '',
+              faculty: response.data.faculty || '',
+              position: response.data.position || ''
+            });
 
-    const { register, handleSubmit,setValue, formState: { errors }, reset } = useForm({
-        resolver: yupResolver(validationSchema),
-      }); 
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        };
+        fetchUserData();
+      }, [userId]); 
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
   
-      const onSubmitHandler = async (data) => {
+      const handleUpdate = async (e) => {
+        e.preventDefault()
+
         try {
-          // Send a PUT request to update user data
-          const response = await axios.put(`http://localhost:8080/auth/users`, data);
-          setValue('faculty', data.faculty);
-          setValue('class', data.class);
-
-
-          console.log('User data updated:', response.data);
-          // Redirect to the appropriate page
-        //   navigate(link);
-        } catch (error) {
-          console.error('Error updating user data:', error);
-        }
-        reset();
+            await axios.put(`http://localhost:8080/auth/users/${userId}`, formData)
+            dispatch(authActions.updateAdditionalUserInfo(formData))
+            console.log(formData)
+          } catch (error) {
+            console.error('Error updating user:', error);
+          }
       };
 
   return (
@@ -74,104 +81,92 @@ function AccountSettings() {
                     <div>
                     <p className='text-2xl pt-5 pb-10 font-bold'>Provide More info ..... </p>
                     </div>
-                    <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmitHandler)}>
+                    <form className="grid grid-cols-1 gap-4" onSubmit={handleUpdate}>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                         <label className="text-sm font-medium text-gray-700">Full names</label>
-                        <label className="text-sm font-thin text-red-500">{errors.fullName?.message}</label>
                         <input
-                        {...register("fullName")}
                             type="text"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Muneza Ben"
                             name="fullName"
+                            value={formData.fullName}
+                            onChange={handleChange}
                         />
                         </div>
                         <div>
                         <label className="text-sm font-medium text-gray-700">Faculty</label>
-                        <label className="text-sm font-thin text-red-500">{errors.faculty?.message}</label>
-
                         <select
-                        {...register("faculty")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             name="faculty"
+                            onChange={handleChange}
                         >
-                            <option value="">Select Fuculty</option>
+                            <option value={formData.faculty}>{formData.faculty}</option>
                             <option value="Law">Law</option>
                             <option value="Ict">Ict</option>
                             <option value="Languages">Languages</option>
                             <option value="Pps">Pps</option>
 
-
                         </select>
                         </div>
                         <div>
-                        <label className="text-sm font-thin text-red-500">{errors.username?.message}</label>
                         <input 
-                          {...register("username")}
                             type="text"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="@lamar250"
                             name="username"
+                            value={formData.username}
+                            onChange={handleChange}
                         />
                         </div>
                         <div>
-                        <label className="text-sm font-thin text-red-500">{errors.email?.message}</label>
                         <input                    
-                            {...register("email")}
                             type="email"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            placeholder="@lamar250.com"
+                            placeholder="lamar250@yahoo.com"
                             name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                         />
                         </div>
                         <div>
-                        <label className="text-sm font-medium text-gray-700">reserved 1</label>
+                        <label className="text-sm font-medium text-gray-700">Position</label>
+                        <select
+                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            name="position"
+                            onChange={handleChange}
+                        >
+                            <option value={formData.position}>{formData.position}</option>
+                            <option value="Io">Io</option>
+                            <option value="Ci">Ci</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Student">Student</option>
+                            <option value="Logistics">Logistics</option>
+                        </select>
+                        </div>
+                        <div>
+                        <label className="text-sm font-medium text-gray-700">  Role</label>
                         <input
                             type="text"
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            placeholder="Your password @123"
-                            name="reserved"
-                        />
-                        </div>
-                        <div>
-                        <label className="text-sm font-medium text-gray-700">reserved 2</label>
-                        <input
-                            type="password"
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Comfirm  password @123"
                             name="reserved"
+                            value={formData.role}
+                            onChange={handleChange}
                         />
                         </div>
                         <div>
-                        <label className="text-sm font-medium text-gray-700">Class</label>
-                        <label className="text-sm font-thin text-red-500">{errors.class?.message}</label>
+                        <label className="text-sm font-medium text-gray-700">Level</label>
                         <select
-                        {...register("class")}
                             className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="class"
+                            name="level"
+                            onChange={handleChange}
                         >
-                            <option value="">Select Class</option>
+                            <option value={formData.level}>{formData.level}</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
-
-                        </select>
-                        </div>
-                        <div>
-                        <label className="text-sm font-medium text-gray-700">Role in class</label>
-                        <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
-                        <select
-                        {...register("class_role")}
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="class_role"
-                        >
-                            <option value="">Select Role</option>
-                            <option value="Cep">Cep</option>
-                            <option value="Pltn">Pltn </option>
-                            <option value="Oc">Oc</option>
-                            <option value="Cc">Cc</option>
                         </select>
                         </div>
                     </div>

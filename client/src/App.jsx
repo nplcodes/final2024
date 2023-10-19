@@ -29,14 +29,10 @@ import { useEffect, useState } from 'react';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
   const [userState, setUserState] = useState(null);
-
+  
   useEffect(() => {
-    // Retrieve the saved state from localStorage
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-
-    // Check if there's a saved state and if the user is logged in
     if (storedUserInfo && storedUserInfo.isLoggedIn) {
       setUserState(storedUserInfo.isLoggedIn);
     }

@@ -15,9 +15,9 @@ const Topnav = ({ toggleSidebar }) => {
   };
 
   const handleLogout = (e) => {
+    e.preventDefault()
     dispatch(authActions.logoutUser());
     e.preventDefault();
-    window.location.replace('/');
     
   };
 

@@ -26,6 +26,18 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    updateAdditionalUserInfo : (state, action)=>{
+      const {fullName, email, username, role, position, level, faculty} = action.payload;
+      state.user.email = email || state.user.email;
+      state.user.username = username || state.user.username;
+      state.user.fullName = fullName || state.user.fullName;
+      state.user.role = role || state.user.role;
+      state.user.position = position || state.user.position;
+      state.user.level = level || state.user.level;
+      state.user.faculty = faculty || state.user.faculty;
+
+      localStorage.setItem('authState', JSON.stringify(state));
+    },
 
     userInfoUpdate: (state, action)=>{
       const {fullName, email, username} = action.payload;
@@ -57,7 +69,8 @@ const authSlice = createSlice({
       logoutUser(state) {
         state.user = null;
         state.isLoggedIn = false;
-        localStorage.removeItem('authState'); // Remove specific item from localStorage on logout
+        localStorage.removeItem('authState');
+        localStorage.removeItem('isLoggedIn'); 
         window.location.replace('/');
       },
   },
