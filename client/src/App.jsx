@@ -18,7 +18,7 @@ import Notifications from './components/Student/Notifications';
 import IssuePage from './components/Student/IssuePage';
 import StaffHomePage from './components/Staff/StaffHomePage';
 import Appointments from './components/Staff/Appointments';
-import IssuePageStaff from './components/Staff/IssuePage';
+// import IssuePageStaff from './components/Staff/IssuePage';
 import TimeSlots from './components/Staff/TimeSlots';
 import ManageSystem from './components/Admin/ManageSystem';
 import AccountSettingsAdmin from './components/Admin/Settings';
@@ -26,6 +26,7 @@ import Users from './components/Admin/UsersList';
 import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
 import { useEffect, useState } from 'react';
+import StaffPage from './components/Staff/staffPage';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -63,7 +64,12 @@ const App = () => {
           <Route path="staff-notifications" element={<Notifications />} />
           <Route path="staf-post" element={<CreatePost />} />
           <Route path="timeslots" element={<TimeSlots />} />
-          <Route path="staff-issue-page" element={<IssuePageStaff />} />
+          {/* <Route path="staff-issue-page" element={<IssuePageStaff />} /> */}
+
+
+
+          <Route path="staff-issue-page" element={<StaffPage />} />
+
 
           <Route path="admin/manage" element={<ManageSystem />} />
           <Route path="admin/users" element={<Users />} />

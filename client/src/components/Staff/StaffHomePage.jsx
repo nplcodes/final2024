@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom';
 import { useSelector, } from 'react-redux';
 
 function StaffHomePage() {
+
 const userInfo = useSelector((state)=> state.auth.user);
-console.log("User from store redux",userInfo);
-    const notificationCount = 5; // Example notification count
+    const notificationCount = 5;
 
   return (
     <div className=''>
         <div className='bg-slate-200 p-5'>
             <p>Welcome Mr. Staff {userInfo.fullName} </p>
         </div>
-        {/* Three cards ........ */}
 
         <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
             <div className='p-16 flex flex-col items-center justify-center gap-3 rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>

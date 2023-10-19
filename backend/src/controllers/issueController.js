@@ -18,11 +18,11 @@ const createIssue = async (req, res) => {
 
 // Assign issue to Staff
 const updateAssignedTo = async (req, res) => {
-    const { id } = req.params;  // Extract the issue ID from the route parameter
-    const { assignedTo, senderId } = req.body;
+    const { issueId } = req.params;  // Extract the issue ID from the route parameter
+    const { assignedTo, status, senderId } = req.body;
   
     try {
-      const issue = await Issue.findByIdAndUpdate(id, { assignedTo }, { new: true });
+      const issue = await Issue.findByIdAndUpdate(issueId, { assignedTo, status }, { new: true });
   
       if (!issue) {
         return res.status(404).json({ message: 'Issue not found' });
@@ -160,10 +160,10 @@ const updateIssue = async (req, res) => {
     }
   };
 
-  const getAllOpenIssues = async (req, res) => {
+  const getAllIssues = async (req, res) => {
     try {
-      const openIssues = await Issue.find({ status: 'open' });
-      res.status(200).json(openIssues);
+      const Issues = await Issue.find();
+      res.status(200).json(Issues);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -192,6 +192,6 @@ export default {
       rejectIssue , 
       getIssueDetails,
       getIssuesByReporterId,
-      getAllOpenIssues,
+      getAllIssues,
       deleteIssueById
 };

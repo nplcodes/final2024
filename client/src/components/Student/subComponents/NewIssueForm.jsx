@@ -5,6 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import axios from 'axios';
 import Modal from '../pop_up/Model';
+import { useSelector, useDispatch } from 'react-redux';
+import { issueActions } from '../../../redux/issue/issueSlice';
+
+
 
 
 const validationSchema = object().shape({
@@ -12,7 +16,7 @@ const validationSchema = object().shape({
     .max(30, 'Issue title must be at most 30 characters')
     .required('Title is required'),
     reporter: string()
-    .required('Title is required'),
+    .required('Your id is missing please'),
   description: string()
     .max(200, 'Description must be at most 200 characters')
     .required('Description is required'),
@@ -22,15 +26,18 @@ const validationSchema = object().shape({
 function NewIssueForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  
+  const dispatch = useDispatch()
+  const userInfo = useSelector((state)=> state.auth.user);
+  const reporter = userInfo._id;
+
+
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
@@ -38,14 +45,14 @@ function NewIssueForm() {
 
   const onSubmitHandler = async (data) => {
     try {
+      dispatch(issueActions.addNewIssueStart(data))
       const response = await axios.post('http://localhost:8080/issue/new-issue', data);
+      dispatch(issueActions.addNewIssueSuccess(data))
       console.log('Issue created successfully:', response.data);
-        // After successful issue creation, open the modal
         openModal();
-      // Handle success (e.g., show a success message)
     } catch (error) {
+      dispatch(issueActions.addNewIssueFailure(error))
       console.error('Error creating issue:', error);
-      // Handle error (e.g., show an error message)
     }
     reset();
   };
@@ -110,6 +117,7 @@ function NewIssueForm() {
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="We want to see you"
                     name="reporter"
+                    value={reporter}
                   />
                   <label className="text-sm font-medium text-red-500">{errors.reporter?.message}</label>
                 </div>
