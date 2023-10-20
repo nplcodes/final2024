@@ -17,6 +17,8 @@ router.get('/reporter/:reporterId', issueController.getIssuesByReporterId);
 router.get('/all-issues', issueController.getAllIssues);
 router.delete('/delete/:id', issueController.deleteIssueById);
 
+router.get('/open', issueController.getOpenIssues)
+
 
 
 export default router;

@@ -1,5 +1,4 @@
 // controllers/issueController.js
-
 import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
 import Comment from '../models/Comment.js';
@@ -89,25 +88,15 @@ const updateIssue = async (req, res) => {
 };
 // Student can Deltete issue 
 
-//  const deleteIssue = async (req, res) => {
-//     try {
-//       const { id } = req.params;
-  
-//       const deletedIssue = await Issue.findByIdAndRemove(id);
-  
-//       if (!deletedIssue) {
-//         return res.status(404).json({ message: 'Issue not found' });
-//       }
-  
-//       res.json({ message: 'Issue deleted successfully', deletedIssue });
-//     } catch (error) {
-//       console.error('Error deleting issue:', error);
-//       res.status(500).json({ error: 'An error occurred while deleting the issue.' });
-//     }
-//   };
+const getOpenIssues = async (req, res) => {
+  try {
+    const openIssues = await Issue.find({ status: 'open' });
 
-//   Middleman can reject an issue 
-// ...
+    res.status(200).json(openIssues);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
  const rejectIssue = async (req, res) => {
     try {
@@ -188,10 +177,14 @@ export default {
     createIssue, 
     updateAssignedTo,
      updateIssue,
-
+     getOpenIssues,
       rejectIssue , 
       getIssueDetails,
       getIssuesByReporterId,
       getAllIssues,
       deleteIssueById
 };
+
+
+
+

@@ -1,17 +1,6 @@
-  useEffect(() => {
-        const fetchIssuesData = async () => {
-          try {
-            const response = await axios.get('http://localhost:8080/issue/all-issues'); // Replace with your API endpoint
-            dispatch(issueActions.setOpenedIssues(response.data));
-            console.log(issues)
-          } catch (error) {
-            console.log(error)
-          }
-        };
-    
-        fetchIssuesData(); // Call the function to fetch data
-      }, [dispatch]);
 
 
-      const allIssues = useSelector((state) => state.issue.issues); // Fetch all issues
-      const recentIssues = allIssues.slice(0, 3);
+
+
+
+

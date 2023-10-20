@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
-import { useNavigate } from 'react-router-dom';
 
 
 function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
-    const navigate = useNavigate()
   const [assignedTo, setSelectedStaff] = useState('');
   const [allStaffs, setAllStaffs] = useState([])
   const staff='staff';
@@ -35,11 +33,12 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
     await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, status, issueId})
     .then(()=>{
         dispatch(issueActions.removeAssignedIssue({assignedTo, issueId, status}))
-        navigate('/Home/staff-issue-page');
     })
     .catch((error)=>{
         console.log(error)
     })
+    const response = await axios.get('http://localhost:8080/issue/open');
+    dispatch(issueActions.setIssues(response.data));
     onClose(); // Close the pop-up
   };
 
