@@ -57,7 +57,7 @@ const App = () => {
           <Route path="hero" element={<HeroSectionStudent />} />
           <Route path="issue-list" element={<IssuesList />} />
           <Route path="issue-page" element={!isLoggedIn ? <Navigate to="/" /> : <IssuePage />} />
-          <Route path="manage-issue" element={<ManageIssue />} />
+          <Route path="manage-issue/:issueId" element={<ManageIssue />} />
 
           <Route path="staff-home" element={<StaffHomePage />} />
           <Route path="staff-book-list" element={<Appointments />} />

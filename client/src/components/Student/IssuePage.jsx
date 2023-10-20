@@ -49,7 +49,7 @@ function IssuePage() {
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
             <div className='pb-10'>
-                <p className='text-blue-500'>My Issue Page , welcome: {userInfo?.user?.fullName}</p>
+                <p className='text-blue-500'>Role: {userInfo?.user?.position} </p>
             </div>
             {renderSettingContent()}
 

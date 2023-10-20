@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   issues: [],
+  studentIssues: [],
   loading: false,
   error: null,
 };
@@ -88,6 +89,14 @@ const issueSlice = createSlice({
     deleteIssueFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    // student 
+    getStudentIssue: (state, action)=>{
+      state.issues =  action.payload;
+      localStorage.setItem('issueState', JSON.stringify(state));
+    },
+    getIssueDetails: (state, action) => {
+      state.studentIssues = action.payload;
     },
   },
 });

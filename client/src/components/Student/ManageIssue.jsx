@@ -1,16 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { BsFileEarmarkPdf, BsFiletypeDocx, BsSend } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { issueActions } from '../../redux/issue/issueSlice';
+
+
+
 
 function ManageIssue() {
+    const { issueId } = useParams();
+    const dispatch = useDispatch()
+    const issueDetails = useSelector((state) => state.issue.studentIssues);
+    console.log(issueDetails)
+
+
+    useEffect(() => {
+        const fetchIssueDetails = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
+            const issueData = response.data; // 
+    
+            dispatch(issueActions.getIssueDetails(issueData));
+          } catch (error) {
+            console.error('Error fetching issue details:', error);
+          }
+        };
+    
+        fetchIssueDetails();
+      }, [dispatch, issueId]);
+
   return (
     <div className='grid grid-cols-2 grid-rows-1 gap-4 min-h-screen p-10'>
         <div className='p-10 '>
             <div className='pb-5'>Me/ Admin</div>
-            <div className='pb-10'><p className='text-2xl italic'>Class window have already broken, recently</p></div>
+            <div className='pb-10'><p className='text-2xl italic'>{issueDetails?.issue?.category}: "{issueDetails?.issue?.title}"</p></div>
             <div className=''>
                 <p>
-                placeholder text commonly used to demonstrate the visual form of a document or a typefac
+                {issueDetails?.issue?.description}
                 </p>
                 <div className='flex p-2'>
                     <p className='cursor-pointer'> &#128512; &#128516;</p>

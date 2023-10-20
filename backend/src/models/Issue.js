@@ -23,7 +23,9 @@ const issueSchema = new mongoose.Schema({
   dateUpdated: { type: Date },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   attachments: [attachmentSchema], // Array of attachment objects
-});
+}, {
+  timestamps: true} // Add timestamps
+);
 
 const Issue = mongoose.model('Issue', issueSchema);
 

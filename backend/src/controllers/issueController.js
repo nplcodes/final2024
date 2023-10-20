@@ -2,6 +2,7 @@
 import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
 import Comment from '../models/Comment.js';
+import mongoose from 'mongoose';
 
 
 const createIssue = async (req, res) => {
@@ -134,20 +135,20 @@ const getOpenIssues = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while getting issue details.' });
     }
   };
-
-// Function to get all issues for a specific reporter
- const getIssuesByReporterId = async (req, res) => {
+  // student issue
+  const getIssuesByReporterId = async (req, res) => {
     try {
-      const { reporterId } = req.params;
-  
-      const issues = await Issue.find({ reporter: reporterId }).populate('assignedTo');
-  
-      res.json(issues);
+      const {reporterId} = req.params;
+      if (reporterId) {
+        const issues = await Issue.find({ reporter: reporterId , status: 'assigned'});
+        res.status(200).json(issues);
+      } else {
+        res.status(400).json({ message: 'Invalid reporterId' });
+      }
     } catch (error) {
-      console.error('Error getting issues by reporter ID:', error);
-      res.status(500).json({ error: 'An error occurred while getting the issues.' });
+      res.status(500).json({ message: error.message });
     }
-  };
+  };;
 
   const getAllIssues = async (req, res) => {
     try {

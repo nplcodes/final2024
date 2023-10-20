@@ -26,7 +26,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex overflow-hidden">
       <Sidebar isSidebarOpen={isSidebarOpen} />
       <div className="flex flex-col w-full">
         <Topnav toggleSidebar={toggleSidebar} />
