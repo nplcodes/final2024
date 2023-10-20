@@ -7,7 +7,6 @@ const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   issue: { type: mongoose.Schema.Types.ObjectId, ref: 'Issue', required: true },
   datePosted: { type: Date, default: Date.now },
-  role: { type: String, enum: ['staff', 'student'], required: true }  // Role of the commenter
 });
 
 const Comment = mongoose.model('Comment', commentSchema);

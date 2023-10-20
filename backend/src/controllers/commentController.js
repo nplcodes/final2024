@@ -3,14 +3,13 @@ import Comment from '../models/Comment.js';
 // Function to create a comment for a specific issue
  const createComment = async (req, res) => {
   try {
-    const { content, role, userId } = req.body;
+    const { content, userId } = req.body;
     const { issueId } = req.params;
 
     const comment = new Comment({
       content,
       user: userId,
       issue: issueId,
-      role,  // Assign the role of the commenter
     });
 
     await comment.save();

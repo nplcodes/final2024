@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   issues: [],
   studentIssues: [],
+  comments: [],
   loading: false,
   error: null,
 };
@@ -97,6 +98,9 @@ const issueSlice = createSlice({
     },
     getIssueDetails: (state, action) => {
       state.studentIssues = action.payload;
+    },
+    commentsOnIssue: (state, action) => {
+      state.comments = action.payload;
     },
   },
 });

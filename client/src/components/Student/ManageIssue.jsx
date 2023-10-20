@@ -1,146 +1,187 @@
-import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { BsFileEarmarkPdf, BsFiletypeDocx, BsSend } from "react-icons/bs";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import {BsSend } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../redux/issue/issueSlice';
 
-
-
-
 function ManageIssue() {
-    const { issueId } = useParams();
-    const dispatch = useDispatch()
-    const issueDetails = useSelector((state) => state.issue.studentIssues);
-    console.log(issueDetails)
+  const { issueId } = useParams();
+  const dispatch = useDispatch();
+  const issueDetails = useSelector((state) => state.issue.studentIssues);
+  const comments = useSelector((state) => state.issue.comments);
 
+  // State for the comment form
+  const [content, setComment] = useState('');
+  const [userId, setUserId] = useState('');
 
-    useEffect(() => {
-        const fetchIssueDetails = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
-            const issueData = response.data; // 
-    
-            dispatch(issueActions.getIssueDetails(issueData));
-          } catch (error) {
-            console.error('Error fetching issue details:', error);
-          }
-        };
-    
-        fetchIssueDetails();
-      }, [dispatch, issueId]);
+  useEffect(() => {
+    const fetchIssueDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
+        const issueData = response.data;
+        dispatch(issueActions.getIssueDetails(issueData));
+      } catch (error) {
+        console.error('Error fetching issue details:', error);
+      }
+    };
+
+    fetchIssueDetails();
+  }, [dispatch, issueId]);
+
+  useEffect(() => {
+    // Fetch user ID from localStorage
+    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserId(storedUserInfo.user._id);
+    } else {
+      console.log('Failed to fetch userID');
+    }
+  }, []);
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post(`http://localhost:8080/comment/new-comment/${issueId}`, {
+        content,
+        userId,
+      });
+      // You can dispatch an action here if needed
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/comment/view-comment/${issueId}`);
+        const commentData = response.data;
+        dispatch(issueActions.commentsOnIssue(commentData));
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    fetchComments();
+  }, [dispatch, issueId]);
 
   return (
-    <div className='grid grid-cols-2 grid-rows-1 gap-4 min-h-screen p-10'>
-        <div className='p-10 '>
-            <div className='pb-5'>Me/ Admin</div>
-            <div className='pb-10'><p className='text-2xl italic'>{issueDetails?.issue?.category}: "{issueDetails?.issue?.title}"</p></div>
-            <div className=''>
-                <p>
-                {issueDetails?.issue?.description}
-                </p>
-                <div className='flex p-2'>
-                    <p className='cursor-pointer'> &#128512; &#128516;</p>
-                    </div>
-            </div>
-            <div className='pt-3'>Assigned to: </div>
-            <div className='pb-5 pt-3'>
-                <input type="file" />
-            </div>
-            <div>
-            <div>
-                <Link to="#">
-               <button
-              className="
-                bg-blue-500
-                hover:border-none
-                text-white
-                py-1
-                px-3
-                sm
-                rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
-              "
-            >
-              Attach file
-            </button>
+    <div className="grid grid-cols-2 grid-rows-1 gap-4 min-h-screen pl-32 pr-32 pt-10">
+      <div className="p-10">
+        <div className="pb-5">Me/ Admin</div>
+        <div className="pb-10">
+          <p className="text-2xl italic">
+            {issueDetails?.issue?.category}: "{issueDetails?.issue?.title}"
+          </p>
+        </div>
+        <div>
+          <p>{issueDetails?.issue?.description}</p>
+          <div className="flex p-2">
+            <p className="cursor-pointer"> &#128512; &#128516;</p>
+          </div>
+        </div>
+        <div className="pt-3">Assigned to: </div>
+        <div className="pb-5 pt-3">
+          <input type="file" />
+        </div>
+        <div>
+          <div>
+            <Link to="#">
+              <button
+                className="
+                  bg-blue-500
+                  hover:border-none
+                  text-white
+                  py-1
+                  px-3
+                  sm
+                  rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
+                "
+              >
+                Attach file
+              </button>
             </Link>
-               </div>
-            </div>
+          </div>
         </div>
-        <div className='bg-gray-100'>
-            <div className='p-10'>
-                <p className='pb-10'>Attached Documents.... </p>
-                    <div className="grid grid-cols-4 gap-2 pb-10">
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'><BsFiletypeDocx className='text-6xl'  /></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'><BsFileEarmarkPdf className='text-6xl' /></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'></div>
+      </div>
+      <div className="bg-gray-100">
+        <div className="p-10">
+          <p className="pb-10">Attached Documents.... </p>
+          <div className="grid grid-cols-4 gap-2 pb-10">
+            {/* Display attached documents here */}
+          </div>
+          <div>
+            <form onSubmit={handleCommentSubmit}>
+              <div>
+                <textarea
+                  required
+                  onChange={(e) => setComment(e.target.value)}
+                  name="comments"
+                  id=""
+                  className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
+                  placeholder="Type your comment ...."
+                ></textarea>
+              </div>
+              <div>
+                <input type="text" value={userId} hidden />
+              </div>
+              <div className="p-3">
+                <button
+                  type="submit"
+                  className="
+                      bg-blue-500
+                      hover:bg-blue-700
+                      text-white
+                      py-1
+                      px-3
+                      sm
+                      rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
+                  "
+                >
+                  <BsSend />
+                </button>
+              </div>
+            </form>
+            <div className="max-w-sm flex flex-col space-y-4 pt-10">
+              <p>
+                {comments.length} Comments ...{' '}
+                <span className="italic underline text-blue-500 cursor-pointer">see all</span>
+              </p>
+              {comments.map((comment) => (
+                <div
+                  key={comment._id}
+                  className="bg-white w-full flex items-center p-2 rounded-xl shadow border"
+                >
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={comment.user.profilePicture} // Replace with actual source
+                      alt={comment.user.username}
+                      className="w-16 h-16 rounded-full"
+                    />
+                  </div>
+                  <div className="flex-grow p-3">
+                    <div className="font-semibold text-gray-700">{comment.user.username}</div>
+                    <div className="text-sm text-gray-500">
+                      {comment.content} . {comment.datePosted} {/* You may format this date */}
                     </div>
-                    <div className=''>
-                
-                        <div>
-                           <textarea name="comments" id="" className='w-full  rounded-md focus:outline-none p-3 bg-transparent' placeholder='Type your comment ....'></textarea>
-                        </div>
-                        <div className='pt-5'>
-                            <button
-                            className="
-                                bg-blue-500
-                                hover:bg-blue-700
-                                text-white
-                                py-1
-                                px-3
-                                sm
-                                rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
-                            "
-                            >
-                            <BsSend />
-                            </button>
-                            </div>
-                        <div class=" max-w-sm flex flex-col space-y-4 pt-10">
-                        <p>
-                           3 Comments ... <span className='italic underline text-blue-500 cursor-pointer'>see all</span>
-                        </p>
-                        <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
-                            <div class="flex items-center space-x-4">
-                            <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full" />
-                            </div>
-                            <div class="flex-grow p-3">
-                            <div class="font-semibold text-gray-700">
-                                Antério Vieira da Silva Lima
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                You: Thanks, sounds good! . 8hr
-                            </div>
-                            </div>
-                            <div class="p-2">
-                            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-4 h-4 rounded-full order-1" />
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
-                            <div class="relative flex items-center space-x-4">
-                            <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full" />
-                            <span class="absolute h-4 w-4 bg-green-400 rounded-full bottom-0 right-0 border-2 border-white"></span>
-                            </div>
-                            <div class="flex-grow p-3">
-                            <div class="font-semibold text-gray-700">
-                                Antério Vieira da Silva Lima
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                @ktquez sent a image . 2hr
-                            </div>
-                            </div>
-                            <div class="p-2">
-                            <span class="block h-4 w-4 bg-blue-400 rounded-full bottom-0 right-0"></span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-    
+                  </div>
+                  <div className="p-2">
+                    <img
+                      src={comment.user.profilePicture} // Replace with actual source
+                      alt={comment.user.username}
+                      className="w-4 h-4 rounded-full order-1"
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ManageIssue
+export default ManageIssue;
