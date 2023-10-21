@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from 'react-icons/ai'
-import { BiCommentEdit, BiMessage } from 'react-icons/bi'
-import { BsDot, BsEye } from 'react-icons/bs'
-import { TiDeleteOutline } from 'react-icons/ti'
+import { BiMessage } from 'react-icons/bi'
+import { BsDot } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { issueActions } from '../../redux/issue/issueSlice';
 import axios from 'axios';
+import { TbArrowBearRight2 } from "react-icons/tb";
 
 
 
-function IssuePageMenuAllIssues() {
+function AllIssues() {
     const dispatch = useDispatch();
     const studentIssues = useSelector((state) => state.issue.issues);
-    const [reporterId, setUserId] = useState(null);
+    const [assignedToId, setUserId] = useState(null);
 
     useEffect(() => {
         const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
@@ -27,10 +27,10 @@ function IssuePageMenuAllIssues() {
 
 
       useEffect(() => {
-        if (reporterId) {
+        if (assignedToId) {
           const fetchStudentIssues = async () => {
             try {
-              const response = await axios.get(`http://localhost:8080/issue/reporter/${reporterId}`);
+              const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
               const studentIssues = response.data;
               dispatch(issueActions.getStudentIssue(studentIssues));
             } catch (error) {
@@ -40,7 +40,7 @@ function IssuePageMenuAllIssues() {
       
           fetchStudentIssues();
         }
-      }, [dispatch, reporterId]);
+      }, [dispatch, assignedToId]);
 
   return (
     <div>
@@ -55,7 +55,7 @@ function IssuePageMenuAllIssues() {
               <div>
                 <p className='text-xl pb-2 font-semibold italic'>{issue.category}</p>
                 <div className='flex gap-2'>
-                  <p className='text-slate-500'>{issue.reporterName} Admin</p>
+                  <p className='text-red-500'>{issue.reporterName} new</p>
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
                   <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />{issue.dateReported}</p>
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
@@ -64,10 +64,8 @@ function IssuePageMenuAllIssues() {
               </div>
             </div>
             </Link>
-            <div className='flex  gap-4'>
-              <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}><p className='cursor-pointer'><BsEye /></p></Link>
-              <Link to="/Home/update-issue"><p className='cursor-pointer'><BiCommentEdit /></p></Link>
-              <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+            <div className='flex flex-col gap-1'>
+               <p className='cursor-pointer'><TbArrowBearRight2 /></p>
             </div>
           </div>
         </div>
@@ -76,4 +74,4 @@ function IssuePageMenuAllIssues() {
   )
 }
 
-export default IssuePageMenuAllIssues;
+export default AllIssues;

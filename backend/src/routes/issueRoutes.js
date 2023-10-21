@@ -14,10 +14,11 @@ router.put('/edit/:id',upload.single('attachments'), issueController.updateIssue
 router.put('/reject-issue/:id', issueController.rejectIssue);
 router.get('/view/:id', issueController.getIssueDetails);
 router.get('/reporter/:reporterId', issueController.getIssuesByReporterId);
+router.get('/assigned-staff/:assignedToId', issueController.getIssuesByAssignedId);
 router.get('/all-issues', issueController.getAllIssues);
 router.delete('/delete/:id', issueController.deleteIssueById);
 
-router.get('/open', issueController.getOpenIssues)
+router.get('/open', issueController.getOpenIssues);
 
 
 

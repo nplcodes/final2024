@@ -148,7 +148,22 @@ const getOpenIssues = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  };;
+  };
+
+   // Staff issue
+   const getIssuesByAssignedId = async (req, res) => {
+    try {
+      const {assignedToId} = req.params;
+      if (assignedToId) {
+        const issues = await Issue.find({ assignedTo: assignedToId});
+        res.status(200).json(issues);
+      } else {
+        res.status(400).json({ message: 'Invalid assignedToID' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
   const getAllIssues = async (req, res) => {
     try {
@@ -183,7 +198,8 @@ export default {
       getIssueDetails,
       getIssuesByReporterId,
       getAllIssues,
-      deleteIssueById
+      deleteIssueById,
+      getIssuesByAssignedId
 };
 
 

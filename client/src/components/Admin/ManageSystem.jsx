@@ -21,7 +21,7 @@ function ManageSystem() {
             <p className='text-2xl'>Users</p>      
           </div>
           </Link>
-          <Link to="/Home/admin/issues">
+          <Link to="/Home/middleman-issue-page">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><AiOutlineIssuesClose className='text-6xl text-blue-500'/></p>
             <p className='text-xl text-slate-500'>7</p>

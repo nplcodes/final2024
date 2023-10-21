@@ -23,7 +23,7 @@ function IssuePage() {
       setSelectedSetting(setting);
     };
   
-    const renderSettingContent = () => {
+    const renderMenuSelection = () => {
       switch (selectedSetting) {
         case 'all-issues':
           return <IssuePageMenuAllIssues />;
@@ -35,23 +35,24 @@ function IssuePage() {
           return null;
       }
     };
+    // <div  className='p-5 text-2xl bg-blue-400 text-white cursor-pointer' onClick={() => handleSettingClick('all-issues')}><BsListTask /></div>
 
     
     return (
     <div className='p-20 gap-20 w-full  grid grid-cols-6'>
         <div className='pt-10 flex flex-col p-10 gap-3 col-span-1'>
-            <div  className='p-5 text-2xl bg-blue-400 text-white cursor-pointer' onClick={() => handleSettingClick('all-issues')}><BsListTask /></div>
+            <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'all-issues' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('all-issues')}><BsListTask /></div>
             <Link to="#">
-               <div  className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer' onClick={() => handleSettingClick('new-issue')}><BsPlus /></div>
+               <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('new-issue')}><BsPlus /></div>
             </Link>
-            <div className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer' onClick={() => handleSettingClick('rejected')}><FcCancel /></div>
+            <div className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'rejected' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('rejected')}><FcCancel /></div>
         </div>
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
             <div className='pb-10'>
                 <p className='text-blue-500'>Role: {userInfo?.user?.position} </p>
             </div>
-            {renderSettingContent()}
+            {renderMenuSelection()}
 
         </div>
     </div>

@@ -28,11 +28,10 @@ function Notifications() {
   return (
     <div className='flex p-20 gap-20'>
         <div className='pt-10 flex flex-col p-10 gap-3'>
-            <div  className='p-5 bg-blue-500 text-white text-2xl hover:bg-blue-400 hover:text-white cursor-pointer' onClick={() => handleSettingClick('new')}><PiNotificationThin /></div>
-            <div  className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer' onClick={() => handleSettingClick('recent')}><AiOutlineProfile  /></div>
-            <div className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer' onClick={() => handleSettingClick('unknown')}><RiChatSettingsLine /></div>
+            <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'new' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('new')}><PiNotificationThin /></div>
+            <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'recent' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('recent')}><AiOutlineProfile  /></div>
+            <div className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'unknown' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('unknown')}><RiChatSettingsLine /></div>
         </div>
-        {/* Main part with Notifications   */}
          {renderSettingContent()}
 
     </div>

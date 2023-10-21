@@ -1,191 +1,109 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { BsFileEarmarkPdf, BsFiletypeDocx, BsSend } from "react-icons/bs";
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { issueActions } from '../../redux/issue/issueSlice';
+import React from 'react'
+import { BsDot, BsEye, BsListTask } from "react-icons/bs";
+import { BiMessage, BiCommentEdit } from "react-icons/bi";
+import { TiDeleteOutline } from "react-icons/ti";
+import { RiShareForwardBoxLine } from "react-icons/ri";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { Link } from 'react-router-dom';
 
 
-function ManageIssue() {
-    const { issueId } = useParams();
-    const dispatch = useDispatch()
-    const issueDetails = useSelector((state) => state.issue.studentIssues);
-
-
-
-    useEffect(() => {
-        const fetchIssueDetails = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
-            const issueData = response.data; 
-            dispatch(issueActions.getIssueDetails(issueData));
-          } catch (error) {
-            console.error('Error fetching issue details:', error);
-          }
-        };
-    
-        fetchIssueDetails();
-      }, [dispatch, issueId]);
-
-
-
-    //   comment submition
-    const [content, setComment] = useState('');
-    const [userId, setUserId] = useState('');
-    
-  // fetch userId from localStorage
-    useEffect(() => {
-      const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-      if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
-        setUserId(storedUserInfo.user._id);
-      } else {
-        console.log("Failed to fetch userID");
-      }
-    }, []);
-  //  comment on issue
-    const handleCommentSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        await axios.post(`http://localhost:8080/comment/new-comment/${issueId}`, {
-          content,
-          userId,
-        });
-      } catch (error) {
-        console.error('Error submitting comment:', error);
-      }
-    };
-// fetch comments from database and pass them to state
-    useEffect(() => {
-      const fetchIssueDetails = async () => {
-        try {
-          const response = await axios.get(`http://localhost:8080/comment/view-comment/${issueId}`)
-          const commentData = response.data; 
-          dispatch(issueActions.commentsOnIssue(commentData))
-        } catch (error) {
-          console.error('Error fetching comments :', error);
-        }
-      };
-  
-      fetchIssueDetails();
-    }, [dispatch, issueId]);
-
-    const comments = useSelector((state) => state.issue.comments);
-
-    console.log("commeeeeeeeeeeeeeeee",comments)
-      
+function MyStaffPage() {
   return (
-    <div className='grid grid-cols-2 grid-rows-1 gap-4 min-h-screen pl-32 pr-32 pt-10'>
-        <div className='p-10 '>
-            <div className='pb-5'>Me/ Admin</div>
-            <div className='pb-10'><p className='text-2xl italic'>{issueDetails?.issue?.category}: "{issueDetails?.issue?.title}"</p></div>
-            <div className=''>
-                <p>
-                {issueDetails?.issue?.description}
-                </p>
-                <div className='flex p-2'>
-                    <p className='cursor-pointer'> &#128512; &#128516;</p>
-                    </div>
-            </div>
-            <div className='pt-3'>Assigned to: </div>
-            <div className='pb-5 pt-3'>
-                <input type="file" />
-            </div>
-            <div>
-            <div>
-                <Link to="#">
-               <button
-              className="
-                bg-blue-500
-                hover:border-none
-                text-white
-                py-1
-                px-3
-                sm
-                rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
-              "
-            >
-              Attach file
-            </button>
-            </Link>
-               </div>
-            </div>
+    <div className='p-20 gap-20 w-full  grid grid-cols-6'>
+        <div className='pt-10 flex flex-col p-10 gap-3 col-span-1'>
+            <div  className='p-5 text-2xl bg-blue-400 text-white cursor-pointer'><BsListTask /></div>
+            {/* <div className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'><AiOutlineProfile /></div> */}
         </div>
-        <div className='bg-gray-100'>
-            <div className='p-10'>
-                <p className='pb-10'>Attached Documents.... </p>
-                    <div className="grid grid-cols-4 gap-2 pb-10">
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'><BsFiletypeDocx className='text-6xl'  /></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'><BsFileEarmarkPdf className='text-6xl' /></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'></div>
-                        <div className='cursor-pointer w-20 h-20 bg-white flex items-center justify-center shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'></div>
-                    </div>
-                    <div className=''>
-                <form onSubmit={handleCommentSubmit }>
-                        <div>
-                           <textarea required onChange={(e)=> setComment(e.target.value)} name="comments" id="" className='w-full  rounded-md focus:outline-none p-3 bg-transparent' placeholder='Type your comment ....'></textarea>
-                        </div>
-                        <div><input type="text" value={userId} hidden /></div>
-                        <div className='p-3'>
-                            <button type='submit'
-                            className="
-                                bg-blue-500
-                                hover:bg-blue-700
-                                text-white
-                                py-1
-                                px-3
-                                sm
-                                rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
-                            "
-                            >
-                            <BsSend />
-                            </button>
-                            </div>
-                </form>
-                        <div class=" max-w-sm flex flex-col space-y-4 pt-10">
-                        <p>
-                           3 Comments ... <span className='italic underline text-blue-500 cursor-pointer'>see all</span>
-                        </p>
-                        <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
-                            <div class="flex items-center space-x-4">
-                            <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full" />
-                            </div>
-                            <div class="flex-grow p-3">
-                            <div class="font-semibold text-gray-700">
-                                Antério Vieira da Silva Lima
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                You: Thanks, sounds good! . 8hr
-                            </div>
-                            </div>
-                            <div class="p-2">
-                            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-4 h-4 rounded-full order-1" />
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white w-full flex items-center p-2 rounded-xl shadow border">
-                            <div class="relative flex items-center space-x-4">
-                            <img src="https://avatars2.githubusercontent.com/u/1490347?s=460&u=39d7a6b9bc030244e2c509119e5f64eabb2b1727&v=4" alt="My profile" class="w-16 h-16 rounded-full" />
-                            <span class="absolute h-4 w-4 bg-green-400 rounded-full bottom-0 right-0 border-2 border-white"></span>
-                            </div>
-                            <div class="flex-grow p-3">
-                            <div class="font-semibold text-gray-700">
-                                Antério Vieira da Silva Lima
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                @ktquez sent a image . 2hr
-                            </div>
-                            </div>
-                            <div class="p-2">
-                            <span class="block h-4 w-4 bg-blue-400 rounded-full bottom-0 right-0"></span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
+        {/* Main part with MyStaffPage   */}
+        <div className='col-span-5'>
+            <div className='pb-10'>
+                <p className='text-blue-500'>Staff Issues Page </p>
             </div>
+            <p className='pb-3 font-bold'>New</p>
+            {/* Notification card */}
+                        <Link to="/Home/manage-issue">
+                        <div className= 'flex flex-row justify-between p-10 mb-1  border-b border-b-1'>
+                            <div className='flex gap-5'>
+                                <div className='text-red-500 text-4xl'><BsDot/></div>
+                                <img className='w-10 h-10 rounded-full' src="https://images.unsplash.com/photo-1460904577954-8fadb262612c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1690&q=80" alt="" />
+                                <div>
+                                    <p className='text-xl pb-2 font-semibold  italic'>Personal </p>
+                                    <div className='flex gap-2'>
+                                        <p className='text-slate-500'>Amin Yazid</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />1:00 pm</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='flex items-center gap-2 text-slate-500'> <BiMessage />Comments</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                                <Link to="/Home/manage-issue">
+                                   <p className='cursor-pointer'><BsEye /></p>
+                                </Link>
+                                <Link to="/Home/update-issue">
+                                    <p className='cursor-pointer'><BiCommentEdit /></p>
+                                </Link>
+                                <p className='cursor-pointer'><RiShareForwardBoxLine /></p>
+                              <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+
+                            </div>
+                        </div>
+                        </Link>
+                        {/* today 2 */}
+                        <div className= 'flex flex-row justify-between p-10 mb-1  border-b border-b-1'>
+                            <div className='flex gap-5'>
+                                <div className='text-red-500 text-4xl'><BsDot/></div>
+                                <img className='w-10 h-10 rounded-full' src="https://images.unsplash.com/photo-1620000617482-821324eb9a14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="" />
+                                <div>
+                                    <p className='text-xl font-semibold  italic pb-2'>Want to go home </p>
+                                    <div className='flex gap-2'>
+                                        <p className='text-slate-500'>Berwa Emma</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />12:25 p.m</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='flex items-center gap-2 text-slate-500'> <BiMessage />Comments</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                              <p className='cursor-pointer'><BsEye /></p>
+                              <p className='cursor-pointer'><BiCommentEdit /></p>
+                              <p className='cursor-pointer'><RiShareForwardBoxLine /></p>
+                              <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+
+                            </div>
+                        </div>
+                        {/* Issue card   */}
+                        
+                        {/* Yestarday */}
+                        <p className='pb-3 font-bold'>Recents</p>
+                        {/* Issue card */}
+                        <div className= 'flex flex-row justify-between p-10 mb-1  border-b border-b-1'>
+                            <div className='flex gap-5'>
+                                <div className='text-blue-500 text-4xl'><BsDot/></div>
+                                <img className='w-10 h-10 rounded-full' src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="" />
+                                <div>
+                                    <p className='text-xl pb-2 font-semibold  italic'>Uniform are just getting old </p>
+                                    <div className='flex gap-2'>
+                                        <p className='text-slate-500'>Ariane Putri</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />8:01 a.m</p>
+                                        <div className='h-5 w-[0.5px] bg-slate-300'></div>
+                                        <p className='flex items-center gap-2 text-slate-500'> <BiMessage />Comments</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                              <p className='cursor-pointer'><BsEye /></p>
+                              <p className='cursor-pointer'><BiCommentEdit /></p>
+                              <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+
+                            </div>
+                        </div>
         </div>
     </div>
   )
 }
 
-export default ManageIssue
+export default MyStaffPage

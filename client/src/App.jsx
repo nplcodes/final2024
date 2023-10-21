@@ -27,6 +27,7 @@ import IssuesToAssign from './components/Admin/IssuesList';
 import CreatePost from './components/General/CreatePost';
 import { useEffect, useState } from 'react';
 import StaffPage from './components/Staff/staffPage';
+import MyStaffPage from './components/Staff/MyStaffPage';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -58,23 +59,20 @@ const App = () => {
           <Route path="issue-list" element={<IssuesList />} />
           <Route path="issue-page" element={!isLoggedIn ? <Navigate to="/" /> : <IssuePage />} />
           <Route path="manage-issue/:issueId" element={<ManageIssue />} />
-
+          {/* Staff  page */}
           <Route path="staff-home" element={<StaffHomePage />} />
           <Route path="staff-book-list" element={<Appointments />} />
           <Route path="staff-notifications" element={<Notifications />} />
           <Route path="staf-post" element={<CreatePost />} />
           <Route path="timeslots" element={<TimeSlots />} />
-          {/* <Route path="staff-issue-page" element={<IssuePageStaff />} /> */}
-
-
-
-          <Route path="staff-issue-page" element={<StaffPage />} />
-
-
+          <Route path="staff-issue-page" element={<MyStaffPage />} />
+           {/* Middleman page */}
           <Route path="admin/manage" element={<ManageSystem />} />
           <Route path="admin/users" element={<Users />} />
           <Route path="admin/issues" element={<IssuesToAssign />} />
           <Route path="admin/setting" element={<AccountSettingsAdmin />} />
+          <Route path="middleman-issue-page" element={<StaffPage />} />
+
         </Route>
       </Routes>
     </Router>

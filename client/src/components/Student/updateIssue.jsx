@@ -65,48 +65,6 @@ function UpdateIssue() {
                  <label className="text-sm font-mediumtext-red-500">{errors.title?.message}</label>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Priority</label>
-                  <select
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    name="role"
-                  >
-                    <option value=" ">Select priority</option>
-                    <option value="Low">Low</option>
-                    <option value="High">High</option>
-                    <option value="Urgency">Urgency</option>
-
-                  </select>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Reasons</label>
-                  <input
-                    type="text"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your username"
-                    name="username"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">how long does it started?</label>
-                  <input
-                    type="text"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your full name"
-                    name="fullName"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Role</label>
-                  <select
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    name="role"
-                  >
-                    <option value=" ">Select role</option>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
-                  </select>
-                </div>
-                <div>
                   <label className="text-sm font-medium text-gray-700">Description</label>
                   <textarea
                   {...register("description")}
