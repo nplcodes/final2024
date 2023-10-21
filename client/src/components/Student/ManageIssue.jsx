@@ -47,7 +47,9 @@ function ManageIssue() {
         content,
         userId,
       });
-      // You can dispatch an action here if needed
+    setComment('');
+    setUserId('');  
+
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
@@ -130,15 +132,7 @@ function ManageIssue() {
               <div className="p-3">
                 <button
                   type="submit"
-                  className="
-                      bg-blue-500
-                      hover:bg-blue-700
-                      text-white
-                      py-1
-                      px-3
-                      sm
-                      rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none
-                  "
+                  className="bg-blue-500hover:bg-blue-700 text-white py-1 px-3 sm rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none"
                 >
                   <BsSend />
                 </button>
@@ -149,14 +143,14 @@ function ManageIssue() {
                 {comments.length} Comments ...{' '}
                 <span className="italic underline text-blue-500 cursor-pointer">see all</span>
               </p>
-              {comments.map((comment) => (
+               {Array.isArray(comments) && comments.map((comment) => (
                 <div
                   key={comment._id}
                   className="bg-white w-full flex items-center p-2 rounded-xl shadow border"
                 >
                   <div className="flex items-center space-x-4">
                     <img
-                      src={comment.user.profilePicture} // Replace with actual source
+                      src='https://brsc.sa.edu.au/wp-content/uploads/2018/09/placeholder-profile-sq.jpg'
                       alt={comment.user.username}
                       className="w-16 h-16 rounded-full"
                     />
@@ -164,12 +158,12 @@ function ManageIssue() {
                   <div className="flex-grow p-3">
                     <div className="font-semibold text-gray-700">{comment.user.username}</div>
                     <div className="text-sm text-gray-500">
-                      {comment.content} . {comment.datePosted} {/* You may format this date */}
+                      {comment.content} . {comment.datePosted}
                     </div>
                   </div>
                   <div className="p-2">
                     <img
-                      src={comment.user.profilePicture} // Replace with actual source
+                      src={comment.user.profilePicture}
                       alt={comment.user.username}
                       className="w-4 h-4 rounded-full order-1"
                     />
