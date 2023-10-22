@@ -12,6 +12,7 @@ function StaffPage() {
   
 
   const issues = allIssues.filter((issue) => issue.status === 'open');
+  const total_number_issues = issues.length()
   const Allissues = allIssues.filter((issue) => issue.status === 'assigned');
   const recentIssues = Allissues.slice(0, 3);
 
@@ -43,6 +44,8 @@ function StaffPage() {
   const closeIssue = (issueId) => {
     // Handle closing the issue
   };
+
+  console.log("How may issues: ", total_number_issues)
 
   return (
     <div>

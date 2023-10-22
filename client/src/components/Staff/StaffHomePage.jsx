@@ -7,6 +7,8 @@ import { useSelector, } from 'react-redux';
 function StaffHomePage() {
 
 const userInfo = useSelector((state)=> state.auth.user);
+const pending = userInfo.filter((user)=> user.approvalStatus=== 'pending')
+const total = pending.length()
     const notificationCount = 5;
 
   return (
@@ -18,7 +20,7 @@ const userInfo = useSelector((state)=> state.auth.user);
         <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
             <div className='p-16 flex flex-col items-center justify-center gap-3 rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
                 <Link to="/Home/staff-issue-page">
-                    <p className='text-4xl'>2</p>
+                    <p className='text-4xl'>{total}</p>
                     <div className='text-2xl text-red-500'>New Issues</div>
                 </Link>
             </div>

@@ -66,7 +66,7 @@ function IssuePageMenuAllIssues() {
             </Link>
             <div className='flex  gap-4'>
               <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}><p className='cursor-pointer'><BsEye /></p></Link>
-              <Link to="/Home/update-issue"><p className='cursor-pointer'><BiCommentEdit /></p></Link>
+              <Link to={`/Home/update-issue/${issue._id}`}><p className='cursor-pointer'><BiCommentEdit /></p></Link>
               <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
             </div>
           </div>

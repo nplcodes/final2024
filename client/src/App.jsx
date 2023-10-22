@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/" element={!isLoggedIn && <LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/Home" element={!isLoggedIn ? <Navigate to="/" /> :<Dashbord />}>
-          <Route path="update-issue" element={<UpdateIssue />} />
+          <Route path="update-issue/:id" element={<UpdateIssue />} />
           <Route path="book" element={<Apointment />} />
           <Route path="book-list" element={<AppointmentsList />} />
           <Route path="notifications" element={<Notifications />} />

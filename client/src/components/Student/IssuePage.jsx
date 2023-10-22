@@ -35,8 +35,6 @@ function IssuePage() {
           return null;
       }
     };
-    // <div  className='p-5 text-2xl bg-blue-400 text-white cursor-pointer' onClick={() => handleSettingClick('all-issues')}><BsListTask /></div>
-
     
     return (
     <div className='p-20 gap-20 w-full  grid grid-cols-6'>

@@ -84,6 +84,7 @@ function NewIssueForm() {
                   <textarea {...register("description")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter issue description"
+                    rows={5}
                     name="description"
                   ></textarea>
                   <p className="text-sm font-medium text-red-500">{errors.description?.message}</p>

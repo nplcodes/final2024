@@ -75,22 +75,6 @@ const issueSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    
-    // Delete an issue
-    deleteIssueStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    deleteIssueSuccess: (state, action) => {
-      const issueId = action.payload;
-      state.issues = state.issues.filter((issue) => issue.id !== issueId);
-      state.loading = false;
-      state.error = null;
-    },
-    deleteIssueFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
     // student 
     getStudentIssue: (state, action)=>{
       state.issues =  action.payload;

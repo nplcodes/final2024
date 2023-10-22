@@ -87,7 +87,6 @@ const updateIssue = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while updating the issue.' });
   }
 };
-// Student can Deltete issue 
 
 const getOpenIssues = async (req, res) => {
   try {
