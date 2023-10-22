@@ -7,6 +7,7 @@ import {upload} from '../middleware/multer.js';
 
 const router = express.Router();
 
+router.post('/create', upload.single('image'), postController.createPost);
 router.post('/', upload.single('image'), postController.createPost);
 router.post('/comment/:postId', postController.addComment);
 router.post('/like/:postId', postController.addLike);

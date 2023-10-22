@@ -11,7 +11,7 @@ function ManageSystem() {
   return (
     <div className='bg-gray-100'>
       <div className='bg-slate-200 p-5'>
-            <p>Welcome M.r: {userInfo.fullName} </p>
+            <p>Welcome: {userInfo.fullName} </p>
         </div>
       <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
         <Link to="/Home/admin/users">

@@ -3,32 +3,52 @@ import Post from '../models/Post.js';
 import { notifyAllStudentsAboutNewPost } from '../middleware/notificationService.js';
 
 // Function to create a post with image upload
- const createPost =  async (req, res) => {
-    try {
-      const { title, content, postedBy, datePosted } = req.body;
+//  const createPost =  async (req, res) => {
+//     try {
+//       const { title, content, postedBy, datePosted } = req.body;
   
-      // Get the image path from multer
-      const image = req.file ? req.file.path : null;
-      const likes = [];
-      const post = new Post({
-        title,
-        content,
-        image,
-        postedBy,
-        datePosted,
-        likes,
-      });
+//       // Get the image path from multer
+//       const image = req.file ? req.file.path : null;
+//       const likes = [];
+//       const post = new Post({
+//         title,
+//         content,
+//         image,
+//         postedBy,
+//         datePosted,
+//         likes,
+//       });
   
-      await post.save();
-          // Notify all students
-    await notifyAllStudentsAboutNewPost(post);
+//       await post.save();
+//           // Notify all students
+//     await notifyAllStudentsAboutNewPost(post);
   
-      res.json({ message: 'Post created successfully', post });
-    } catch (error) {
-      console.error('Error creating post:', error);
-      res.status(500).json({ error: 'An error occurred while creating the post.' });
-    }
-  };
+//       res.json({ message: 'Post created successfully', post });
+//     } catch (error) {
+//       console.error('Error creating post:', error);
+//       res.status(500).json({ error: 'An error occurred while creating the post.' });
+//     }
+//   };
+
+// Create a new post
+const createPost = async (req, res) => {
+  const { title, content } = req.body;
+  const image = req.file ? req.file.path : null;
+
+  try {
+    const post = new Post({
+      title,
+      content,
+      image,
+    });
+
+    await post.save();
+    res.json({ message: 'Post created successfully', post });
+  } catch (error) {
+    console.error('Error creating post:', error);
+    res.status(500).json({ error: 'An error occurred while creating the post.' });
+  }
+};
 
 // Function to like a post
  const likePost = async (req, res) => {
