@@ -15,6 +15,8 @@ router.delete('/dislike/:postId', postController.removeLike);
 router.get('/comments/:postId', postController.getCommentsForPost);
 router.put('/:postId', postController.updatePost);
 router.delete('/:postId', postController.deletePost);
+router.get('/posts/:postedBy', postController.getPostsByUserId);
+
 
 
 

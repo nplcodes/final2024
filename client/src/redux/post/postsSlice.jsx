@@ -12,7 +12,7 @@ const postsSlice = createSlice({
       state.posts = action.payload;
     },
     addPost: (state, action) => {
-      state.posts.unshift(action.payload);
+      state.posts=(action.payload);
     },
 
     updatePost: (state, action) => {

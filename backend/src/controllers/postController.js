@@ -32,13 +32,15 @@ import { notifyAllStudentsAboutNewPost } from '../middleware/notificationService
 
 // Create a new post
 const createPost = async (req, res) => {
-  const { title, content } = req.body;
+
+  const { title, content, postedBy } = req.body;
   const image = req.file ? req.file.path : null;
 
   try {
     const post = new Post({
       title,
       content,
+      postedBy,
       image,
     });
 
@@ -239,6 +241,24 @@ const deletePost = async (req, res) => {
   }
 };
 
+// Fetch posts by userId
+const getPostsByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const posts = await Post.find({ postedBy: userId });
+
+    if (!posts) {
+      return res.status(404).json({ message: 'No posts found for this user.' });
+    }
+
+    res.json(posts);
+  } catch (error) {
+    console.error('Error fetching posts by userId:', error);
+    res.status(500).json({ error: 'An error occurred while fetching posts.' });
+  }
+};
+
 
 export default{
     commentOnPost,
@@ -249,6 +269,7 @@ export default{
     removeLike,
     getCommentsForPost,
     updatePost,
-    deletePost
+    deletePost,
+    getPostsByUserId
 
 }
