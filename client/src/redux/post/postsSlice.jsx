@@ -1,13 +1,20 @@
 // postsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const postsSlice = createSlice({
   name: 'posts',
-  initialState: [],
+  initialState: {
+    posts: [],
+  },
   reducers: {
-    addPost: (state, action) => {
-      state.push(action.payload);
+    setPosts: (state, action) => {
+      state.posts = action.payload;
     },
+    addPost: (state, action) => {
+      state.posts.unshift(action.payload);
+    },
+
     updatePost: (state, action) => {
       const { postId, updatedData } = action.payload;
       const postIndex = state.findIndex(post => post.id === postId);
