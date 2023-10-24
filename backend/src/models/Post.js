@@ -12,10 +12,10 @@ const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   image: { type: String },  // Store image path
-  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
   datePosted: { type: Date, default: Date.now },
   comments: [commentSchema],  // Array of comments
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],  // Array to store user IDs who liked the post
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
 
 });
 

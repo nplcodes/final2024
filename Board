@@ -4,7 +4,13 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import { RxShare2 } from "react-icons/rx";
 import { BsSend } from "react-icons/bs";
+import { useSelector } from 'react-redux';
+
+
 function Board() {
+    const posts = useSelector((state)=> state.issue.posts)
+    console.log("Pooooooooooooooooooooooooooooooooooooo",posts);
+
   return (
     <div className='Wrapper flex justify-center pt-10'>
         <div className='grid grid-cols-10 max-w-[70%] '>
@@ -19,7 +25,7 @@ function Board() {
                 </div>
             </div>
             <div className='rounded-md'>
-                <img  className=" flex pt-3 w-[80%]  h-[400px] object-fit" src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?auto=format&fit=crop&q=80&w=1856&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="body" />
+                <img  className=" flex pt-3 w-[80%]  h-[400px] object-fit" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" alt="body" />
             </div>
             <div className='footer'>
                 <div className='flex gap-3 text-xl pt-2 pb-2'>

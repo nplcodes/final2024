@@ -6,7 +6,6 @@ const initialState = {
   comments: [],
   loading: false,
   error: null,
-  posts: []
 };
 
 const issueSlice = createSlice({
@@ -38,15 +37,25 @@ const issueSlice = createSlice({
         state.issues = state.issues.filter((issue) => issue.id !== issueId);
 
       },
-      // Add post to state
-      addPost: (state, action) => {
-        state.posts.unshift(action.payload);
-      },
-      // initialize posts state
-      setPosts: (state, action) => {
-        state.posts = action.payload;
     
-      },
+    // Update an issue
+    updateIssueStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateIssueSuccess: (state, action) => {
+      const { issueId, updatedIssue } = action.payload;
+      const issueIndex = state.issues.findIndex((issue) => issue.id === issueId);
+      if (issueIndex !== -1) {
+        state.issues[issueIndex] = updatedIssue;
+      }
+      state.loading = false;
+      state.error = null;
+    },
+    updateIssueFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     
     // Assign an issue to staff
     assignIssueToStaffStart: (state) => {

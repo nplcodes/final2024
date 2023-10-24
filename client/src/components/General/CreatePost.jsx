@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { AiOutlineDelete, AiOutlineHeart } from 'react-icons/ai'
-import { BiMessageRounded } from 'react-icons/bi'
-import { FiEdit } from 'react-icons/fi'
-import { postActions } from '../../redux/post/postsSlice';
-import { useDispatch } from 'react-redux';
+import Post from './Post';
+import {useDispatch, useSelector} from 'react-redux'
+import { issueActions } from '../../redux/issue/issueSlice';
+
 
 function CreatePost() {
-  const dispatch = useDispatch();
-  
-  const [postedBy, setPostedBy]= useState(null)
+  const dispatch = useDispatch()
+  const [postedBy, setPostedBy] = useState(null);
+  const posts = useSelector((state)=> state.issue.posts)
+
+
   useEffect(() => {
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-    
+
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setPostedBy(storedUserInfo.user._id);
     } else {
-        //
+      console.error('User data is missing or invalid.');
     }
-  }, []);
+    if (postedBy) {
+      axios
+        .get(`http://localhost:8080/post/posts/${postedBy}`)
+        .then((response) => {
+          dispatch(issueActions.setPosts(response.data));
+        })
+        .catch((error) => {
+          console.error('Error fetching posts:', error);
+        });
+    }
+  }, [postedBy, dispatch]);
 
-  const [postData, setPostData] = useState({
-    title: '',
-    content: '',
-    image: null,
-  });
 
   const handleTitleChange = (e) => {
     setPostData({
@@ -56,38 +62,26 @@ function CreatePost() {
     formData.append('image', postData.image);
     formData.append('postedBy', postedBy);
 
-
     try {
-      const response = await axios.post('http://localhost:8080/post/', formData, {
+      const response = await axios.post('http://localhost:8080/post', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      // add data to state post[]
-      dispatch(postActions.addPost(response.data));
-      setPostData({  
+      dispatch(issueActions.addPost(response.data));
+      setPostData({
         title: '',
         content: '',
         image: '',
-      })
-      // Handle the response as needed
+      });
     } catch (error) {
       console.error('Error creating post:', error);
     }
   };
-    // Function to fetch all posts and initialize the Redux store
-    useEffect(()=>{
-      const fetchPosts = async () => {
-        try {
-          const response = await axios.get('http://localhost:8080/post/posts/'+postedBy); // Replace with your API endpoint
-    
-          // Set the posts in the Redux store
-          dispatch(postActions.setPosts(response.data));
-        } catch (error) {
-          console.error('Error fetching posts:', error);
-        }
-      };
-      fetchPosts()
-    }, [])
-  
+
+  const [postData, setPostData] = useState({
+    title: '',
+    content: '',
+    image: null,
+  });
 
   return (
     <div className='grid grid-cols-2 grid-rows-1 p-10 gap-10'>
@@ -139,28 +133,7 @@ function CreatePost() {
           </div>
         </div>
       </form>
-      <div className='bg-gray-100 p-10 '>
-            <div className='pb-10'>
-                <input type="text" placeholder='search...' className=' rounded-md focus: border-none focus:outline-0' />
-            </div>
-            {/* card */}
-            <div className='bg-white w-[70%] rounded-md p-5'>
-                <div className='flex gap-3'>
-                    <img  className="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
-                    <div>
-                        <p className='font-bold'>We are hiring Devs</p>
-                        <p className='text-sm text-gray-400 pl-5'>9 min ago</p>
-                    </div>
-                </div>
-                <div className='flex gap-5 p-7 pb-3'>
-                    <div><BiMessageRounded className='text-xl'/></div>
-                    <div><FiEdit className='text-xl' /></div>
-                    <div><AiOutlineHeart className='text-xl'/></div>
-                    <div><AiOutlineDelete className='text-red-500 text-xl' /></div>
-
-                </div>
-            </div>
-        </div>
+      <Post posts={posts} />
     </div>
   );
 }
