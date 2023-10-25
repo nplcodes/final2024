@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { PiDotsThreeOutlineThin } from "react-icons/pi";
-import { AiOutlineHeart } from "react-icons/ai";
-import { GoCommentDiscussion } from "react-icons/go";
-import { RxShare2 } from "react-icons/rx";
-import { BsSend } from "react-icons/bs";
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../redux/issue/issueSlice';
+import SinglePost from './SinglePost';
 
 
 
 function Board() {
-    const posts = useSelector((state)=> state.issue.posts)
     const dispatch = useDispatch();
-    const [userId, setUserId] = useState(null)
+    const posts = useSelector((state)=> state.issue.posts)
+
 
 
     useEffect(() => {
@@ -29,28 +25,6 @@ function Board() {
       }, [dispatch]);
 
 
-    //   Likes and comment on post
-
-    const handleLike = async(postId, userId) => {
-        try {
-            await axios.post(`http://localhost:8080/post/like/${postId}`, { userId });
-            dispatch(issueActions.addLike({ postId: postId, userId: userId }));
-          } catch (error) {
-            console.error('Error liking post:', error);
-          }
-      };
-    
-
-      useEffect(() => {
-        const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-        
-        if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
-          setUserId(storedUserInfo.user._id);
-        } else {
-            //
-        }
-      }, []);
-
   return (
     <div className='Wrapper flex justify-center pt-10'>
         <div className='grid grid-cols-10 max-w-[70%] '>
@@ -58,36 +32,9 @@ function Board() {
              <p>No posts available</p>
             ) : (
              posts.map((post) => (
-        <div className='grid col-span-6 pb-5'>
-            <div className='flex  p-2'>
-                <div className='flex items-center gap-3'>
-                    <img  className="w-10 h-10 rounded-full" src="https://media.istockphoto.com/id/938709362/photo/portrait-of-a-girl.webp?s=2048x2048&w=is&k=20&c=GAKRAkeiut6MTnyYbrIhwSyq_bPbq49YqgpK7JWpvno=" alt="poster" />
-                    <p>{post.title}</p>
-                </div>
-                <div>
-                    <span className='cursor-pointer'><PiDotsThreeOutlineThin /></span>
-                </div>
+            <div className='grid col-span-6 pb-5'>
+                    <SinglePost  post={post}/>
             </div>
-            <div className='rounded-md'>
-                <img  className=" flex pt-3 w-[80%]  h-[400px] object-fit" src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?auto=format&fit=crop&q=80&w=1856&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="body" />
-            </div>
-            <div className='footer'>
-            <div className='flex gap-3 text-xl pt-2 pb-2'>
-                <div onClick={() => handleLike(post._id, userId)} className='cursor-pointer'><AiOutlineHeart /></div>
-                <span className='cursor-pointer'><GoCommentDiscussion /></span>
-                <span className='cursor-pointer'><RxShare2 /></span>
-            </div>
-                <div className='flex gap-1'>
-                    <p>{post.likes.length} likes</p>
-                    <div>10 comments</div>
-                </div>
-                <div className='relative'>
-                    <input className='bg-transparent border-none focus:border-none border-b-1 pb-2 w-full ' type="text" placeholder='type comment ....' />
-                    <button className='absolute  right-2 my-1 hover:bg-blue-500 p-1 hover:rounded-md hover:text-white '><BsSend /></button>
-                </div>
-                
-            </div>
-        </div>
              )))}
         <div className='grid col-span-4'>
             <div>
