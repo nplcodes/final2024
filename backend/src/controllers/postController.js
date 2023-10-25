@@ -52,6 +52,28 @@ const createPost = async (req, res) => {
   }
 };
 
+// Update a post
+const updatePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const { title, content } = req.body;
+    const image = req.file ? req.file.path : null;
+
+    const updatedPost = await Post.findByIdAndUpdate(postId,{ title, content, image },{ new: true });
+
+    if (!updatedPost) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    return res.json(updatedPost);
+  } catch (error) {
+    console.error('Error updating post:', error);
+    return res.status(500).json({ error: 'An error occurred while updating the post.' });
+  }
+};
+
+
+
 // Function to like a post
  const likePost = async (req, res) => {
   try {
@@ -200,28 +222,6 @@ const removeLike = async (req, res) => {
     }
   };
 
-  // Update post
-const updatePost = async (req, res) => {
-  try {
-    const postId = req.params.postId;
-    const { title, content } = req.body;
-
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { title, content },
-      { new: true }
-    );
-
-    if (!updatedPost) {
-      return res.status(404).json({ error: 'Post not found', postId });
-    }
-
-    res.json({ message: 'Post updated successfully', updatedPost });
-  } catch (error) {
-    console.error('Error updating post:', error);
-    res.status(500).json({ error: 'An error occurred while updating the post.' });
-  }
-};
 
 // Delete a post
 const deletePost = async (req, res) => {
@@ -257,6 +257,22 @@ const getPostsByUserId = async (req, res) => {
   }
 };
 
+// Fetch posts by userId
+const getPostBypostId = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const posts = await Post.find({ _id: postId });
+    if (!posts) {
+      return res.status(404).json({ message: 'No post found for this user.' });
+    }
+    res.json(posts);
+  } catch (error) {
+    console.error('Error fetching post by postIf:', error);
+    res.status(500).json({ error: 'An error occurred while fetching posts.' });
+  }
+};
+
 // get all posts
 const getAllPosts = async (req, res) => {
   try {
@@ -279,6 +295,7 @@ export default{
     updatePost,
     deletePost,
     getPostsByUserId,
-    getAllPosts
+    getAllPosts,
+    getPostBypostId
 
 }

@@ -6,7 +6,8 @@ const initialState = {
   comments: [],
   loading: false,
   error: null,
-  posts: []
+  posts: [],
+  selectedPost: null
 };
 
 const issueSlice = createSlice({
@@ -31,6 +32,24 @@ const issueSlice = createSlice({
     setIssues: (state, action) => {
         state.issues=action.payload;
       },
+      addLike: (state, action) => {
+        const { postId, userId } = action.payload;
+        const post = state.posts.find((post) => post.id === postId);
+        if (post) {
+          if (!post.likes.includes(userId)) {
+            post.likes.push(userId);
+          } else {
+            post.likes = post.likes.filter((id) => id !== userId);
+          }
+        }
+      },
+      addComment: (state, action) => {
+        const { postId, comment } = action.payload;
+        const post = state.posts.find((post) => post.id === postId);
+        if (post) {
+          post.comments.push(comment);
+        }
+      },
     //   delete opened issue from middleman page
       removeAssignedIssue: (state, action)=>{
         const {issueId, status} = action.payload;
@@ -45,7 +64,9 @@ const issueSlice = createSlice({
       // initialize posts state
       setPosts: (state, action) => {
         state.posts = action.payload;
-    
+      },
+      selectPost: (state, action)=>{
+        state.selectedPost = action.payload;
       },
     
     // Assign an issue to staff

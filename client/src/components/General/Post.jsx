@@ -1,10 +1,10 @@
 import { AiOutlineDelete, AiOutlineHeart } from 'react-icons/ai'
 import { BiMessageRounded } from 'react-icons/bi'
 import { FiEdit } from 'react-icons/fi'
+import { Link } from 'react-router-dom';
 
 
 function Post({posts}) {
-  console.log(posts)
 
   return (
     <div>
@@ -27,13 +27,14 @@ function Post({posts}) {
             </div>
             <div className='flex gap-5 p-7 pb-3'>
                 <div><BiMessageRounded className='text-xl cursor-pointer'/></div>
-                <div><FiEdit className='text-xl cursor-pointer' cursor-pointer /></div>
+                <Link to={`/Home/staff-update-post/${post._id ? post._id : post.post._id}`}>
+                   <div ><FiEdit className='text-xl cursor-pointer' cursor-pointer /></div>
+                </Link>
                 <div><AiOutlineHeart className='text-xl cursor-pointer'/></div>
                 <div><AiOutlineDelete className='text-red-500 text-xl cursor-pointer' /></div>
             </div>
         </div>
-          ))
-        )}
+          )))}
      
         </div>
     </div>

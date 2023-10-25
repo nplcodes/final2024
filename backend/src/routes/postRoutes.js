@@ -13,9 +13,10 @@ router.post('/comment/:postId', postController.addComment);
 router.post('/like/:postId', postController.addLike);
 router.delete('/dislike/:postId', postController.removeLike);
 router.get('/comments/:postId', postController.getCommentsForPost);
-router.put('/:postId', postController.updatePost);
+router.put('/update/:postId', postController.updatePost);
 router.delete('/:postId', postController.deletePost);
 router.get('/posts/:postedBy', postController.getPostsByUserId);
+router.get('/singlepost/:postId', postController.getPostBypostId);
 router.get('/', postController.getAllPosts);
 
 

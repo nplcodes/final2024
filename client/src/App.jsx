@@ -28,6 +28,7 @@ import CreatePost from './components/General/CreatePost';
 import { useEffect, useState } from 'react';
 import StaffPage from './components/Staff/staffPage';
 import MyStaffPage from './components/Staff/MyStaffPage';
+import UpdatePost from './components/General/UpdatePost'
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -66,6 +67,8 @@ const App = () => {
           <Route path="staf-post" element={<CreatePost />} />
           <Route path="timeslots" element={<TimeSlots />} />
           <Route path="staff-issue-page" element={<MyStaffPage />} />
+          <Route path="staff-update-post/:postId" element={<UpdatePost />} />
+
            {/* Middleman page */}
           <Route path="admin/manage" element={<ManageSystem />} />
           <Route path="admin/users" element={<Users />} />

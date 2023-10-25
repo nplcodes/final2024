@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import {  useDispatch, useSelector } from 'react-redux';
-import { issueActions } from '../../redux/issue/issueSlice';
-
 
 function UpdatePost() {
-  const dispatch = useDispatch();
-  const {postId} = useParams()
-  const post = useSelector((state)=> state.issue.selectedPost);
+  const { postId } = useParams();
 
   const [postData, setPostData] = useState({
-    title: post[0].title,
-    content: post[0].content,
-    image: post[0].image
-  })
-
-
+    title: '',
+    content: '',
+    image: null,
+  });
 
   useEffect(() => {
-      axios
-        .get(`http://localhost:8080/post/singlepost/${postId}`)
-        .then((response) => {
-            dispatch(issueActions.selectPost(response.data))
-        })
-        .catch((error) => {
-          console.error('Error fetching posts:', error);
-        });
-    },
-   [postId, dispatch]);
+    axios
+      .get(`http://localhost:8080/post/singlepost/${postId}`)
+      .then((response) => {
+        const post = response.data[0];
 
+        setPostData({
+          title: post.title,
+          content: post.content,
+          image: post.image,
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching post data:', error);
+      });
+  }, [postId]);
 
   const handleTitleChange = (e) => {
     setPostData({
@@ -60,10 +57,19 @@ function UpdatePost() {
     formData.append('content', postData.content);
     formData.append('image', postData.image);
 
+
+    try {
+       const res =  await axios.put(`http://localhost:8080/post/update/${postId}`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        console.log(res.data)
+  
+      } catch (error) {
+        console.error('Error updating post:', error);
+      }
+
   };
-
-
-
+ 
   return (
     <div className='grid grid-cols-1 grid-rows-1 p-32 pt-10'>
       <form onSubmit={handleSubmit}>
@@ -71,8 +77,8 @@ function UpdatePost() {
           <div className='flex flex-col gap-2'>
             <label>Post Title</label>
             <input
-              type="text"
-              value=''
+              type='text'
+              value={postData.title}
               onChange={handleTitleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="John"
@@ -83,9 +89,8 @@ function UpdatePost() {
           <div className='flex flex-col gap-2'>
             <label>Post Content</label>
             <textarea
-              rows="10"
-              cols="60"
-              value=''
+              rows='10'
+              value={postData.content}
               onChange={handleContentChange}
               placeholder='Text ...'
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -95,21 +100,18 @@ function UpdatePost() {
             <div class="flex w-full items-center pt-5">
               <div class="rounded-md border border-gray-100 bg-white p-4 shadow-md">
                 <label for="upload" class="flex flex-col items-center gap-2 cursor-pointer">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 fill-white stroke-indigo-500" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span class="text-gray-600 font-medium">Upload file</span>
+                  {/* Your file upload input */}
+                  <input value={postData.image} id="upload" type="file" name='image' accept="image/*" onChange={handleImageChange} />
                 </label>
-                <input id="upload" type="file" name='image' accept="image/*" onChange={handleImageChange} />
               </div>
             </div>
           </div>
           <div className='pt-5'>
             <button
               type='submit'
-              className="bg-blue-500 hover-bg-blue-600 text-white font-semibold py-1 px-6 rounded-md"
+              className='bg-blue-500 hover-bg-blue-600 text-white font-semibold py-1 px-6 rounded-md'
             >
-              Post
+              Update
             </button>
           </div>
         </div>

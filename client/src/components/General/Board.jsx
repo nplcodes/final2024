@@ -1,18 +1,56 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PiDotsThreeOutlineThin } from "react-icons/pi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
 import { RxShare2 } from "react-icons/rx";
 import { BsSend } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { issueActions } from '../../redux/issue/issueSlice';
+
+
+
 function Board() {
+    const posts = useSelector((state)=> state.issue.posts)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+          axios
+            .get(`http://localhost:8080/post`)
+            .then((response) => {
+              dispatch(issueActions.setPosts(response.data));
+            })
+            .catch((error) => {
+              console.error('Error fetching posts:', error);
+            });
+        
+      }, [dispatch]);
+
+
+    //   Likes and comment on post
+
+      const handleLike = () => {
+        // dispatch(issueActions.addLike({ postId: post.id, userId: userId }));
+        console.log("like")
+      };
+    
+      const handleComment = (comment) => {
+        // dispatch(issueActions.addComment({ postId: post.id, comment }));
+        console.log("comment")
+      };
+
   return (
     <div className='Wrapper flex justify-center pt-10'>
         <div className='grid grid-cols-10 max-w-[70%] '>
-        <div className='grid col-span-6 '>
-            <div className='flex justify-between p-2'>
+        {posts.length === 0 ? (
+             <p>No posts available</p>
+            ) : (
+             posts.map((post) => (
+        <div className='grid col-span-6 pb-5'>
+            <div className='flex  p-2'>
                 <div className='flex items-center gap-3'>
                     <img  className="w-10 h-10 rounded-full" src="https://media.istockphoto.com/id/938709362/photo/portrait-of-a-girl.webp?s=2048x2048&w=is&k=20&c=GAKRAkeiut6MTnyYbrIhwSyq_bPbq49YqgpK7JWpvno=" alt="poster" />
-                    <p>Luis 2min</p>
+                    <p>{post.title}</p>
                 </div>
                 <div>
                     <span className='cursor-pointer'><PiDotsThreeOutlineThin /></span>
@@ -23,8 +61,8 @@ function Board() {
             </div>
             <div className='footer'>
                 <div className='flex gap-3 text-xl pt-2 pb-2'>
-                    <span className='cursor-pointer'><AiOutlineHeart /></span>
-                    <span className='cursor-pointer'><GoCommentDiscussion /></span>
+                    <span onClick={handleLike}  className='cursor-pointer'><AiOutlineHeart /></span>
+                    <span onClick={handleComment} className='cursor-pointer'><GoCommentDiscussion /></span>
                     <span className='cursor-pointer'><RxShare2 /></span>
                 </div>
                 <div className='flex gap-1'>
@@ -38,6 +76,7 @@ function Board() {
                 
             </div>
         </div>
+             )))}
         <div className='grid col-span-4'>
             <div>
                <p>Notifications</p>
