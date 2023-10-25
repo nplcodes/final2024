@@ -34,7 +34,7 @@ const issueSlice = createSlice({
       },
       addLike: (state, action) => {
         const { postId, userId } = action.payload;
-        const post = state.posts.find((post) => post.id === postId);
+        const post = state.posts.find((post) => post._id === postId);
         if (post) {
           if (!post.likes.includes(userId)) {
             post.likes.push(userId);

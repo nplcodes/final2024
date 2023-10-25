@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PiDotsThreeOutlineThin } from "react-icons/pi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { GoCommentDiscussion } from "react-icons/go";
@@ -13,6 +13,8 @@ import { issueActions } from '../../redux/issue/issueSlice';
 function Board() {
     const posts = useSelector((state)=> state.issue.posts)
     const dispatch = useDispatch();
+    const [userId, setUserId] = useState(null)
+
 
     useEffect(() => {
           axios
@@ -29,15 +31,25 @@ function Board() {
 
     //   Likes and comment on post
 
-      const handleLike = () => {
-        // dispatch(issueActions.addLike({ postId: post.id, userId: userId }));
-        console.log("like")
+    const handleLike = async(postId, userId) => {
+        try {
+            await axios.post(`http://localhost:8080/post/like/${postId}`, { userId });
+            dispatch(issueActions.addLike({ postId: postId, userId: userId }));
+          } catch (error) {
+            console.error('Error liking post:', error);
+          }
       };
     
-      const handleComment = (comment) => {
-        // dispatch(issueActions.addComment({ postId: post.id, comment }));
-        console.log("comment")
-      };
+
+      useEffect(() => {
+        const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+        
+        if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+          setUserId(storedUserInfo.user._id);
+        } else {
+            //
+        }
+      }, []);
 
   return (
     <div className='Wrapper flex justify-center pt-10'>
@@ -60,13 +72,13 @@ function Board() {
                 <img  className=" flex pt-3 w-[80%]  h-[400px] object-fit" src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?auto=format&fit=crop&q=80&w=1856&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="body" />
             </div>
             <div className='footer'>
-                <div className='flex gap-3 text-xl pt-2 pb-2'>
-                    <span onClick={handleLike}  className='cursor-pointer'><AiOutlineHeart /></span>
-                    <span onClick={handleComment} className='cursor-pointer'><GoCommentDiscussion /></span>
-                    <span className='cursor-pointer'><RxShare2 /></span>
-                </div>
+            <div className='flex gap-3 text-xl pt-2 pb-2'>
+                <div onClick={() => handleLike(post._id, userId)} className='cursor-pointer'><AiOutlineHeart /></div>
+                <span className='cursor-pointer'><GoCommentDiscussion /></span>
+                <span className='cursor-pointer'><RxShare2 /></span>
+            </div>
                 <div className='flex gap-1'>
-                    <p>20 likes</p>
+                    <p>{post.likes.length} likes</p>
                     <div>10 comments</div>
                 </div>
                 <div className='relative'>
