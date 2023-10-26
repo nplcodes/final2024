@@ -45,7 +45,7 @@ const issueSlice = createSlice({
       },
       addComment: (state, action) => {
         const { postId, comment } = action.payload;
-        const post = state.posts.find((post) => post.id === postId);
+        const post = state.posts.find((post) => post._id === postId);
         if (post) {
           post.comments.push(comment);
         }

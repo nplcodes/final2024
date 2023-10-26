@@ -102,8 +102,7 @@ const updatePost = async (req, res) => {
  const commentOnPost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { content } = req.body;
-    const { user } = req; // Assuming user is authenticated
+    const { content, userId } = req.body;
 
     const post = await Post.findById(id);
 
@@ -113,7 +112,7 @@ const updatePost = async (req, res) => {
 
     const newComment = {
       content,
-      user: user._id,
+      user: userId,
     };
 
     post.comments.push(newComment);
