@@ -29,6 +29,7 @@ import { useEffect, useState } from 'react';
 import StaffPage from './components/Staff/staffPage';
 import MyStaffPage from './components/Staff/MyStaffPage';
 import UpdatePost from './components/General/UpdatePost'
+import ReadPost from './components/General/ReadPost';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<AccountSettings />} />
           <Route path="general-board" element={<Board />} />
+          <Route path="read/:postId" element={<ReadPost />} />
           <Route path="staff" element={<StaffMembers />} />
           <Route path="hero" element={<HeroSectionStudent />} />
           <Route path="issue-list" element={<IssuesList />} />

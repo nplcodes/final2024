@@ -7,6 +7,7 @@ import { issueActions } from '../../redux/issue/issueSlice'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
+import {Link} from 'react-router-dom'
 
 export default function SinglePost({ post }) {
       const dispatch = useDispatch();
@@ -73,7 +74,7 @@ export default function SinglePost({ post }) {
             </div>
                 <div className='flex gap-1'>
                     <p>{post?.likes?.length} likes</p>
-                    <div>{post?.comments?.length} comments</div>
+                   <Link to={`/Home/read/${post._id}`}> <div>{post?.comments?.length} comments</div></Link>
                 </div>
                 <div className='relative'>
                     {boxOpen && 
