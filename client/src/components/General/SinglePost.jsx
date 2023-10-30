@@ -1,7 +1,6 @@
 import { AiFillHeart } from 'react-icons/ai'
 import { BsSend } from 'react-icons/bs'
 import { GoCommentDiscussion } from 'react-icons/go'
-import { PiDotsThreeOutlineThin } from 'react-icons/pi'
 import { RxShare2 } from 'react-icons/rx'
 import { issueActions } from '../../redux/issue/issueSlice'
 import axios from 'axios'
@@ -54,14 +53,12 @@ export default function SinglePost({ post }) {
     
   return (
         <div className='grid col-span-6 pb-5'>
-            <div className='flex  p-2'>
+            <div className='flex  p-2 w-full'>
                 <div className='flex items-center gap-3'>
                     <img  className="w-10 h-10 rounded-full" src="https://media.istockphoto.com/id/938709362/photo/portrait-of-a-girl.webp?s=2048x2048&w=is&k=20&c=GAKRAkeiut6MTnyYbrIhwSyq_bPbq49YqgpK7JWpvno=" alt="poster" />
                     <p>{post.title} </p>
                 </div>
-                <div>
-                    <span className='cursor-pointer'><PiDotsThreeOutlineThin /></span>
-                </div>
+                <hr />
             </div>
             <div className='rounded-md'>
                 <img  className=" flex pt-3 w-[80%]  h-[400px] object-fit" src={`http://localhost:8080/${post.image}`} alt="body" />

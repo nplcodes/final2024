@@ -1,4 +1,4 @@
-import { GrAlarm, GrUserSettings } from "react-icons/gr";
+import { GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle, BsPeople } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
+import { LiaAllergiesSolid } from 'react-icons/lia'; // Replace 'fa' with the icon library of your choice
+
 
 const Sidebar = ({ isSidebarOpen }) => {
   const userInfo = useSelector((state)=> state.auth.user);
@@ -91,7 +93,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         {userInfo.role === 'staff' && (
         <Link to="/Home/timeslots" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <GrAlarm className="text-xl" />
+            <LiaAllergiesSolid className="text-xl" />
           </div>
         </Link>
         )}

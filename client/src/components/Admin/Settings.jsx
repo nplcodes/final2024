@@ -30,10 +30,6 @@ function AccountSettingsAdmin() {
 
   return (
     <div className='p-10'>
-      <div>
-        <p className='text-blue-500 text-2xl'>Account Settings</p>
-      </div>
-
       <div className='w-full flex p-10'>
         <div className='min-w-[20%] h-full flex flex-col items-center pt-10 gap-2'>
           <p
@@ -56,7 +52,7 @@ function AccountSettingsAdmin() {
           </p>
         </div>
 
-        <div className='w-[80%] h-auto bg-white border p-4'>
+        <div className='w-[80%] h-auto bg-white border-l border-t p-4'>
           {renderSettingContent()}
         </div>
       </div>

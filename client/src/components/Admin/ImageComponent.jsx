@@ -16,7 +16,7 @@ function ImageComponent() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+    <div className="max-w-md mt-1 p-6 bg-white rounded-lg shadow-xl">
       <h2 className="text-2xl mb-4 pb-7">Edit Profile Image</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
