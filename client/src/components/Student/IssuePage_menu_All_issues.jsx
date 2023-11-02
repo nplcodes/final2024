@@ -14,6 +14,8 @@ function IssuePageMenuAllIssues() {
     const dispatch = useDispatch();
     const studentIssues = useSelector((state) => state.issue.issues);
     const [reporterId, setUserId] = useState(null);
+    const comments = useSelector((state) => state.issue.comments);
+
 
     useEffect(() => {
         const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
@@ -24,7 +26,6 @@ function IssuePageMenuAllIssues() {
             //
         }
       }, []);
-
 
       useEffect(() => {
         if (reporterId) {
@@ -42,12 +43,31 @@ function IssuePageMenuAllIssues() {
         }
       }, [dispatch, reporterId]);
 
+      function formatDate(dateString) {
+        const originalDate = new Date(dateString);
+        const day = originalDate.getDate(); // Get the day of the month (1-31)
+        const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+        return `${day}, ${time}`;
+      }
+
+      useEffect(()=>{
+          axios.get(`http://localhost:8080/auth/staffs/single/${studentIssues[0].assignedTo}`)
+          .then((response)=>{
+            dispatch(issueActions.setAssignedTo(response.data))
+          })
+          .catch((error)=>{
+            console.log(error)
+          })
+
+      }, [dispatch,studentIssues])
+
   return (
     <div>
-      <p className='pb-3 font-bold'>My issues page</p>
+      <p className='pb-3 font-bold text-xl'>My Concerns page</p>
       {studentIssues.map((issue) => (
         <div className='max-h-60 overflow-y-auto'>
-          <div className='flex flex-row justify-between p-10 mb-1 border-b border-b-1'>
+          <div className='flex flex-row justify-between p-10 mb-1'>
           <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}>
             <div className='flex gap-5'>
               <div className='text-red-500 text-4xl'><BsDot /></div>
@@ -55,19 +75,22 @@ function IssuePageMenuAllIssues() {
               <div>
                 <p className='text-xl pb-2 font-semibold italic'>{issue.category}</p>
                 <div className='flex gap-2'>
-                  <p className='text-slate-500'>{issue.reporterName} Admin</p>
+                  <p className='text-slate-500'>
+                  </p>
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
-                  <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />{issue.dateReported}</p>
+                  <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />{formatDate(issue.dateReported)}</p>
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
-                  <p className='flex items-center gap-2 text-slate-500'> <BiMessage />{issue.comments} Comments</p>
+                  <p className='flex items-center gap-2 text-slate-500'> <BiMessage />({comments?.length}) Comments</p>
                 </div>
               </div>
             </div>
             </Link>
-            <div className='flex  gap-4'>
+            <div className=''>
               <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}><p className='cursor-pointer'><BsEye /></p></Link>
               <Link to={`/Home/update-issue/${issue._id}`}><p className='cursor-pointer'><BiCommentEdit /></p></Link>
-              <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+              <Link to='#'>
+                 <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+              </Link>
             </div>
           </div>
         </div>
@@ -75,5 +98,4 @@ function IssuePageMenuAllIssues() {
     </div>
   )
 }
-
 export default IssuePageMenuAllIssues;

@@ -47,9 +47,9 @@ function IssuePage() {
         </div>
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
-            <div className='pb-10'>
+            {/* <div className='pb-10'>
                 <p className='text-blue-500'>Role: {userInfo?.user?.position} </p>
-            </div>
+            </div> */}
             {renderMenuSelection()}
 
         </div>

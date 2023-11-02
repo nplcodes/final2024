@@ -1,49 +1,149 @@
-import React from 'react';
-import {AiOutlineSend} from 'react-icons/ai'
+import { AiFillCheckSquare} from 'react-icons/ai'
+import React, { useEffect, useState } from 'react';
+import {  useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { issueActions } from '../../../redux/issue/issueSlice';
+import { BsSend } from 'react-icons/bs';
+
 
 function MyTimeSlots() {
+  const { issueId } = useParams();
+  const dispatch = useDispatch();
+  const issueDetails = useSelector((state) => state.issue.studentIssues);
+  const comments = useSelector((state) => state.issue.comments);
+  const assignedTo = useSelector((state) => state.issue.assignedTo);
+
+
+  // State for the comment form
+  const [reporter, setReporter]  = useState([]);
+  const [content, setComment] = useState('');
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const fetchIssueDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
+        const issueData = response.data;
+        dispatch(issueActions.getIssueDetails(issueData));
+        // reporter name
+        const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
+        setReporter(reporterInfo.data)
+        console.log(reporterInfo.data)
+
+      } catch (error) {
+        console.error('Error fetching issue details:', error);
+      }
+    };
+
+    fetchIssueDetails();
+  }, [dispatch, issueId]);
+
+  useEffect(() => {
+    // Fetch user ID from localStorage
+    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserId(storedUserInfo.user._id);
+    } else {
+      console.log('Failed to fetch userID');
+    }
+  }, []);
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post(`http://localhost:8080/comment/new-comment/${issueId}`, {
+        content,
+        userId,
+      });
+    setComment('');
+    setUserId('');  
+
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/comment/view-comment/${issueId}`);
+        const commentData = response.data;
+        dispatch(issueActions.commentsOnIssue(commentData));
+
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    fetchComments();
+  }, [dispatch, issueId]);
+
+  function formatDate(dateString) {
+    const originalDate = new Date(dateString);
+    const day = originalDate.getDate(); // Get the day of the month (1-31)
+    const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+    return `${day}, ${time}`;
+  }
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">
         <div className="border p-5">
-          <p className="text-2xl font-bold pb-3">Stuff and Student conversation</p>
-          <p className='text-xs'>And your feedback for mostafajur project by signing up or signing in</p>
+          <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
+          <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
         </div>
         <div className="p-4 border">
           {/* Existing comments */}
-          <div className="flex gap-2 p-2">
+          <p>Comments ....({comments.length})</p>
+          {Array.isArray(comments) && comments.map((comment) => (
+
+          <div className="flex gap-2 p-2" key={comment._id} >
             <img
               className="w-8 h-8 rounded-full"
               src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
               alt=""
             />
             <div>
-              <p className="font-bold">Madson Kenny <span className="text-gray-300 text-xs">Nov 24, 2023</span></p>
-              <p className="text-xs text-gray-500">Amazing work :)</p>
+              <p className="font-bold">{comment.user.username}<span className="text-gray-300 text-xs pl-10">{formatDate(comment.datePosted)}</span></p>
+              <p className="text-xs text-gray-500">{comment.content}</p>
             </div>
           </div>
-
-          <div className="flex gap-2 p-2 pb-5">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?auto=format&fit=crop&q=80&w=1641&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-            />
-            <div>
-              <p className="font-bold">Don Pacson <span className="text-gray-300 text-xs">Oct 10, 2023</span></p>
-              <p className="text-xs text-gray-500">We are good!</p>
-            </div>
-          </div>
+          ))}
 
           {/* Comment Field */}
           <div className="flex gap-2 p-2">
-            <div>
-            <input
-              type='text'
-              placeholder='Add a comment...'
-              className=' p-2 w-full focus:border-none border-none'
-            />
-              <AiOutlineSend />
+            <div className='mt-3'>
+              <form onSubmit={handleCommentSubmit}>
+                <div>
+                  <textarea
+                    required
+                    onChange={(e) => setComment(e.target.value)}
+                    name="comments"
+                    id=""
+                    className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
+                    placeholder="Type your comment ...."
+                  ></textarea>
+                </div>
+                <div>
+                  <input type="text" value={userId} hidden />
+                </div>
+                <div className="p-3">
+                  <button
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 sm rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none"
+                  >
+                    <BsSend />
+                  </button>
+                </div>
+              </form>
+            <div className='flex gap-3 items-center'>
+               <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
+              <p>want to close issue?</p>
+            </div>
+
             </div>
           </div>
         </div>
@@ -53,8 +153,8 @@ function MyTimeSlots() {
         <div className="p-4 border flex gap-3 mb-5">
           <img className='w-20 h-20 rounded-md' src="https://media.istockphoto.com/id/1386479313/photo/happy-millennial-afro-american-business-woman-posing-isolated-on-white.jpg?s=2048x2048&w=is&k=20&c=JecbHiBxM7ZzAADbPkqJuvNoCs3uO2VrK2LmrSpm3Ek=" alt="" />
           <div>
-            <p className='text-xl font-bold'>Leon Don</p>
-            <p className='text-xs text-gray-500'>Student</p>
+            <p className='text-xl font-bold'>{reporter.fullName}</p>
+            <p className='text-xs text-gray-500'>{reporter.role}</p>
             <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover:bg-black'>More info</button>
           </div>
         </div>
@@ -62,8 +162,8 @@ function MyTimeSlots() {
         <div className="p-4 border flex gap-3">
           <img className='w-20 h-20 rounded-md' src="https://media.istockphoto.com/id/1338134336/photo/headshot-portrait-african-30s-man-smile-look-at-camera.jpg?s=2048x2048&w=is&k=20&c=dfjN29cr1CyEzhR0RgRjCWSNMpSrLAKsZzMn_K9Aalo=" alt="" />
           <div>
-            <p className='text-xl font-bold'> Muneza John</p>
-            <p className='text-xs text-gray-500'> Admin - Staff</p>
+            <p className='text-xl font-bold'> {assignedTo[0].role} </p>
+            <p className='text-xs text-gray-500'> {assignedTo[0].position}</p>
               <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover:bg-black'>More info</button>
           </div>
           <div>
@@ -76,7 +176,8 @@ function MyTimeSlots() {
             <li>identity</li>
             <li>Ikibari</li>
           </div>
-          <input type='file'  className='mt-3'/>
+          <input type='file' className='mt-3'/>
+          <button className='mt-3 bg-blue-500 text-white p-1 rounded-md font-bold'>Attach file</button>
         </div>
       </div>
     </div>

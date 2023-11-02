@@ -12,7 +12,7 @@ function StaffPage() {
   
 
   const issues = allIssues.filter((issue) => issue.status === 'open');
-  const total_number_issues = issues.length()
+  const total_number_issues = issues.length
   const Allissues = allIssues.filter((issue) => issue.status === 'assigned');
   const recentIssues = Allissues.slice(0, 3);
 

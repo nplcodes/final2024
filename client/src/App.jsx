@@ -7,7 +7,6 @@ import RegisterForm from './pages/Register';
 import Dashbord from './pages/Dashbord';
 import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
-import ManageIssue from './components/Student/ManageIssue';
 import UpdateIssue from './components/Student/updateIssue';
 import StaffMembers from './components/Student/StaffMembers';
 import AccountSettings from './components/Student/AccountSettings';
@@ -61,13 +60,13 @@ const App = () => {
           <Route path="hero" element={<HeroSectionStudent />} />
           <Route path="issue-list" element={<IssuesList />} />
           <Route path="issue-page" element={!isLoggedIn ? <Navigate to="/" /> : <IssuePage />} />
-          <Route path="manage-issue/:issueId" element={<ManageIssue />} />
+          <Route path="manage-issue/:issueId" element={<TimeSlots />} />
           {/* Staff  page */}
           <Route path="staff-home" element={<StaffHomePage />} />
           <Route path="staff-book-list" element={<Appointments />} />
           <Route path="staff-notifications" element={<Notifications />} />
           <Route path="staf-post" element={<CreatePost />} />
-          <Route path="timeslots" element={<TimeSlots />} />
+          <Route path="timeslots/:issueId" element={<TimeSlots />} />
           <Route path="staff-issue-page" element={<MyStaffPage />} />
           <Route path="staff-update-post/:postId" element={<UpdatePost />} />
 

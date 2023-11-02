@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlineStar } from 'react-icons/ai';
+import { CiChat2 } from 'react-icons/ci';
 import { SlCalender } from 'react-icons/sl';
 import CreateNewSlot from './timeslots/CreateNewSlot';
 import MyTimeSlots from './timeslots/MyTimeSlots';
@@ -27,7 +27,7 @@ function TimeSlots() {
       <div className="flex pt-3">
         <div className="w-32 flex flex-col items-center gap-2 pt-10 ">
           <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 text-white bg-blue-500 hover:text-white" onClick={() => handleSettingClick('my-slots')}>
-            <AiOutlineStar />
+            <CiChat2 />
           </p>
           <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white" onClick={() => handleSettingClick('create-new-slot')}>
             <SlCalender />

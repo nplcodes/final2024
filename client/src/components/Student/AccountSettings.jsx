@@ -62,7 +62,7 @@ function AccountSettings() {
 
   return (
     <div className='flex gap-3 p-12'>
-         <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col justify-center items-center shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+         <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col">
                 <div className="mb-8">
                     <img className="object-center object-cover rounded-md h-36 w-36" src="https://police.gov.rw/fileadmin/user_upload/gumira.jpg" alt="qw" />
                 </div>
@@ -170,15 +170,14 @@ function AccountSettings() {
                         </select>
                         </div>
                     </div>
-                    <button
-                        type="submit"
-                        className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 focus:outline-none focus:shadow-outline max-w-[100px]"
-                    >
-                        Edit
-                    </button>
-                    <p>
-                        <Link to='/Home/manage-issue' className='text-blue-500'>Back</Link>
-                    </p>
+                    <div className='flex gap-3'>
+                        <button
+                            type="submit"
+                            className="bg-blue-400 w-16 hover:bg-blue-500 text-white font-bold  focus:outline-none focus:shadow-outline "
+                        >
+                            Edit
+                        </button>
+                    </div>
                     </form>
                 </div>
             </div>
