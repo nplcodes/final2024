@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post('/new-issue', issueController.createIssue);
 router.put('/assign/:issueId', issueController.updateAssignedTo);
+router.put('/escalate/:issueId', issueController.EscalateIssue);
 router.put('/edit/:id',upload.single('attachments'), issueController.updateIssue);
 // router.delete('/delete/:id', issueController.deleteIssue);
 router.put('/reject-issue/:id', issueController.rejectIssue);

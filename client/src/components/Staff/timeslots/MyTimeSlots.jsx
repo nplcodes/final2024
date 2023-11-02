@@ -12,6 +12,7 @@ function MyTimeSlots() {
   const dispatch = useDispatch();
   const issueDetails = useSelector((state) => state.issue.studentIssues);
   const comments = useSelector((state) => state.issue.comments);
+  const assignedToInfo = useSelector((state) => state.issue.assignedToInfo);
   const assignedTo = useSelector((state) => state.issue.assignedTo);
 
 
@@ -29,7 +30,6 @@ function MyTimeSlots() {
         // reporter name
         const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
         setReporter(reporterInfo.data)
-        console.log(reporterInfo.data)
 
       } catch (error) {
         console.error('Error fetching issue details:', error);
@@ -87,6 +87,18 @@ function MyTimeSlots() {
   
     return `${day}, ${time}`;
   }
+// Fetch assigned staff info
+  useEffect(()=>{
+    axios.get(`http://localhost:8080/auth/staffs/single/${assignedTo}`)
+    .then((response)=>{
+      dispatch(issueActions.setAssignedToInfo(response.data))
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+
+}, [dispatch, assignedTo])
+
 
   return (
     <div className="grid grid-cols-3 gap-4">
@@ -162,8 +174,8 @@ function MyTimeSlots() {
         <div className="p-4 border flex gap-3">
           <img className='w-20 h-20 rounded-md' src="https://media.istockphoto.com/id/1338134336/photo/headshot-portrait-african-30s-man-smile-look-at-camera.jpg?s=2048x2048&w=is&k=20&c=dfjN29cr1CyEzhR0RgRjCWSNMpSrLAKsZzMn_K9Aalo=" alt="" />
           <div>
-            <p className='text-xl font-bold'> {assignedTo[0].role} </p>
-            <p className='text-xs text-gray-500'> {assignedTo[0].position}</p>
+            <p className='text-xl font-bold'>{assignedToInfo[0]?.role }</p>
+            <p className='text-xs text-gray-500'>{assignedToInfo[0]?.position }</p>
               <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover:bg-black'>More info</button>
           </div>
           <div>

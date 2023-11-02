@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { issueActions } from '../../redux/issue/issueSlice';
 import axios from 'axios';
 import { TbArrowBearRight2 } from "react-icons/tb";
+import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
 
 
 
@@ -42,6 +43,18 @@ function AllIssues() {
         }
       }, [dispatch, assignedToId]);
 
+      // pop up form settings
+      const handleIconClick = (issueId) => {
+        setSelectedIssueId(issueId);
+      };
+      
+      const handleClosePopUp = () => {
+        setSelectedIssueId(null);
+      };
+      // selected issue Id
+      const [selectedIssueId, setSelectedIssueId] = useState(null);
+
+
   return (
     <div>
       <p className='pb-3 font-bold'>My issues page</p>
@@ -65,7 +78,14 @@ function AllIssues() {
             </div>
             </Link>
             <div className='flex flex-col gap-1'>
-               <p className='cursor-pointer'><TbArrowBearRight2 /></p>
+            <TbArrowBearRight2 onClick={() => handleIconClick(issue._id)} className="cursor-pointer text-red-600 text-xl font-bold"
+            />
+              {selectedIssueId === issue._id && (
+              <MeetingAndEscalate
+                onClose={handleClosePopUp}
+                issueId={selectedIssueId}
+              />
+            )}
             </div>
           </div>
         </div>

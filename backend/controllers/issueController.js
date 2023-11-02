@@ -57,6 +57,23 @@ const updateAssignedTo = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   };
+  // Assign issue to Staff
+const EscalateIssue = async (req, res) => {
+  const { issueId } = req.params; 
+  const { assignedTo } = req.body;
+
+  try {
+    const issue = await Issue.findByIdAndUpdate(issueId, { assignedTo }, { new: true });
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    res.status(200).json(issue);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 // Student updae issue
 
 const updateIssue = async (req, res) => {
@@ -198,7 +215,8 @@ export default {
       getIssuesByReporterId,
       getAllIssues,
       deleteIssueById,
-      getIssuesByAssignedId
+      getIssuesByAssignedId,
+      EscalateIssue
 };
 
 

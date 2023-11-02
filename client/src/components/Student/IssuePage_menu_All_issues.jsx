@@ -45,22 +45,11 @@ function IssuePageMenuAllIssues() {
 
       function formatDate(dateString) {
         const originalDate = new Date(dateString);
-        const day = originalDate.getDate(); // Get the day of the month (1-31)
+        const day = originalDate.getDate(); 
         const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       
         return `${day}, ${time}`;
       }
-
-      useEffect(()=>{
-          axios.get(`http://localhost:8080/auth/staffs/single/${studentIssues[0].assignedTo}`)
-          .then((response)=>{
-            dispatch(issueActions.setAssignedTo(response.data))
-          })
-          .catch((error)=>{
-            console.log(error)
-          })
-
-      }, [dispatch,studentIssues])
 
   return (
     <div>
@@ -72,7 +61,7 @@ function IssuePageMenuAllIssues() {
             <div className='flex gap-5'>
               <div className='text-red-500 text-4xl'><BsDot /></div>
               <img className='w-10 h-10 rounded-full' src="https://www.shutterstock.com/image-illustration/male-default-placeholder-avatar-profile-260nw-582509551.jpg" alt={issue.title} />
-              <div>
+              <div onClick={()=> dispatch(issueActions.setAssignedTo(issue.assignedTo))}>
                 <p className='text-xl pb-2 font-semibold italic'>{issue.category}</p>
                 <div className='flex gap-2'>
                   <p className='text-slate-500'>

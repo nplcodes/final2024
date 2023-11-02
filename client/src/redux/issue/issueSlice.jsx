@@ -9,7 +9,8 @@ const initialState = {
   posts: [],
   selectedPost: null,
   singlePost: null,
-  assignedTo: null
+  assignedTo: null,
+  assignedToInfo: []
 };
 
 const issueSlice = createSlice({
@@ -75,6 +76,9 @@ const issueSlice = createSlice({
       },
       setAssignedTo: (state, action)=>{
         state.assignedTo = action.payload
+      },
+      setAssignedToInfo: (state, action)=>{
+        state.assignedToInfo = action.payload
       },
     
     // Assign an issue to staff

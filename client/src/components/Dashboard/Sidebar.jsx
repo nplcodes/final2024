@@ -104,6 +104,13 @@ const Sidebar = ({ isSidebarOpen }) => {
                     </div>
             </Link>
         )}
+                {userInfo.role === 'staff' && (
+            <Link to="/Home/admin/manage" className="text-gray-500">
+                    <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
+                      E-meeting
+                    </div>
+            </Link>
+        )}
       </div>
     </div>
   );

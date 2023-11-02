@@ -49,33 +49,9 @@ function StaffPage() {
 
   return (
     <div>
-      <header className="bg-blue-500 text-white p-20">
+      <header className="bg-blue-500 text-white p-5">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Manage upcomming</h1>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link to="/staff/home" className="hover:underline">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/staff/issues" className="hover:underline">
-                  Issues
-                </Link>
-              </li>
-              <li>
-                <Link to="/staff/profile" className="hover:underline">
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <Link to="/staff/settings" className="hover:underline">
-                  Settings
-                </Link>
-              </li>
-            </ul>
-          </nav>
         </div>
       </header>
       <div className="flex p-8">
