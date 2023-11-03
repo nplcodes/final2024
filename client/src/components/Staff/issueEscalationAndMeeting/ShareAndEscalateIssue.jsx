@@ -35,7 +35,7 @@ useEffect(() => {
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/escalate/${issueId}`, {assignedTo})
     .then((response)=>{
-        console.log("idiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",response.data)
+        console.log("",response.data)
     })
     .catch((error)=>{
         console.log(error)
@@ -70,7 +70,7 @@ useEffect(() => {
           </div>
           {/* Right Div */}
           <div className="w-1/2">
-            <p className="text-lg font-bold">Post Issue in discussion</p>
+            <p className="text-lg font-bold">Post in Chat Room</p>
             <form>
               <div className="mb-4">
                 <input

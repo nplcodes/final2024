@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
-import { LiaAllergiesSolid } from 'react-icons/lia'; // Replace 'fa' with the icon library of your choice
 
 
 const Sidebar = ({ isSidebarOpen }) => {
@@ -90,13 +89,6 @@ const Sidebar = ({ isSidebarOpen }) => {
                   <GrUserSettings className="text-xl" />
               </div>
         </Link>
-        {userInfo.role === 'staff' && (
-        <Link to="/Home/timeslots" className="text-gray-500">
-        <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <LiaAllergiesSolid className="text-xl" />
-          </div>
-        </Link>
-        )}
         {userInfo.role === 'admin' && (
             <Link to="/Home/admin/manage" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
@@ -105,9 +97,9 @@ const Sidebar = ({ isSidebarOpen }) => {
             </Link>
         )}
                 {userInfo.role === 'staff' && (
-            <Link to="/Home/admin/manage" className="text-gray-500">
+            <Link to="/Home/board-issues" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-                      E-meeting
+                      Board Chat
                     </div>
             </Link>
         )}

@@ -29,6 +29,8 @@ import StaffPage from './components/Staff/staffPage';
 import MyStaffPage from './components/Staff/MyStaffPage';
 import UpdatePost from './components/General/UpdatePost'
 import ReadPost from './components/General/ReadPost';
+import BoardChat from './components/General/BoardChat';
+import BoardIssuesTOChatOn from './components/General/BoardIssuesTOChatOn';
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -55,6 +57,9 @@ const App = () => {
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<AccountSettings />} />
           <Route path="general-board" element={<Board />} />
+          <Route path="staff-chatboard" element={<BoardChat />} />
+          <Route path="board-issues" element={<BoardIssuesTOChatOn />} />
+
           <Route path="read/:postId" element={<ReadPost />} />
           <Route path="staff" element={<StaffMembers />} />
           <Route path="hero" element={<HeroSectionStudent />} />
