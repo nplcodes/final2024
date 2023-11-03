@@ -57,7 +57,7 @@ const App = () => {
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<AccountSettings />} />
           <Route path="general-board" element={<Board />} />
-          <Route path="staff-chatboard" element={<BoardChat />} />
+          <Route path="staff-chatboard/:issueId" element={<BoardChat />} />
           <Route path="board-issues" element={<BoardIssuesTOChatOn />} />
 
           <Route path="read/:postId" element={<ReadPost />} />

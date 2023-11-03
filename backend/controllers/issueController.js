@@ -75,7 +75,7 @@ const EscalateIssue = async (req, res) => {
   }
 };
 
-  // Assign issue to Staff
+  // Send issue in cht Room
   const ShareIssueToChatRoom = async (req, res) => {
     const { issueId } = req.params;
   
@@ -91,6 +91,17 @@ const EscalateIssue = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   };
+
+  // Retrieve issue to be display in chatroom
+  const getAllIssuesInChatRoom = async (req, res) => {
+    try {
+      const Issues = await Issue.find({inChatRoom: true});
+      res.status(200).json(Issues);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
 // Student updae issue
 
 const updateIssue = async (req, res) => {
@@ -219,6 +230,54 @@ const getOpenIssues = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   };
+
+
+const addCommentInGroup = async (req, res) => {
+  try {
+    const { issueId } = req.params;
+    const { text, authorId } = req.body;
+
+    if (!issueId || !authorId) {
+      return res.status(400).json({ message: 'Invalid input data' });
+    }
+    const issue = await Issue.findById(issueId);
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+    const newComment = {
+      text,
+      author: authorId,
+    };
+    issue.groupComments.push(newComment);
+
+    await issue.save();
+
+    return res.status(201).json({ message: 'Comment added to the issue' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// fetch group comments
+
+const getCommentsByIssueId = async (req, res) => {
+  try {
+    const { issueId } = req.params;
+    const issue = await Issue.findById(issueId);
+
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+
+    const comments = issue.groupComments;
+
+    res.json(comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Failed to fetch comments' });
+  }
+}
   
   
 
@@ -234,7 +293,10 @@ export default {
       deleteIssueById,
       getIssuesByAssignedId,
       EscalateIssue,
-      ShareIssueToChatRoom
+      ShareIssueToChatRoom,
+      getAllIssuesInChatRoom,
+      addCommentInGroup,
+      getCommentsByIssueId
 };
 
 

@@ -10,7 +10,10 @@ const initialState = {
   selectedPost: null,
   singlePost: null,
   assignedTo: null,
-  assignedToInfo: []
+  chatRoomIssue: [],
+  IssueReporter: [],
+  groupComment: []
+
 };
 
 const issueSlice = createSlice({
@@ -77,9 +80,19 @@ const issueSlice = createSlice({
       setAssignedTo: (state, action)=>{
         state.assignedTo = action.payload
       },
-      setAssignedToInfo: (state, action)=>{
-        state.assignedToInfo = action.payload
+      setChatRoomIssue: (state, action)=>{
+        state.chatRoomIssue = action.payload
       },
+      setIssueReporter: (state, action)=>{
+        state.IssueReporter = action.payload
+      },
+      setGroupComment: (state, action)=>{
+        state.groupComment=(action.payload)
+      },
+      addGroupComment: (state, action) => {
+        state.groupComment.push(action.payload);
+      },
+  
     
     // Assign an issue to staff
     assignIssueToStaffStart: (state) => {

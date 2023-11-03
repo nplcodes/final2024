@@ -85,18 +85,6 @@ function MyTimeSlots() {
   
     return `${day}, ${time}`;
   }
-// // Fetch assigned staff info
-//   useEffect(()=>{
-//     axios.get(`http://localhost:8080/auth/staffs/single/${assignedTo}`)
-//     .then((response)=>{
-//       dispatch(issueActions.setAssignedToInfo(response.data))
-//     })
-//     .catch((error)=>{
-//       console.log(error)
-//     })
-
-// }, [dispatch, assignedTo])
-
 
   return (
     <div className="grid grid-cols-3 gap-4">

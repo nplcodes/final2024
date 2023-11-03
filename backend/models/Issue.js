@@ -13,6 +13,13 @@ const attachmentSchema = new mongoose.Schema({
   },
 });
 
+const commentSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+
 const issueSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -21,12 +28,14 @@ const issueSchema = new mongoose.Schema({
   reporter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   dateReported: { type: Date, default: Date.now },
   dateUpdated: { type: Date },
-  inChatRoom: {type: Boolean, default: false},
+  inChatRoom: { type: Boolean, default: false },
+  inDiscussion: { type: String, default: 'new' },
+  groupComments: [commentSchema], 
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
-  attachments: [attachmentSchema], // Array of attachment objects
+  attachments: [attachmentSchema], 
 }, {
-  timestamps: true} // Add timestamps
-);
+  timestamps: true,
+});
 
 const Issue = mongoose.model('Issue', issueSchema);
 
