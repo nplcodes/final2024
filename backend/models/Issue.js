@@ -21,6 +21,7 @@ const issueSchema = new mongoose.Schema({
   reporter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   dateReported: { type: Date, default: Date.now },
   dateUpdated: { type: Date },
+  inChatRoom: {type: Boolean, default: false},
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   attachments: [attachmentSchema], // Array of attachment objects
 }, {

@@ -41,6 +41,17 @@ useEffect(() => {
         console.log(error)
     })
   }
+  const HandleShare = async(e)=>{
+    e.preventDefault()
+    await axios.put(`http://localhost:8080/issue/share/${issue}`)
+    .then((response)=>{
+      console.log(response.data)
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+
+  }
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
@@ -78,15 +89,14 @@ useEffect(() => {
                   name="issue"
                   className="w-full rounded-md"
                   value={issue}
+                  hidden
                 ></input>
               </div>
               <button
                 className="bg-blue-500 text-white p-2 rounded-md w-full"
-                onClick={() => {
-                  // Handle the "Post" button click action here
-                }}
+                onClick={HandleShare}
               >
-                Post
+                Share
               </button>
             </form>
           </div>

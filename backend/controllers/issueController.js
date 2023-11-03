@@ -74,6 +74,23 @@ const EscalateIssue = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+  // Assign issue to Staff
+  const ShareIssueToChatRoom = async (req, res) => {
+    const { issueId } = req.params;
+  
+    try {
+      const issue = await Issue.findByIdAndUpdate(issueId, { inChatRoom: 'true' }, { new: true });
+  
+      if (!issue) {
+        return res.status(404).json({ message: 'Issue not found' });
+      }
+  
+      res.status(200).json(issue);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 // Student updae issue
 
 const updateIssue = async (req, res) => {
@@ -216,7 +233,8 @@ export default {
       getAllIssues,
       deleteIssueById,
       getIssuesByAssignedId,
-      EscalateIssue
+      EscalateIssue,
+      ShareIssueToChatRoom
 };
 
 
