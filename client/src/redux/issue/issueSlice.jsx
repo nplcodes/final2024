@@ -12,7 +12,7 @@ const initialState = {
   assignedTo: null,
   chatRoomIssue: [],
   IssueReporter: [],
-  groupComment: []
+  groupComment: [],
 
 };
 

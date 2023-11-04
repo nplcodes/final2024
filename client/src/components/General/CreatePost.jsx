@@ -13,7 +13,6 @@ function CreatePost() {
 
   useEffect(() => {
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setPostedBy(storedUserInfo.user._id);
     } else {

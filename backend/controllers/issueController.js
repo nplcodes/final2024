@@ -3,6 +3,8 @@ import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
 import Comment from '../models/Comment.js';
 import mongoose from 'mongoose';
+import User from '../models/User.js';
+
 
 
 const createIssue = async (req, res) => {
@@ -232,6 +234,32 @@ const getOpenIssues = async (req, res) => {
   };
 
 
+// const addCommentInGroup = async (req, res) => {
+//   try {
+//     const { issueId } = req.params;
+//     const { text, authorId } = req.body;
+
+//     if (!issueId || !authorId) {
+//       return res.status(400).json({ message: 'Invalid input data' });
+//     }
+//     const issue = await Issue.findById(issueId);
+//     if (!issue) {
+//       return res.status(404).json({ message: 'Issue not found' });
+//     }
+//     const newComment = {
+//       text,
+//       author: authorId,
+//     };
+//     issue.groupComments.push(newComment);
+
+//     await issue.save();
+
+//     return res.status(201).json(newComment);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
 const addCommentInGroup = async (req, res) => {
   try {
     const { issueId } = req.params;
@@ -240,24 +268,39 @@ const addCommentInGroup = async (req, res) => {
     if (!issueId || !authorId) {
       return res.status(400).json({ message: 'Invalid input data' });
     }
+
     const issue = await Issue.findById(issueId);
+
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
     }
+
     const newComment = {
       text,
       author: authorId,
     };
+
     issue.groupComments.push(newComment);
 
+    // Save the issue to ensure the new comment is added to the groupComments array
     await issue.save();
 
-    return res.status(201).json({ message: 'Comment added to the issue' });
+    // Fetch the user information of the comment's author
+    const authorInfo = await User.findById(authorId);
+
+    // Include user information in the response
+    const commentWithUserInfo = {
+      ...newComment,
+      authorInfo, // Include user information
+    };
+
+    return res.status(201).json(commentWithUserInfo); // Return the comment with user information
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 // fetch group comments
 

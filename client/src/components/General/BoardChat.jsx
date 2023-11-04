@@ -35,8 +35,6 @@ useEffect(() => {
 
 
 
-
-// fetch comments
 useEffect(() => {
   const fetchCommentsData = async () => {
     try {
@@ -44,18 +42,19 @@ useEffect(() => {
       if (response.status === 200) {
         const fetchedComments = response.data;
 
-        // Fetch user info for each comment's author
-        const commentsWithUserInfo = await Promise.all(
-          fetchedComments.map(async (comment) => {
-            const authorInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
-            const authorInfo = authorInfoResponse.data;
+        // Create an array of promises to fetch user info for each comment's author
+        const authorInfoPromises = fetchedComments.map(async (comment) => {
+          const authorInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
+          const authorInfo = authorInfoResponse.data;
 
-            return {
-              ...comment,
-              authorInfo,
-            };
-          })
-        );
+          return {
+            ...comment,
+            authorInfo,
+          };
+        });
+
+        // Wait for all author info promises to resolve
+        const commentsWithUserInfo = await Promise.all(authorInfoPromises);
 
         dispatch(issueActions.setGroupComment(commentsWithUserInfo));
       }
@@ -66,6 +65,7 @@ useEffect(() => {
 
   fetchCommentsData();
 }, [dispatch, issueId]);
+
 
 // save data
 const handleCommentSubmit = async (e) => {
@@ -94,6 +94,8 @@ const handleCommentSubmit = async (e) => {
   }
 };
 
+
+
   return (
     <div className="grid grid-cols-3 gap-4 pl-32 pt-10">
 
@@ -120,7 +122,7 @@ const handleCommentSubmit = async (e) => {
         </div>
         <div className="p-4 border">
           {/* Existing comments */}
-          <p className='pb-5'>Comments ....3</p>
+          <p className='pb-5'>({groupComments.length})Comments</p>
 
           {groupComments.map((comment, index) => (
           <div className="flex gap-2 p-2 pb-10" >
