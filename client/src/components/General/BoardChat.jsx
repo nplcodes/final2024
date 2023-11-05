@@ -1,13 +1,15 @@
 import { AiFillCheckSquare} from 'react-icons/ai'
 import { BsSend } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 function BoardChat() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const groupComments = useSelector((comments)=> comments.issue.groupComment)
 
@@ -42,7 +44,6 @@ useEffect(() => {
       if (response.status === 200) {
         const fetchedComments = response.data;
 
-        // Create an array of promises to fetch user info for each comment's author
         const authorInfoPromises = fetchedComments.map(async (comment) => {
           const authorInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
           const authorInfo = authorInfoResponse.data;
@@ -53,7 +54,6 @@ useEffect(() => {
           };
         });
 
-        // Wait for all author info promises to resolve
         const commentsWithUserInfo = await Promise.all(authorInfoPromises);
 
         dispatch(issueActions.setGroupComment(commentsWithUserInfo));
@@ -82,10 +82,9 @@ const handleCommentSubmit = async (e) => {
       console.log('Comment posted successfully');
       const newComment = response.data;
 
-      // Dispatch the addGroupComment action to update the groupComment array
       dispatch(issueActions.addGroupComment(newComment));
 
-      setCommentText(''); // Clear the comment input field
+      setCommentText('');
     } else {
       console.error('Failed to post comment');
     }
@@ -94,6 +93,20 @@ const handleCommentSubmit = async (e) => {
   }
 };
 
+// RemoveIssuefromGroup
+const RemoveIssuefromGroup = async(e)=>{
+  const issueId = currentIssue[0]._id;
+    e.preventDefault()
+    await axios.put(`http://localhost:8080/issue/remove/${issueId}`)
+    .then(()=>{
+      navigate('/Home/board-issues')
+    })
+    .catch(error =>{
+      console.log(error)
+    })
+
+  
+}
 
 
   return (
@@ -109,7 +122,7 @@ const handleCommentSubmit = async (e) => {
           </div>
         </div>
         <div className="p-4 border">
-          <p className='pb-3'>Staff who shared:</p>
+          <p className='pb-3'>Staff commented:</p>
           <div className=' flex pl-5'>
             <img className='w-10 h-10 rounded-full' src="https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?auto=format&fit=crop&q=80&w=1641&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
           </div>
@@ -125,7 +138,7 @@ const handleCommentSubmit = async (e) => {
           <p className='pb-5'>({groupComments.length})Comments</p>
 
           {groupComments.map((comment, index) => (
-          <div className="flex gap-2 p-2 pb-10" >
+          <div className="flex gap-2 p-2 pb-5" >
             <img
               className="w-8 h-8 rounded-full"
               src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
@@ -141,7 +154,6 @@ const handleCommentSubmit = async (e) => {
 
     </div>
 
-          {/* Comment Field */}
           <div className="flex gap-2 p-2">
             <div className='mt-3'>
             <form onSubmit={handleCommentSubmit}>
@@ -166,10 +178,12 @@ const handleCommentSubmit = async (e) => {
                   </button>
                 </div>
               </form>
-            <div className='flex gap-3 items-center'>
+              {currentIssue[0]?.assignedTo === userInfo?._id &&
+            <div className='flex gap-3 items-center cursor-pointer' onClick={RemoveIssuefromGroup}>
                <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
               <p>want to close issue?</p>
             </div>
+            }
             </div>
           </div>
         </div>

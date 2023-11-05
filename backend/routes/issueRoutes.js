@@ -11,9 +11,8 @@ router.post('/new-issue', issueController.createIssue);
 router.put('/assign/:issueId', issueController.updateAssignedTo);
 router.put('/escalate/:issueId', issueController.EscalateIssue);
 router.put('/share/:issueId', issueController.ShareIssueToChatRoom);
-
+router.put('/remove/:issueId', issueController.RemoveIssueToChatRoom);
 router.put('/edit/:id',upload.single('attachments'), issueController.updateIssue);
-// router.delete('/delete/:id', issueController.deleteIssue);
 router.put('/reject-issue/:id', issueController.rejectIssue);
 router.get('/view/:id', issueController.getIssueDetails);
 router.get('/reporter/:reporterId', issueController.getIssuesByReporterId);

@@ -38,7 +38,6 @@ function MyTimeSlots() {
   }, [dispatch, issueId]);
 
   useEffect(() => {
-    // Fetch user ID from localStorage
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setUserId(storedUserInfo.user._id);
@@ -141,7 +140,6 @@ function MyTimeSlots() {
                <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
               <p>want to close issue?</p>
             </div>
-
             </div>
           </div>
         </div>

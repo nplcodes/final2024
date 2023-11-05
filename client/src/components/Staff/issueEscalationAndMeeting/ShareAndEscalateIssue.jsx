@@ -41,6 +41,7 @@ useEffect(() => {
         console.log(error)
     })
   }
+  // Share issue to group chat
   const HandleShare = async(e)=>{
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/share/${issue}`)

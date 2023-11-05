@@ -77,12 +77,12 @@ const EscalateIssue = async (req, res) => {
   }
 };
 
-  // Send issue in cht Room
-  const ShareIssueToChatRoom = async (req, res) => {
+  // Remove issue in cht Room
+  const RemoveIssueToChatRoom = async (req, res) => {
     const { issueId } = req.params;
   
     try {
-      const issue = await Issue.findByIdAndUpdate(issueId, { inChatRoom: 'true' }, { new: true });
+      const issue = await Issue.findByIdAndUpdate(issueId, { inChatRoom: 'false' }, { new: true });
   
       if (!issue) {
         return res.status(404).json({ message: 'Issue not found' });
@@ -94,6 +94,22 @@ const EscalateIssue = async (req, res) => {
     }
   };
 
+    // Send issue in cht Room
+    const ShareIssueToChatRoom = async (req, res) => {
+      const { issueId } = req.params;
+    
+      try {
+        const issue = await Issue.findByIdAndUpdate(issueId, { inChatRoom: 'true' }, { new: true });
+    
+        if (!issue) {
+          return res.status(404).json({ message: 'Issue not found' });
+        }
+    
+        res.status(200).json(issue);
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
+    };
   // Retrieve issue to be display in chatroom
   const getAllIssuesInChatRoom = async (req, res) => {
     try {
@@ -233,33 +249,6 @@ const getOpenIssues = async (req, res) => {
     }
   };
 
-
-// const addCommentInGroup = async (req, res) => {
-//   try {
-//     const { issueId } = req.params;
-//     const { text, authorId } = req.body;
-
-//     if (!issueId || !authorId) {
-//       return res.status(400).json({ message: 'Invalid input data' });
-//     }
-//     const issue = await Issue.findById(issueId);
-//     if (!issue) {
-//       return res.status(404).json({ message: 'Issue not found' });
-//     }
-//     const newComment = {
-//       text,
-//       author: authorId,
-//     };
-//     issue.groupComments.push(newComment);
-
-//     await issue.save();
-
-//     return res.status(201).json(newComment);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
 const addCommentInGroup = async (req, res) => {
   try {
     const { issueId } = req.params;
@@ -339,7 +328,8 @@ export default {
       ShareIssueToChatRoom,
       getAllIssuesInChatRoom,
       addCommentInGroup,
-      getCommentsByIssueId
+      getCommentsByIssueId,
+      RemoveIssueToChatRoom
 };
 
 

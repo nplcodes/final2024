@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { issueActions } from "../../redux/issue/issueSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {GoCommentDiscussion } from 'react-icons/go'
 
 function BoardIssuesTOChatOn() {
+    const groupComments = useSelector((comments)=> comments.issue.groupComment)
     const dispatch = useDispatch()
     const [chatroomIssues, setChatroomIssues] = useState([]);
 
@@ -22,6 +24,7 @@ function BoardIssuesTOChatOn() {
   
       fetchChatroomIssues();
     }, [dispatch]);
+
   
   return (
     <div className='flex justify-center pt-10'>
@@ -43,8 +46,11 @@ function BoardIssuesTOChatOn() {
                     <div className="text-red-500 rounded-sm">{chatroomIssue.inDiscusion}</div>
                 </div>
                 <div className="flex flex-col pl-7">
-                    <p>0 comments</p>
-                    <p className="text-gray-400 text-xs">{chatroomIssue.updatedAt}</p>
+                <p className="text-gray-400 text-xs">{chatroomIssue.updatedAt}</p>
+                    <div className="flex items-center gap-1">
+                       <p>{chatroomIssue.groupComments.length}</p>
+                       <GoCommentDiscussion className="text-blue-500" />
+                    </div>
                 </div>
             </div>
         </Link>
