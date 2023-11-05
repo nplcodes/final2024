@@ -13,6 +13,7 @@ const initialState = {
   chatRoomIssue: [],
   IssueReporter: [],
   groupComment: [],
+  StudentStaffComment:[]
 
 };
 
@@ -91,6 +92,12 @@ const issueSlice = createSlice({
       },
       addGroupComment: (state, action) => {
         state.groupComment.push(action.payload);
+      },
+      addStaffStudentComment: (state, action) => {
+        state.StudentStaffComment.push(action.payload);
+      },
+      setStaffStudentComment: (state, action) => {
+        state.StudentStaffComment=(action.payload);
       },
   
     

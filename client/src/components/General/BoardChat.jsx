@@ -83,7 +83,6 @@ const handleCommentSubmit = async (e) => {
       const newComment = response.data;
 
       dispatch(issueActions.addGroupComment(newComment));
-
       setCommentText('');
     } else {
       console.error('Failed to post comment');

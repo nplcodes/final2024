@@ -1,23 +1,22 @@
-import { AiFillCheckSquare} from 'react-icons/ai'
+import { AiFillCheckSquare } from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
 
-
 function MyTimeSlots() {
   const { issueId } = useParams();
   const dispatch = useDispatch();
   const issueDetails = useSelector((state) => state.issue.studentIssues);
-  const comments = useSelector((state) => state.issue.comments);
+  const StaffStudentComments = useSelector((comments)=> comments.issue.StudentStaffComment);
 
 
   // State for the comment form
-  const [reporter, setReporter]  = useState([]);
-  const [content, setComment] = useState('');
-  const [userId, setUserId] = useState('');
+  const [reporter, setReporter] = useState([]);
+  const [commentText, setComment] = useState('');
+  const [authorId, setUserId] = useState('');
 
   useEffect(() => {
     const fetchIssueDetails = async () => {
@@ -25,10 +24,10 @@ function MyTimeSlots() {
         const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
         const issueData = response.data;
         dispatch(issueActions.getIssueDetails(issueData));
+        console.log(issueData)
         // reporter name
         const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
-        setReporter(reporterInfo.data)
-
+        setReporter(reporterInfo.data);
       } catch (error) {
         console.error('Error fetching issue details:', error);
       }
@@ -49,26 +48,45 @@ function MyTimeSlots() {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
+    const commentData = {
+      text: commentText,
+      authorId: authorId,
+    };
+  
     try {
-      await axios.post(`http://localhost:8080/comment/new-comment/${issueId}`, {
-        content,
-        userId,
-      });
-    setComment('');
-    setUserId('');  
-
+      if (commentText && authorId) { 
+       const response =  await axios.post(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`, commentData);
+        const newComment = response.data;
+        dispatch(issueActions.addStaffStudentComment(newComment));
+        setComment('');
+      } else {
+        console.error('commentText and userId are required to create a comment');
+      }
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
   };
-
+  
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/comment/view-comment/${issueId}`);
+        const response = await axios.get(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`);
         const commentData = response.data;
-        dispatch(issueActions.commentsOnIssue(commentData));
 
+        // Fetch user information for each comment
+        const commentsWithUserInfo = await Promise.all(
+          commentData.map(async (comment) => {
+            const userInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
+            const userInfo = userInfoResponse.data;
+
+            return {
+              ...comment,
+              userInfo,
+            };
+          })
+        );
+
+        dispatch(issueActions.setStaffStudentComment(commentsWithUserInfo));
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
@@ -79,12 +97,13 @@ function MyTimeSlots() {
 
   function formatDate(dateString) {
     const originalDate = new Date(dateString);
-    const day = originalDate.getDate(); // Get the day of the month (1-31)
+    const day = originalDate.getDate();
     const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
+
     return `${day}, ${time}`;
   }
 
+  console.log(StaffStudentComments);
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">
@@ -93,24 +112,26 @@ function MyTimeSlots() {
           <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
         </div>
         <div className="p-4 border">
-          {/* Existing comments */}
-          <p>Comments ....({comments.length})</p>
-          {Array.isArray(comments) && comments.map((comment) => (
-
-          <div className="flex gap-2 p-2" key={comment._id} >
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
-              alt=""
-            />
-            <div>
-              <p className="font-bold">{comment.user.username}<span className="text-gray-300 text-xs pl-10">{formatDate(comment.datePosted)}</span></p>
-              <p className="text-xs text-gray-500">{comment.content}</p>
+        <p className='pb-5'>({StaffStudentComments.length})Comments</p>
+          {Array.isArray(StaffStudentComments) && StaffStudentComments.map((comment) => (
+            <div className="flex gap-2 p-2" key={comment._id}>
+              <img
+                className="w-8 h-8 rounded-full"
+                src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
+                alt=""
+              />
+              <div>
+                <p className="font-bold">
+                {comment?.userInfo?.fullName}
+                  <span className="text-gray-300 text-xs pl-10">
+                    {comment.createdAt}
+                  </span>
+                </p>
+                <p className="text-xs text-gray-500">{comment.text}</p>
+              </div>
             </div>
-          </div>
           ))}
 
-          {/* Comment Field */}
           <div className="flex gap-2 p-2">
             <div className='mt-3'>
               <form onSubmit={handleCommentSubmit}>
@@ -118,28 +139,27 @@ function MyTimeSlots() {
                   <textarea
                     required
                     onChange={(e) => setComment(e.target.value)}
-                    name="comments"
-                    id=""
+                    value={commentText}
                     className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
                     placeholder="Type your comment ...."
                   ></textarea>
                 </div>
                 <div>
-                  <input type="text" value={userId} hidden />
+                  <input type="text" value={authorId} hidden />
                 </div>
                 <div className="p-3">
                   <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 sm rounded-md focus:border-transparent focus:outline-none focus:shadow-outline-none"
+                    className="bg-blue-500 hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
                   >
                     <BsSend />
                   </button>
                 </div>
               </form>
-            <div className='flex gap-3 items-center'>
-               <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
-              <p>want to close issue?</p>
-            </div>
+              <div className='flex gap-3 items-center'>
+                <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
+                <p>want to close issue?</p>
+              </div>
             </div>
           </div>
         </div>
@@ -151,7 +171,7 @@ function MyTimeSlots() {
           <div>
             <p className='text-xl font-bold'>{reporter.fullName}</p>
             <p className='text-xs text-gray-500'>{reporter.role}</p>
-            <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover:bg-black'>More info</button>
+            <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover-bg-black'>More info</button>
           </div>
         </div>
         <div className="p-4 border">

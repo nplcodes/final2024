@@ -21,7 +21,10 @@ router.get('/all-issues', issueController.getAllIssues);
 router.get('/chatroom-issues', issueController.getAllIssuesInChatRoom);
 router.delete('/delete/:id', issueController.deleteIssueById);
 router.post('/chatroom/:issueId/comments', issueController.addCommentInGroup);
+router.post('/staff-student-chat/:issueId/comments', issueController.addCommentInStaffStudentChat);
 router.get('/chatroom/:issueId/comments', issueController.getCommentsByIssueId);
+router.get('/staff-student-chat/:issueId/comments', issueController.getStaffStudentCommentsByIssueId);
+
 
 
 
