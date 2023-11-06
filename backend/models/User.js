@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['Student', 'Staff', 'Admin'] },
   faculty: { type: String },
   level: { type: Number },
+  createdAt: {type: Date, default: Date.now},
   position: {
     type: String,
     enum: ['Ci', 'Io', 'Academic', 'Logistics', 'Admin', 'Commandant','Student', '']

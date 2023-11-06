@@ -187,10 +187,8 @@ const getOpenIssues = async (req, res) => {
       if (!issue) {
         return res.status(404).json({ message: 'Issue not found' });
       }
-  
-      const comments = await Comment.find({ issue: id });
-  
-      res.json({ issue, comments });
+    
+      res.json({ issue });
     } catch (error) {
       console.error('Error getting issue details:', error);
       res.status(500).json({ error: 'An error occurred while getting issue details.' });
@@ -353,7 +351,28 @@ const getStaffStudentCommentsByIssueId = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch comments' });
   }
 }
-  
+
+
+// Update the isRead field for an issue
+const markIssueAsRead = async (req, res) => {
+  try {
+    const { issueId } = req.params;
+    const updatedIssue = await Issue.findOneAndUpdate(
+      { _id: issueId },
+      { $set: { isRead: true } },
+      { new: true }
+    );
+
+    if (!updatedIssue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+
+    res.json({ message: 'Issue marked as read successfully', issue: updatedIssue });
+  } catch (error) {
+    console.error('Error marking issue as read:', error);
+    res.status(500).json({ error: 'An error occurred while marking the issue as read.' });
+  }
+};
   
 
 export default { 
@@ -374,7 +393,8 @@ export default {
       getCommentsByIssueId,
       RemoveIssueToChatRoom,
       addCommentInStaffStudentChat,
-      getStaffStudentCommentsByIssueId
+      getStaffStudentCommentsByIssueId,
+      markIssueAsRead
 };
 
 

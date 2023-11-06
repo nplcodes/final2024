@@ -24,7 +24,7 @@ router.post('/chatroom/:issueId/comments', issueController.addCommentInGroup);
 router.post('/staff-student-chat/:issueId/comments', issueController.addCommentInStaffStudentChat);
 router.get('/chatroom/:issueId/comments', issueController.getCommentsByIssueId);
 router.get('/staff-student-chat/:issueId/comments', issueController.getStaffStudentCommentsByIssueId);
-
+router.put('/mark-as-read/:issueId', issueController.markIssueAsRead);
 
 
 

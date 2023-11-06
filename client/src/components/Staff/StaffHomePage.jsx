@@ -3,11 +3,14 @@ import NotificationBadge from './notification/UseableNotifactionIcon';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useSelector, } from 'react-redux';
+import { BsPatchQuestion } from 'react-icons/bs';
 
 function StaffHomePage() {
-
+const studentIssues = useSelector((state) => state.issue.issues);
+const unread = studentIssues.filter((read) => read.isRead === false)
 const userInfo = useSelector((state)=> state.auth.user);
-    const notificationCount = 5;
+const notificationCount = unread.length;
+
 
   return (
     <div className=''>
@@ -18,8 +21,10 @@ const userInfo = useSelector((state)=> state.auth.user);
         <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
             <div className='p-16 flex flex-col items-center justify-center gap-3 rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
                 <Link to="/Home/staff-issue-page">
-                    <p className='text-4xl'>3</p>
-                    <div className='text-2xl text-red-500'>New Issues</div>
+                <div className="relative inline-block">
+                    <BsPatchQuestion className="text-4xl text-blue-500" />
+                    {notificationCount > 0 && <NotificationBadge count={notificationCount} />}
+                </div>
                 </Link>
             </div>
             <div className='p-16 flex flex-col items-center justify-center gap-3 rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>

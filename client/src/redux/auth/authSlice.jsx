@@ -4,7 +4,9 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
-  isLoggedIn: false, // Add isLoggedIn state
+  isLoggedIn: false,
+  users: [],
+  selectedUser: ''
 
 };
 
@@ -12,7 +14,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Register Actions..........................
+    // Register Actions.............
     registerUserStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -25,6 +27,12 @@ const authSlice = createSlice({
     registerUserFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    setAllUsers: (state, action) => {
+      state.users = action.payload;
+    },
+    setSelectedUser: (state, action) => {
+      state.selectedUser = action.payload;
     },
     updateAdditionalUserInfo : (state, action)=>{
       const {fullName, email, username, role, position, level, faculty} = action.payload;

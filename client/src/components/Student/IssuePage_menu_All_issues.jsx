@@ -50,6 +50,7 @@ function IssuePageMenuAllIssues() {
       
         return `${day}, ${time}`;
       }
+      console.log("heloooooooooooooooooo", studentIssues)
 
   return (
     <div>
@@ -69,7 +70,7 @@ function IssuePageMenuAllIssues() {
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
                   <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />{formatDate(issue.dateReported)}</p>
                   <div className='h-5 w-[0.5px] bg-slate-300'></div>
-                  <p className='flex items-center gap-2 text-slate-500'> <BiMessage />({comments?.length}) Comments</p>
+                  <p className='flex items-center gap-2 text-slate-500'> <BiMessage />({issue?.staffStudentDiscussion.length}) Comments</p>
                 </div>
               </div>
             </div>

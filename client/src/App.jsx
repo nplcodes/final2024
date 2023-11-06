@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
 // Import your components
 import LoginForm from './pages/Login';
 import RegisterForm from './pages/Register';
@@ -31,19 +29,18 @@ import UpdatePost from './components/General/UpdatePost'
 import ReadPost from './components/General/ReadPost';
 import BoardChat from './components/General/BoardChat';
 import BoardIssuesTOChatOn from './components/General/BoardIssuesTOChatOn';
+import { useSelector } from 'react-redux';
+
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [userState, setUserState] = useState(null);
   
   useEffect(() => {
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
     if (storedUserInfo && storedUserInfo.isLoggedIn) {
-      setUserState(storedUserInfo.isLoggedIn);
+      console.log('')
     }
   }, []);
-
-  console.log(userState, isLoggedIn);
 
   return (
     <Router>

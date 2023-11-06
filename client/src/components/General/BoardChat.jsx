@@ -104,9 +104,7 @@ const RemoveIssuefromGroup = async(e)=>{
       console.log(error)
     })
 
-  
 }
-
 
   return (
     <div className="grid grid-cols-3 gap-4 pl-32 pt-10">
@@ -133,7 +131,6 @@ const RemoveIssuefromGroup = async(e)=>{
           <p className='text-xs'>{currentIssue[0]?.description}</p>
         </div>
         <div className="p-4 border">
-          {/* Existing comments */}
           <p className='pb-5'>({groupComments.length})Comments</p>
 
           {groupComments.map((comment, index) => (
@@ -160,7 +157,6 @@ const RemoveIssuefromGroup = async(e)=>{
                   <textarea
                     required
                     name="comments"
-                    id=""
                     className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
                     placeholder="Type your comment ...."
                     value={commentText}

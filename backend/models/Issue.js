@@ -39,7 +39,8 @@ const issueSchema = new mongoose.Schema({
   inDiscussion: { type: String, default: 'new' },
   groupComments: [commentSchema], 
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
-  attachments: [attachmentSchema], 
+  attachments: [attachmentSchema],
+  isRead: {type: Boolean, default: false}
 }, {
   timestamps: true,
 });

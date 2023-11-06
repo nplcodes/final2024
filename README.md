@@ -1,98 +1,35 @@
-# Online Issue Dispatch
-in this project, iam implementing MERN stack technology, with other technology used in web development like typeScript, vite, etc....
+import React from 'react'
+import { BsDot } from 'react-icons/bs'
+import { useSelector } from 'react-redux';
 
+function RecentAproved() {
 
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { issueActions } from '../../redux/issue/issueSlice';
-import SinglePost from './SinglePost';
-
-
-
-function Board() {
-    const dispatch = useDispatch();
-    const posts = useSelector((state)=> state.issue.posts)
-
-
-
-    useEffect(() => {
-          axios
-            .get(`http://localhost:8080/post`)
-            .then((response) => {
-              dispatch(issueActions.setPosts(response.data));
-            })
-            .catch((error) => {
-              console.error('Error fetching posts:', error);
-            });
-        
-      }, [dispatch]);
-
-
-  return (
-    <div className='flex justify-center'>
-        <div className=''>
-            {posts.length === 0 ? (
-             <p>No posts available</p>
-            ) : (
-             posts.map((post) => (
-            <div className=''>
-                    <SinglePost  post={post}/>
-            </div>
-             )))}
-        </div>
-    <div className=''>
-            <div>
-               <p>Notifications</p>
-            </div>
-        </div>
-    </div>
+    const users = useSelector((state) => state.auth.users);
+    const inactiveUsers = users.filter((user) => user.accountStatus === 'inactive');
+    const inactiveUsersCount = inactiveUsers.length;
     
-  )
+    return (
+        <div>
+          <div className='pb-10'>
+              <p className='text-blue-500 text-2xl'>Users List</p>
+          </div>
+          <p className='pb-3 font-bold'>Pending Users ({inactiveUsersCount})</p>
+          {inactiveUsers.map((user)=>(
+              <div className='border w-full flex items-center justify-between pr-4 mb-3 cursor-pointer'>
+              <div className='flex flex-row p-6 items-center gap-2'>
+                  <div className='text-red-500 text-4xl'><BsDot /></div>
+                  <div><img className='w-7 h-7 rounded-full' src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixdivb=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="" /></div>
+                  <div className='text-slate-500'>{user?.fullName}</div>
+                  <div className='text-slate-500 flex flex-row gap-3 items-center'>
+                      <div>{user?.role} </div>
+                      <div>{user?.email}</div>
+                  </div>
+              </div>
+              <p className='text-slate-400'>9:45 a.m</p>
+          </div>
+          ))}
+  </div>
+)
 }
 
-export default Board;
-
-
-
-
-            <div class="flex flex-col space-y-2 ">
-                <div class="flex justify-between py-6 px-4 bg-white/30 ">
-                    <div class="flex items-center space-x-4">
-                        <img src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" class="rounded-full h-14 w-14" alt="" />
-                        <div class="flex flex-col space-y-1">
-                            <span class="font-bold">Leonard Krashner</span>
-                            <span class="text-sm">Yeah same question here too 🔥</span>
-                        </div>
-                    </div>
-                    <div class="flex-none px-4 py-2 text-stone-600 text-xs md:text-sm">
-                        17m ago
-                    </div>
-                </div>
-               
-                <div class="flex justify-between py-6 px-4 bg-white/30 rounded-lg">
-                    <div class="flex items-center space-x-4">
-                        <img src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" class="rounded-full h-14 w-14" alt="" />
-                        <div class="flex flex-col space-y-1">
-                            <span class="font-bold">Naomie Queen</span>
-                            <span class="text-sm">Lorem ipsum dolor sit</span>
-                        </div>
-                    </div>
-                    <div class="flex-none px-4 py-2 text-stone-600 text-xs md:text-sm">
-                        40m ago
-                    </div>
-                </div>
-
-                <div class="flex justify-between py-6 px-4 bg-white/30 rounded-lg">
-                    <div class="flex items-center space-x-4">
-                        <img src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" class="rounded-full h-14 w-14" alt="" />
-                        <div class="flex flex-col space-y-1">
-                            <span class="font-bold">Lesine</span>
-                            <span class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, provident</span>
-                        </div>
-                    </div>
-                    <div class="flex-none px-4 py-2 text-stone-600 text-xs md:text-sm">
-                        50m ago
-                    </div>
-                </div>
-            </div>
+export default RecentAproved

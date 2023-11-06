@@ -124,9 +124,8 @@ const updateApprovalStatus = async (req, res) => {
 // Admin display all users
 const getUsers = async (req, res) => {
   try {
-    // Fetch all users
     const users = await User.find();
-    res.json({ users });
+    res.json( users );
   } catch (error) {
     res.status(500).json({ error: 'Could not fetch users.' });
   }

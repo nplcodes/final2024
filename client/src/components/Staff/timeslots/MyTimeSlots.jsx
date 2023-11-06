@@ -24,7 +24,7 @@ function MyTimeSlots() {
         const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
         const issueData = response.data;
         dispatch(issueActions.getIssueDetails(issueData));
-        console.log(issueData)
+        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",issueData)
         // reporter name
         const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
         setReporter(reporterInfo.data);
@@ -72,6 +72,7 @@ function MyTimeSlots() {
       try {
         const response = await axios.get(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`);
         const commentData = response.data;
+        await axios.put(`http://localhost:8080/issue/mark-as-read/${issueId}`);
 
         // Fetch user information for each comment
         const commentsWithUserInfo = await Promise.all(
@@ -102,8 +103,6 @@ function MyTimeSlots() {
 
     return `${day}, ${time}`;
   }
-
-  console.log(StaffStudentComments);
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">

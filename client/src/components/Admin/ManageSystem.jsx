@@ -2,11 +2,30 @@ import { AiOutlineIssuesClose } from 'react-icons/ai'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { authActions } from '../../redux/auth/authSlice';
+
 
 
 function ManageSystem() {
+  const dispatch = useDispatch();
   const userInfo = useSelector((state)=> state.auth.user);
+  const users = useSelector((state) => state.auth.users);
+  const pendingUsers = users.filter((user) => user.approvalStatus === 'pending');
+  const pendingUsersCount = pendingUsers.length;
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/auth/users')
+      .then((response) => {
+        dispatch(authActions.setAllUsers(response.data));
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+  }, [dispatch]);
 
   return (
     <div className='bg-gray-100'>
@@ -17,8 +36,8 @@ function ManageSystem() {
         <Link to="/Home/admin/users">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><FiUsers className='text-6xl text-blue-500'/></p>
-            <p className='text-xl text-slate-500'>100</p>
-            <p className='text-2xl'>Users</p>      
+            <p className='text-xl text-red-500'>{pendingUsersCount}</p>
+            <p className='text-2xl'>Pending users</p>    
           </div>
           </Link>
           <Link to="/Home/middleman-issue-page">

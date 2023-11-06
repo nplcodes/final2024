@@ -51,10 +51,10 @@ function AllIssues() {
       const handleClosePopUp = () => {
         setSelectedIssueId(null);
       };
-      // selected issue Id
       const [selectedIssueId, setSelectedIssueId] = useState(null);
+      const [issueId, setRead] = useState('');
 
-
+      console.log(issueId)
   return (
     <div>
       <p className='pb-3 font-bold'>My issues page</p>
