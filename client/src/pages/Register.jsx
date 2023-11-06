@@ -172,8 +172,8 @@ const RegisterForm = () => {
                     name="role"
                   >
                     <option value="">Select role</option>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
+                    <option value="Student">Student</option>
+                    <option value="Staff">Staff</option>
                   </select>
                 </div>
               </div>

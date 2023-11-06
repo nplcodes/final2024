@@ -34,6 +34,12 @@ const authSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
+    approveUser: (state, action) => {
+      state.selectedUser = action.payload;
+    },
+    rejectUser: (state) => {
+      state.selectedUser = '';
+    },
     updateAdditionalUserInfo : (state, action)=>{
       const {fullName, email, username, role, position, level, faculty} = action.payload;
       state.user.email = email || state.user.email;

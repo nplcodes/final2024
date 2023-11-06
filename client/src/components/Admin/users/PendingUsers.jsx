@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { BsDot } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../../redux/auth/authSlice';
@@ -17,7 +16,6 @@ function PendingUsers() {
     }
 
   return (
-
           <div>
             <div className='pb-10'>
                 <p className='text-blue-500 text-2xl'>Users List</p>

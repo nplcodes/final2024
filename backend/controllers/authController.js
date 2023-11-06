@@ -280,7 +280,39 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
-// Logout 
+// Approve user
+const ApproveUser = async (req, res) => {
+  try {
+    const {userId} = req.params;
+
+    const approveUser = await User.findByIdAndUpdate(userId, { approvalStatus: 'approved' }, { new: true });
+
+    if (!approveUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json(approveUser);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// Reject a user
+const RejectUser = async (req, res) => {
+  const {userId} = req.params;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    await User.findByIdAndRemove(userId);
+    return res.status(204).end(); 
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
 export default {
@@ -298,5 +330,7 @@ export default {
   getAllStaffs,
   updateUserDetails,
   updateUserPassword,
-  getSingleStaff
+  getSingleStaff,
+  ApproveUser,
+  RejectUser
 };

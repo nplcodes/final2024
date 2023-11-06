@@ -21,9 +21,8 @@ router.get('/staffs/:staff', authController.getAllStaffs);
 router.get('/staffs/single/:staffId', authController.getSingleStaff);
 router.put('/user/setting/:userId', authController.updateUserDetails);
 router.put('/user/setting/:userId/password', authController.updateUserPassword);
-
-
-
+router.put('/approve/:userId', authController.ApproveUser);
+router.delete('/reject/:userId', authController.RejectUser);
 
 
 // Issue
