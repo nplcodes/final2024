@@ -37,7 +37,6 @@ function Users() {
         <div className='col-span-5'>
            {renderSettingContent()}
         </div>
-        <UserListDetails />
     </div>
   )
 }

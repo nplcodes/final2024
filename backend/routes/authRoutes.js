@@ -23,7 +23,8 @@ router.put('/user/setting/:userId', authController.updateUserDetails);
 router.put('/user/setting/:userId/password', authController.updateUserPassword);
 router.put('/approve/:userId', authController.ApproveUser);
 router.delete('/reject/:userId', authController.RejectUser);
-
+router.put('/activate/:userId', authController.activateAccount);
+router.put('/deactivate/:userId', authController.deactivateAccount);
 
 // Issue
 

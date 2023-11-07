@@ -2,6 +2,7 @@ import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../../redux/auth/authSlice';
+import axios from 'axios';
 
 function RecentAproved() {
     const dispatch = useDispatch()
@@ -14,6 +15,17 @@ function RecentAproved() {
         const selectedUser = inactiveUsers.filter((user)=> user._id === userId)
         dispatch(authActions.setSelectedUser(selectedUser));
     }
+
+    // Activate User
+    const ActivateAccount = async (userId) => {
+        try {
+          const response = await axios.put(`http://localhost:8080/auth/activate/${userId}`);
+          dispatch(authActions.activateAccount(userId));
+          console.log(response.data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
 
   return (
           <div>
@@ -34,7 +46,7 @@ function RecentAproved() {
                         <div>{user?.email}</div>
                     </div>
                 </div>
-                <p className='text-slate-400'>3:23 p.m</p> 
+                <button className='bg-green-500 p-1 text-white rounded-sm text-xs' onClick={()=> ActivateAccount(user?._id)}>Activate</button>
             </div>
             ))}
     </div>

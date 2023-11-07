@@ -30,6 +30,7 @@ import ReadPost from './components/General/ReadPost';
 import BoardChat from './components/General/BoardChat';
 import BoardIssuesTOChatOn from './components/General/BoardIssuesTOChatOn';
 import { useSelector } from 'react-redux';
+import UserListDetails from './components/Admin/users/UserListDetails';
 
 
 const App = () => {
@@ -75,6 +76,8 @@ const App = () => {
            {/* Middleman page */}
           <Route path="admin/manage" element={<ManageSystem />} />
           <Route path="admin/users" element={<Users />} />
+          <Route path="admin/manage-users/:userId" element={<UserListDetails />} />
+
           <Route path="admin/issues" element={<IssuesToAssign />} />
           <Route path="admin/setting" element={<AccountSettingsAdmin />} />
           <Route path="middleman-issue-page" element={<StaffPage />} />

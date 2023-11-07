@@ -2,17 +2,30 @@ import React from 'react'
 import { BsDot } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../../redux/auth/authSlice';
+import axios from 'axios';
 
 function AllUsers() {
     const dispatch = useDispatch()
     const users = useSelector((state) => state.auth.users);
-    const systemUsers = users.filter((user) => user.approvalStatus !== 'pending' && user.approvalStatus !== 'inactive' );
+    const systemUsers = users.filter((user) => (user.approvalStatus !== 'pending') && (user.accountStatus !== 'inactive' ));
     const allSystemUsers = systemUsers.length;
 
     const handleSelectedUser = (userId)=>{
         const selectedUser = systemUsers.filter((user)=> user._id === userId)
         dispatch(authActions.setSelectedUser(selectedUser));
     }
+
+    // Deactivate user
+    const DeactivateAccount = async (userId) => {
+        try {
+          const response = await axios.put(`http://localhost:8080/auth/deactivate/${userId}`);
+          dispatch(authActions.deactivateAccount(userId));
+          console.log(response.data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+    
 
   return (
           <div>
@@ -31,11 +44,10 @@ function AllUsers() {
                                  <div>{user?.email}</div>
                             </div>
                         </div>
-                    <p className='text-slate-400'>9:45 a.m</p> 
+                        <button className='bg-red-500 p-1 text-white rounded-sm text-xs' onClick={() => DeactivateAccount(user._id)}>Deactivate</button>
                 </div>
             ))}
     </div>
   )
 }
-
-export default AllUsers
+export default AllUsers;

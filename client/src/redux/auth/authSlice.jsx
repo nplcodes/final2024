@@ -6,7 +6,6 @@ const initialState = {
   error: null,
   isLoggedIn: false,
   users: [],
-  selectedUser: ''
 
 };
 
@@ -34,11 +33,30 @@ const authSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
-    approveUser: (state, action) => {
-      state.selectedUser = action.payload;
+    setUsersAfterApprove: (state, action) => {
+      state.users = state.users.filter(user => user._id !== action.payload);
+
     },
-    rejectUser: (state) => {
-      state.selectedUser = '';
+    rejectUser: (state, action) => {
+      state.users = state.users.filter(user => user._id !== action.payload);
+    },
+    deactivateAccount:(state, action)=>{
+      const { userId } = action.payload;
+      const user = state.users.find(user => user._id === userId);
+
+      if (user) {
+        user.accountStatus = 'inactive';
+      }
+
+    },
+    activateAccount:(state, action)=>{
+      const { userId } = action.payload;
+      const user = state.users.find(user => user._id === userId);
+
+      if (user) {
+        user.accountStatus = 'active';
+      }
+
     },
     updateAdditionalUserInfo : (state, action)=>{
       const {fullName, email, username, role, position, level, faculty} = action.payload;

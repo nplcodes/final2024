@@ -307,10 +307,38 @@ const RejectUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
     await User.findByIdAndRemove(userId);
-    return res.status(204).end(); 
+    return res.json({Mesage: "user is deleted"})
   } catch (error) {
     console.error('Error:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+// Controller for deactivating a user's account
+const deactivateAccount = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findByIdAndUpdate(userId, { accountStatus: 'inactive' }, { new: true });
+
+    res.json(user);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+// Controller for activating a user's account
+const activateAccount = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findByIdAndUpdate(userId, { accountStatus: 'active' }, { new: true });
+
+    res.json(user);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -332,5 +360,7 @@ export default {
   updateUserPassword,
   getSingleStaff,
   ApproveUser,
-  RejectUser
+  RejectUser,
+  activateAccount,
+  deactivateAccount,
 };
