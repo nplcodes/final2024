@@ -7,6 +7,7 @@ import axios from 'axios';
 import Modal from '../pop_up/Model';
 import { useSelector, useDispatch } from 'react-redux';
 import { issueActions } from '../../../redux/issue/issueSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -24,6 +25,7 @@ const validationSchema = object().shape({
 });
 
 function NewIssueForm() {
+  const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -47,8 +49,7 @@ function NewIssueForm() {
     try {
       dispatch(issueActions.addNewIssueStart(data))
       const response = await axios.post('http://localhost:8080/issue/new-issue', data);
-      dispatch(issueActions.addNewIssueSuccess(data))
-      console.log('Issue created successfully:', response.data);
+      dispatch(issueActions.addNewIssueSuccess(response.data))
         openModal();
     } catch (error) {
       dispatch(issueActions.addNewIssueFailure(error))

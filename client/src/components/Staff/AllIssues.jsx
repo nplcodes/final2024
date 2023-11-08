@@ -34,6 +34,7 @@ function AllIssues() {
               const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
               const studentIssues = response.data;
               dispatch(issueActions.getStudentIssue(studentIssues));
+
             } catch (error) {
               console.log(error);
             }
@@ -52,9 +53,8 @@ function AllIssues() {
         setSelectedIssueId(null);
       };
       const [selectedIssueId, setSelectedIssueId] = useState(null);
-      const [issueId, setRead] = useState('');
+      console.log(assignedToId)
 
-      console.log(issueId)
   return (
     <div>
       <p className='pb-3 font-bold'>My issues page</p>

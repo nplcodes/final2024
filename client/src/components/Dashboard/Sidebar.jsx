@@ -16,9 +16,9 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.role) {
-      if (userInfo.role === 'student') {
+      if (userInfo.role === 'Student') {
         setLink('/Home/issue-page');
-      } else if (userInfo.role === 'admin') {
+      } else if (userInfo.role === 'Admin') {
         setLink('/Home/admin/manage');
       } else {
         setLink('/Home/staff-home');
@@ -50,7 +50,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           </div>
         </Link>
 
-        {userInfo.role === 'student' && (
+        {userInfo.role === 'Student' && (
         <Link to="/Home/staff" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <BsPeople className="text-xl" />
@@ -58,7 +58,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         </Link>
         )}
 
-        {userInfo.role === 'student' && (
+        {userInfo.role === 'Student' && (
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoNotificationsOutline className="text-xl" />
@@ -71,7 +71,7 @@ const Sidebar = ({ isSidebarOpen }) => {
             <PiNewspaperClipping className="text-xl" />
           </div>
         </Link>
-        {userInfo.role === 'staff' && (
+        {userInfo.role === 'Staff' && (
         <Link to="/Home/staf-post" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
             <IoCreateOutline className="text-xl" />
@@ -89,14 +89,14 @@ const Sidebar = ({ isSidebarOpen }) => {
                   <GrUserSettings className="text-xl" />
               </div>
         </Link>
-        {userInfo.role === 'admin' && (
+        {userInfo.role === 'Admin' && (
             <Link to="/Home/admin/manage" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
                       <RxDashboard className="text-xl" />
                     </div>
             </Link>
         )}
-                {userInfo.role === 'staff' && (
+                {userInfo.role === 'Staff' && (
             <Link to="/Home/board-issues" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
                       Board Chat

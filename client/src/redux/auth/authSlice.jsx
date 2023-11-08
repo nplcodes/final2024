@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   isLoggedIn: false,
   users: [],
+  systemUsers: [], 
   inactiveUsers: [],
 
 };

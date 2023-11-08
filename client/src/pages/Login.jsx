@@ -52,7 +52,7 @@ const LoginForm = () => {
       } else if (userData.role === 'Staff') {
         dispatch(authActions.loginUserSuccess(userData));
         navigate('/Home/staff-home');
-      } else if (userData.role === 'admin') {
+      } else if (userData.role === 'Admin') {
         dispatch(authActions.loginUserSuccess(userData));
         navigate('/Home/admin/manage');
       } else {
