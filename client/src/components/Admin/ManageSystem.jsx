@@ -21,6 +21,7 @@ function ManageSystem() {
       .get('http://localhost:8080/auth/users')
       .then((response) => {
         dispatch(authActions.setAllUsers(response.data));
+        dispatch(authActions.setUsers(response.data));
       })
       .catch((error) => {
         console.error('Error fetching users:', error);

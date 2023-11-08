@@ -8,6 +8,7 @@ const initialState = {
   users: [],
   systemUsers: [], 
   inactiveUsers: [],
+  pendingUsers: [], 
 
 };
 
@@ -15,6 +16,78 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+
+
+    setUsers: (state, action) => {
+      state.users = action.payload;
+      // Filter users and set them to systemUsers
+      state.systemUsers = state.users.filter(
+        (user) => user.approvalStatus !== 'pending' && user.accountStatus !== 'inactive');
+      state.inactiveUsers = state.users.filter((user) => user.accountStatus === 'inactive');
+      state.pendingUsers = state.users.filter((user) => user.approvalStatus === 'pending');
+
+
+    },
+
+    deactivateAccount: (state, action) => {
+      const userId = action.payload;
+
+      // Find the user to deactivate in systemUsers
+      const userToDeactivate = state.systemUsers.find((user) => user._id === userId);
+
+      if (userToDeactivate) {
+        // Deactivate the user by updating their accountStatus
+        userToDeactivate.accountStatus = 'inactive';
+
+        // Remove the user from systemUsers
+        state.systemUsers = state.systemUsers.filter((user) => user._id !== userId);
+
+        // Add the user to inactiveUsers
+        state.inactiveUsers.push(userToDeactivate);
+      }
+    },
+
+    activateAccount: (state, action) => {
+      const userId = action.payload;
+
+      // Find the user to activate in inactiveUsers
+      const userToActivate = state.inactiveUsers.find((user) => user._id === userId);
+
+      if (userToActivate) {
+        // Activate the user by updating their accountStatus
+        userToActivate.accountStatus = 'active';
+
+        // Remove the user from inactiveUsers
+        state.inactiveUsers = state.inactiveUsers.filter((user) => user._id !== userId);
+
+        // Add the user to systemUsers
+        state.systemUsers.push(userToActivate);
+      }
+    },
+
+    approveAccount: (state, action) => {
+      const userId = action.payload;
+
+      // Find the user to approve in pendingUsers
+      const userToApprove = state.pendingUsers.find((user) => user._id === userId);
+
+      if (userToApprove) {
+        // Approve the user by updating their approvalStatus
+        userToApprove.approvalStatus = 'approved';
+
+        // Remove the user from pendingUsers
+        state.pendingUsers = state.pendingUsers.filter((user) => user._id !== userId);
+
+        // Add the user to systemUsers
+        state.systemUsers.push(userToApprove);
+      }
+    },
+
+
+
+
+
+
     registerUserStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -40,27 +113,18 @@ const authSlice = createSlice({
     rejectUser: (state, action) => {
       state.users = state.users.filter(user => user._id !== action.payload);
     },
-    deactivateAccount:(state, action)=>{
-      const { userId } = action.payload;
-      const user = state.users.find(user => user._id === userId);
 
-      if (user) {
-        user.accountStatus = 'inactive';
-      }
-
-    },
     setInactiveUsers: (state, action) => {
       state.inactiveUsers = state.inactiveUsers.filter(user => user._id !== action.payload);
     },
-    activateAccount:(state, action)=>{
-      const { userId } = action.payload;
-      const user = state.users.find(user => user._id === userId);
+    // activateAccount:(state, action)=>{
+    //   const { userId } = action.payload;
+    //   const user = state.users.find(user => user._id === userId);
 
-      if (user) {
-        user.accountStatus = 'active';
-      }
-
-    },
+    //   if (user) {
+    //     user.accountStatus = 'active';
+    //   }
+    // },
     updateAdditionalUserInfo : (state, action)=>{
       const {fullName, email, username, role, position, level, faculty} = action.payload;
       state.user.email = email || state.user.email;

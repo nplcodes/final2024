@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function RecentAproved() {
-    const users = useSelector((state) => state.auth.users);
-    const inactiveUsers = users.filter((user) => user.accountStatus === 'inactive');
+    const inactiveUsers = useSelector((state) => state.auth.inactiveUsers);
     const inactiveUsersCount = inactiveUsers.length;
-
 
 
   return (

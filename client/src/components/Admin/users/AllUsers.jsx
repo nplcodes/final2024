@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function AllUsers() {
-    const users = useSelector((state) => state.auth.users);
-    const systemUsers = users.filter((user) => (user.approvalStatus !== 'pending') && (user.accountStatus !== 'inactive' ));
-
+    const systemUsers = useSelector((state) => state.auth.systemUsers);
     const allSystemUsers = systemUsers.length;
 
 

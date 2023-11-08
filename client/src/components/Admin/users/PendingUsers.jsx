@@ -3,12 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function PendingUsers() {
-    const users = useSelector((state) => state.auth.users);
-    const pendingUsers = users.filter((user) => user.approvalStatus === 'pending');
+    const pendingUsers = useSelector((state) => state.auth.pendingUsers);
     const pendingUsersCount = pendingUsers.length;
     
     
-
   return (
           <div>
             <div className='pb-10'>

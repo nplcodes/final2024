@@ -25,7 +25,7 @@ function UserListDetails() {
     const handleConfirmApproval = async () => {
       try {
         await axios.put(`http://localhost:8080/auth/approve/${id}`);
-        dispatch(authActions.setUsersAfterApprove(id));
+        dispatch(authActions.approveAccount(id));
         navigate('/Home/admin/users');
       } catch (error) {
         console.error('Error:', error);
