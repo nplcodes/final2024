@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   isLoggedIn: false,
   users: [],
+  inactiveUsers: [],
 
 };
 
@@ -13,7 +14,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Register Actions.............
     registerUserStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -35,7 +35,6 @@ const authSlice = createSlice({
     },
     setUsersAfterApprove: (state, action) => {
       state.users = state.users.filter(user => user._id !== action.payload);
-
     },
     rejectUser: (state, action) => {
       state.users = state.users.filter(user => user._id !== action.payload);
@@ -48,6 +47,9 @@ const authSlice = createSlice({
         user.accountStatus = 'inactive';
       }
 
+    },
+    setInactiveUsers: (state, action) => {
+      state.inactiveUsers = state.inactiveUsers.filter(user => user._id !== action.payload);
     },
     activateAccount:(state, action)=>{
       const { userId } = action.payload;

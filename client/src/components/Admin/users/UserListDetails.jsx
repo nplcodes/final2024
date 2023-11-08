@@ -52,6 +52,30 @@ function UserListDetails() {
         console.error('Error:', error);
       }
     };
+
+        // Activate User
+        const ActivateAccount = async (userId) => {
+          try {
+            const response = await axios.put(`http://localhost:8080/auth/activate/${userId}`);
+            dispatch(authActions.activateAccount(userId));
+            dispatch(authActions.setUsersAfterApprove(userId));
+            navigate('/Home/admin/users');
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+
+    // Deactivate user
+    const DeactivateAccount = async (userId) => {
+      try {
+        const response = await axios.put(`http://localhost:8080/auth/deactivate/${userId}`);
+        dispatch(authActions.deactivateAccount(userId));
+        dispatch(authActions.setUsersAfterApprove(userId));
+        navigate('/Home/admin/users');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   
     return (
       <div className='max-w-full p-32 col-span-5 h-screen'>
@@ -84,12 +108,25 @@ function UserListDetails() {
                     <div className='flex gap-6'>
                       <p>{userData?.email}</p>
                     </div>
+                    {/* {userData?.accountStatus} */}
+                {userData?.approvalStatus === 'pending' && 
                     <div>
                       <button className="bg-blue-500 hover-bg-blue-700 text-white p-2 mt-3 rounded-sm" onClick={ApproveUser}> Approve
                       </button>
                       <button className="bg-red-500 ml-3 text-white p-2 mt-3 rounded-sm" onClick={() => handleRejectUser(userData?._id)}> Reject
                       </button>
                     </div>
+                }
+                {userData?.accountStatus === 'inactive' && 
+                    <div>
+                      <button className='bg-green-500 p-1 text-white rounded-sm text-xs' onClick={()=> ActivateAccount(userData?._id)}>Activate</button>
+                    </div>
+                }
+                {userData?.accountStatus === 'active' && 
+                    <div>
+                        <button className='bg-red-500 p-1 text-white rounded-sm text-xs' onClick={() => DeactivateAccount(userData._id)}>Deactivate</button>
+                    </div>
+                }
                   </div>
                 </div>
               </div>
