@@ -2,7 +2,7 @@ import React from 'react'
 
 function Report() {
   return (
-    <div>Reporting</div>
+    <div>All successfully processed issue</div>
   )
 }
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BsListTask } from 'react-icons/bs';
+import { BsCheck2All, BsListTask } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import AllIssues from './AllIssues';
+import IssuesInProgress from './Progress';
+import { FaBarsProgress } from 'react-icons/fa';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Report from './Report';
-import { GrDocumentText } from 'react-icons/gr';
 
 function MyStaffPage() {
   const [userInfo, setUserState] = useState(null);
@@ -25,6 +27,8 @@ function MyStaffPage() {
       case 'all-issues':
         return <AllIssues />;
       case 'new-issue':
+        return <IssuesInProgress />;
+        case 'report':
         return <Report />;
       default:
         return null;
@@ -35,23 +39,29 @@ function MyStaffPage() {
     <div className="p-20 gap-20 w-full grid grid-cols-6">
       <div className="pt-10 flex flex-col p-10 gap-3 col-span-1">
         <div
-          className={`p-5 text-2xtext-white cursor-pointer ${
+          className={`p-5 text-2xl text-black cursor-pointer ${
             selectedSetting === 'all-issues' ? 'bg-blue-500 text-white' : ''
           }`}
           onClick={() => handleSettingClick('all-issues')}
         >
           <BsListTask />
         </div>
-        <Link to="#">
-          <div
-            className={`p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer ${
-              selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
-            }`}
-            onClick={() => handleSettingClick('new-issue')}
-          >
-            <GrDocumentText />
-          </div>
-        </Link>
+        <div
+          className={`p-5 text-2xl text-black cursor-pointer ${
+            selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
+          }`}
+          onClick={() => handleSettingClick('new-issue')}
+        >
+          <AiOutlineLoading3Quarters className=''/>
+        </div>
+        <div
+          className={`p-5 text-2xl text-black cursor-pointer ${
+            selectedSetting === 'report' ? 'bg-blue-500 text-white' : ''
+          }`}
+          onClick={() => handleSettingClick('report')}
+        >
+          <BsCheck2All className=''/>
+        </div>
       </div>
       {/* Main part with MyStaffPage   */}
       <div className="col-span-5">

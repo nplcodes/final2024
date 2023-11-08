@@ -28,9 +28,9 @@ function Users() {
   return (
     <div className='grid grid-cols-12 grid-rows-1 p-20 gap-20'>
         <div className='pt-10 col-span-2 p-10 gap-3'>
-            <div  className='p-5 bg-blue-500 text-white text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('pending-users')}><PiNotificationThin /></div>
-            <div  className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('recent-aproved-users')}><MdOutlineAirplanemodeInactive /></div>
-            <div className='p-5 text-2xl hover:bg-blue-400 hover:text-white cursor-pointer'  onClick={() => handleSettingClick('manage-users')}><MdOutlineAirplanemodeActive /></div>
+            <div  className={`p-5 text-black text-2xl hover:bg-blue-400 hover:text-white cursor-pointer ${selectedSetting === 'pending-users' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('pending-users')}><PiNotificationThin /></div>
+            <div  className={`p-5 text-black text-2xl hover:bg-blue-400 hover:text-white cursor-pointer ${selectedSetting === 'recent-aproved-users' ? 'bg-blue-500 text-white' : ''}`}  onClick={() => handleSettingClick('recent-aproved-users')}><MdOutlineAirplanemodeInactive /></div>
+            <div className={`p-5 text-black text-2xl hover:bg-blue-400 hover:text-white cursor-pointer ${selectedSetting === 'manage-users' ? 'bg-blue-500 text-white' : ''}`}  onClick={() => handleSettingClick('manage-users')}><MdOutlineAirplanemodeActive /></div>
         </div>
 
         {/* Main part with Users   */}
