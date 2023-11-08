@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { authActions } from "../../../redux/auth/authSlice";
@@ -24,7 +24,7 @@ function UserListDetails() {
   
     const handleConfirmApproval = async () => {
       try {
-        const response = await axios.put(`http://localhost:8080/auth/approve/${id}`);
+        await axios.put(`http://localhost:8080/auth/approve/${id}`);
         dispatch(authActions.setUsersAfterApprove(id));
         navigate('/Home/admin/users');
       } catch (error) {
@@ -56,7 +56,7 @@ function UserListDetails() {
         // Activate User
         const ActivateAccount = async (userId) => {
           try {
-            const response = await axios.put(`http://localhost:8080/auth/activate/${userId}`);
+            await axios.put(`http://localhost:8080/auth/activate/${userId}`);
             dispatch(authActions.activateAccount(userId));
             dispatch(authActions.setUsersAfterApprove(userId));
             navigate('/Home/admin/users');
@@ -68,7 +68,7 @@ function UserListDetails() {
     // Deactivate user
     const DeactivateAccount = async (userId) => {
       try {
-        const response = await axios.put(`http://localhost:8080/auth/deactivate/${userId}`);
+        await axios.put(`http://localhost:8080/auth/deactivate/${userId}`);
         dispatch(authActions.deactivateAccount(userId));
         dispatch(authActions.setUsersAfterApprove(userId));
         navigate('/Home/admin/users');

@@ -1,12 +1,9 @@
 import React from 'react'
 import { BsDot } from 'react-icons/bs'
-import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../../redux/auth/authSlice';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function AllUsers() {
-    const dispatch = useDispatch()
     const users = useSelector((state) => state.auth.users);
     const systemUsers = users.filter((user) => (user.approvalStatus !== 'pending') && (user.accountStatus !== 'inactive' ));
 
