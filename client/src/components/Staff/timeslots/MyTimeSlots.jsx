@@ -24,7 +24,6 @@ function MyTimeSlots() {
         const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
         const issueData = response.data;
         dispatch(issueActions.getIssueDetails(issueData));
-        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",issueData)
         // reporter name
         const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
         setReporter(reporterInfo.data);

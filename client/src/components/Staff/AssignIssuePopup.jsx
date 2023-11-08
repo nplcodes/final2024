@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
+  const navigate = useNavigate()
   const [assignedTo, setSelectedStaff] = useState('');
   const [allStaffs, setAllStaffs] = useState([])
   const staff='staff';
   const dispatch = useDispatch()
   const status = 'assigned'
-  
-
 
   useEffect(() => {
     const fetchIssuesData = async () => {
@@ -27,12 +27,12 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
   }, []);
 
 //   update 
-
   const handleAssignIssue = async(e) => {
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, status, issueId})
     .then(()=>{
         dispatch(issueActions.removeAssignedIssue({assignedTo, issueId, status}))
+        navigate('/Home/middleman-issue-page')
     })
     .catch((error)=>{
         console.log(error)
@@ -44,7 +44,7 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
 
   return (
         <div className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-70 bg-gray-600 ${isOpen ? 'block' : 'hidden'}`}>
-        <div className="bg-white p-4 shadow-md rounded-lg">
+        <div className="bg-white p-10 shadow-md rounded-lg w-[500px] h-[400px] flex justify-center flex-col">
             <h2 className="text-xl font-semibold mb-4">Assign Issue</h2>
             <label htmlFor="staffSelect" className="block mb-2">Select a staff:</label>
             <select

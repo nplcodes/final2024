@@ -86,6 +86,7 @@ const LoginForm = () => {
           <p class="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
             and publishing industries for previewing layouts and visual mockups</p>
             <p className='mt-5'>Join npc on #social medias:</p>
+            
             <SocialIcons />
 
         </div>
@@ -140,10 +141,8 @@ const LoginForm = () => {
             <p>Don't Have account? <Link to='/register' className='text-blue-500'>Sign Up</Link></p>
             </div>
             {error && <div style={{ color: 'red' }}>{ error }</div>}
-            <div class="pt-5 text-center text-gray-400 text-xs">
-              <span>
-                Copyright © 2023-2027
-                <a href="https://github.com/nplcodes/final2024" rel=""  title="NPL Codes" class="text-green hover:text-green-500 ">Npl Codes</a></span>
+            <div className='flex items-center justify-center'>
+              <SocialIcons />
             </div>
         </div>
       </div>

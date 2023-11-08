@@ -31,6 +31,7 @@ import BoardChat from './components/General/BoardChat';
 import BoardIssuesTOChatOn from './components/General/BoardIssuesTOChatOn';
 import { useSelector } from 'react-redux';
 import UserListDetails from './components/Admin/users/UserListDetails';
+import IssueDetailsPage from './components/Staff/IssueDetailsPage';
 
 
 const App = () => {
@@ -81,6 +82,8 @@ const App = () => {
           <Route path="admin/issues" element={<IssuesToAssign />} />
           <Route path="admin/setting" element={<AccountSettingsAdmin />} />
           <Route path="middleman-issue-page" element={<StaffPage />} />
+          <Route path="middleman-issue-page/:issueId" element={<IssueDetailsPage />} />
+
 
         </Route>
       </Routes>
