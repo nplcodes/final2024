@@ -46,10 +46,10 @@ const LoginForm = () => {
       const userData = userDataResponse.data;
 
       // Assuming response.data contains user data including the role
-      if (userData.role === 'student') {
+      if (userData.role === 'Student') {
         dispatch(authActions.loginUserSuccess(userData));
         navigate('/Home/issue-page');
-      } else if (userData.role === 'staff') {
+      } else if (userData.role === 'Staff') {
         dispatch(authActions.loginUserSuccess(userData));
         navigate('/Home/staff-home');
       } else if (userData.role === 'admin') {
