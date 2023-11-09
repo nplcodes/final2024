@@ -54,7 +54,7 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
             onChange={(e) => setSelectedStaff(e.target.value)}
             >
                 <option value="">Select staff</option>
-                {allStaffs.map((s)=> <option  value={s._id}>{s.role}</option>)}
+                {allStaffs.map((s)=> <option  value={s._id}>{s.position}</option>)}
             </select>
             <div className="mt-4">
             <button

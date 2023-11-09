@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { issueActions } from "../../redux/issue/issueSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {GoCommentDiscussion } from 'react-icons/go'
 
 function BoardIssuesTOChatOn() {
-    const groupComments = useSelector((comments)=> comments.issue.groupComment)
+    // const groupComments = useSelector((comments)=> comments.issue.groupComment)
     const dispatch = useDispatch()
     const [chatroomIssues, setChatroomIssues] = useState([]);
 

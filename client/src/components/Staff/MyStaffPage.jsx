@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BsCheck2All, BsListTask } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import AllIssues from './AllIssues';
 import IssuesInProgress from './Progress';
-import { FaBarsProgress } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Report from './Report';
 

@@ -13,6 +13,22 @@ const getNotificationsByUser = async (req, res) => {
   }
 };
 
+// when user read notification
+const updateNotificationIsRead = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+
+    // Assuming you have a Notification model with an 'isRead' field
+    await Notification.findByIdAndUpdate(notificationId, { isRead: true });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error updating notification status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 export default {
   getNotificationsByUser,
+  updateNotificationIsRead
 };

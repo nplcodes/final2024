@@ -95,13 +95,6 @@ function MyTimeSlots() {
     fetchComments();
   }, [dispatch, issueId]);
 
-  function formatDate(dateString) {
-    const originalDate = new Date(dateString);
-    const day = originalDate.getDate();
-    const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    return `${day}, ${time}`;
-  }
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">

@@ -4,7 +4,6 @@ import PendingUsers from './users/PendingUsers';
 import RecentAproved from './users/RecentAproved';
 import AllUsers from './users/AllUsers';
 import { MdOutlineAirplanemodeActive, MdOutlineAirplanemodeInactive } from 'react-icons/md';
-import UserListDetails from './users/UserListDetails';
 
 
 function Users() {

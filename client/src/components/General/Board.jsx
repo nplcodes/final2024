@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { issueActions } from '../../redux/issue/issueSlice';
+import {  useSelector } from 'react-redux';
 import SinglePost from './SinglePost';
 
 
 
 function Board() {
-    const dispatch = useDispatch();
     const posts = useSelector((state)=> state.issue.posts)
 
   return (

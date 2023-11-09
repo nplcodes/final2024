@@ -1,6 +1,6 @@
 import { AiFillCheckSquare} from 'react-icons/ai'
 import { BsSend } from 'react-icons/bs';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

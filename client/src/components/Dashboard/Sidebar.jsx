@@ -4,7 +4,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
-import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
+import { IoCreateOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 import { TfiAnnouncement } from "react-icons/tfi";

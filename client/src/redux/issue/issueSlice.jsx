@@ -17,6 +17,10 @@ const initialState = {
   unassignedIssues: [], // Issues not assigned to staff
   assignedIssues: [], // Issues assigned to staff
 
+  // Notification on issue
+  notifications: [],
+  unReadNots: []
+
 
 };
 
@@ -24,6 +28,17 @@ const issueSlice = createSlice({
   name: 'issues',
   initialState,
   reducers: {
+
+    setNots: (state, action) => {
+      state.notifications=action.payload;
+      state.unReadNots = state.notifications.filter((not) => not.isRead === false);
+
+      },
+      removeReadedNots: (state, action)=>{
+        const notificationId= action.payload;
+        state.unReadNots = state.unReadNots.filter((not) => not._id !== notificationId);
+
+      },
     // Add a new issue
     addNewIssueStart: (state) => {
       state.loading = true;
@@ -45,6 +60,7 @@ const issueSlice = createSlice({
       state.assignedIssues = state.issues.filter((issue) => issue.status === 'assigned');
 
       },
+      
       // post like
       addLike: (state, action) => {
         const { postId, userId } = action.payload;

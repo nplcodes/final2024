@@ -11,6 +11,20 @@ const createIssue = async (req, res) => {
     const newIssueData = { ...req.body, assignedTo: null };  // Set assignedTo to null initially
     const issue = new Issue(newIssueData);
     await issue.save();
+
+    const user = await User.find({role: 'Admin'})
+    if(user){
+      const MiddlemanNotificationMessage = `New issue come`;
+      // Send notification to staff
+      const MiddleManNotification = new Notification({
+        notificationType: 'IssueAssigned',
+        content: MiddlemanNotificationMessage,
+        recipient: user._id,
+
+      });
+      await MiddlemanNotificationMessage.save();
+    }
+
     res.status(201).json({Meassage: "Issue is submitted very well", issue});
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -30,14 +44,13 @@ const updateAssignedTo = async (req, res) => {
       }
   
       // Send notification to the assigned user
-      const staffNotificationMessage = `Issue ${issue._id} has been assigned to you.`;
-      const studentNotificationMessage = `Issue ${issue._id} has been assigned to staff.`;
+      const staffNotificationMessage = `new assigned!`;
+      const studentNotificationMessage = `Your issue assigned to staff.`;
   
       // Send notification to staff
       const staffNotification = new Notification({
         notificationType: 'IssueAssigned',
         content: staffNotificationMessage,
-        sender: senderId,  // Assuming senderId contains the sender's ID (staff)
         recipient: assignedTo,
         relatedIssue: issue._id
       });
@@ -47,7 +60,6 @@ const updateAssignedTo = async (req, res) => {
       const studentNotification = new Notification({
         notificationType: 'IssueAssigned',
         content: studentNotificationMessage,
-        sender: senderId,  // Assuming senderId contains the sender's ID (staff)
         recipient: issue.reporter,
         relatedIssue: issue._id
       });
