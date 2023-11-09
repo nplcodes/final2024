@@ -30,34 +30,7 @@ function IssueDetailsPage() {
     fetchIssueDetails();
   }, [dispatch, issueId]);
   
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`);
-        const commentData = response.data;
-        await axios.put(`http://localhost:8080/issue/mark-as-read/${issueId}`);
 
-        // Fetch user information for each comment
-        const commentsWithUserInfo = await Promise.all(
-          commentData.map(async (comment) => {
-            const userInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
-            const userInfo = userInfoResponse.data;
-
-            return {
-              ...comment,
-              userInfo,
-            };
-          })
-        );
-
-        dispatch(issueActions.setStaffStudentComment(commentsWithUserInfo));
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    };
-
-    fetchComments();
-  }, [dispatch, issueId]);
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedIssueId, setSelectedIssueId] = useState(null);
@@ -66,7 +39,7 @@ function IssueDetailsPage() {
   const assignIssueToStaff = (issueId, senderId) => {
     setPopupOpen(true);
     setSelectedIssueId(issueId);
-    setSelectedselected(senderId)
+    setSelectedselected(senderId);
   };
 
   function formatDate(dateString) {

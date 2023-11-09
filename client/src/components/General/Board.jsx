@@ -10,21 +10,6 @@ function Board() {
     const dispatch = useDispatch();
     const posts = useSelector((state)=> state.issue.posts)
 
-
-
-    useEffect(() => {
-          axios
-            .get(`http://localhost:8080/post`)
-            .then((response) => {
-              dispatch(issueActions.setPosts(response.data));
-            })
-            .catch((error) => {
-              console.error('Error fetching posts:', error);
-            });
-        
-      }, [dispatch]);
-
-
   return (
     <div className='flex justify-center pt-10'>
         <div className=''>

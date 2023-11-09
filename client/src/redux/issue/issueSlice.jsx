@@ -13,7 +13,10 @@ const initialState = {
   chatRoomIssue: [],
   IssueReporter: [],
   groupComment: [],
-  StudentStaffComment:[]
+  StudentStaffComment:[],
+  unassignedIssues: [], // Issues not assigned to staff
+  assignedIssues: [], // Issues assigned to staff
+
 
 };
 
@@ -37,8 +40,12 @@ const issueSlice = createSlice({
     },
     // Opened Issues on middleman page
     setIssues: (state, action) => {
-        state.issues=action.payload;
+      state.issues=action.payload;
+      state.unassignedIssues = state.issues.filter((issue) => issue.status === 'open');
+      state.assignedIssues = state.issues.filter((issue) => issue.status === 'assigned');
+
       },
+      // post like
       addLike: (state, action) => {
         const { postId, userId } = action.payload;
         const post = state.posts.find((post) => post._id === postId);
@@ -59,9 +66,8 @@ const issueSlice = createSlice({
       },
     //   delete opened issue from middleman page
       removeAssignedIssue: (state, action)=>{
-        const {issueId, status} = action.payload;
-        state.issues.status = status;
-        state.issues = state.issues.filter((issue) => issue.id !== issueId);
+        const issueId= action.payload;
+        state.unassignedIssues = state.unassignedIssues.filter((issue) => issue._id !== issueId);
 
       },
       // Add post to state
@@ -82,10 +88,10 @@ const issueSlice = createSlice({
         state.assignedTo = action.payload
       },
       setChatRoomIssue: (state, action)=>{
-        state.chatRoomIssue = action.payload
+        state.chatRoomIssue = action.payload;
       },
       setIssueReporter: (state, action)=>{
-        state.IssueReporter = action.payload
+        state.IssueReporter = action.payload;
       },
       setGroupComment: (state, action)=>{
         state.groupComment=(action.payload)

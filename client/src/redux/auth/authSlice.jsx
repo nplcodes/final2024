@@ -117,14 +117,7 @@ const authSlice = createSlice({
     setInactiveUsers: (state, action) => {
       state.inactiveUsers = state.inactiveUsers.filter(user => user._id !== action.payload);
     },
-    // activateAccount:(state, action)=>{
-    //   const { userId } = action.payload;
-    //   const user = state.users.find(user => user._id === userId);
 
-    //   if (user) {
-    //     user.accountStatus = 'active';
-    //   }
-    // },
     updateAdditionalUserInfo : (state, action)=>{
       const {fullName, email, username, role, position, level, faculty} = action.payload;
       state.user.email = email || state.user.email;

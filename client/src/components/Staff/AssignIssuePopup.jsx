@@ -9,8 +9,8 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
   const navigate = useNavigate()
   const [assignedTo, setSelectedStaff] = useState('');
   const [allStaffs, setAllStaffs] = useState([])
-  const staff='staff';
   const dispatch = useDispatch()
+  const staff='Staff';
   const status = 'assigned'
 
   useEffect(() => {
@@ -31,8 +31,8 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, status, issueId})
     .then(()=>{
-        dispatch(issueActions.removeAssignedIssue({assignedTo, issueId, status}))
-        navigate('/Home/middleman-issue-page')
+        dispatch(issueActions.removeAssignedIssue({issueId}))
+        navigate('/Home/middleman-issue-page');
     })
     .catch((error)=>{
         console.log(error)
@@ -54,7 +54,7 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
             onChange={(e) => setSelectedStaff(e.target.value)}
             >
                 <option value="">Select staff</option>
-                {allStaffs.map((s)=> <option  value={s._id}>{s.position}</option>)}
+                {allStaffs.map((s)=> <option  value={s._id}>{s.role}</option>)}
             </select>
             <div className="mt-4">
             <button

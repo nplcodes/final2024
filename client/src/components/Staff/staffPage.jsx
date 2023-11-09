@@ -1,36 +1,17 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { issueActions } from '../../redux/issue/issueSlice';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function StaffPage() {
-  const dispatch = useDispatch();
-  const allIssues = useSelector((state) => state.issue.issues); // Use issues instead of openedIssues
-  
+  const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
+  const total_number_issues = unassignedIssues.length;
 
-  const issues = allIssues.filter((issue) => issue.status === 'open');
-  const total_number_issues = issues.length
-  const Allissues = allIssues.filter((issue) => issue.status === 'assigned');
-  const recentIssues = Allissues.slice(0, 3);
+  const allIssues = useSelector((state) => state.issue.assignedIssues);
+  const recentIssues = allIssues.slice(0, 3);
 
-
-  useEffect(() => {
-    const fetchIssuesData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/issue/all-issues'); // Fetch all issues
-        dispatch(issueActions.setIssues(response.data)); // Update the issues state
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchIssuesData();
-  }, [dispatch]);
 
   return (
-    <div>
-      <header className="bg-blue-500 text-white p-5">
+    <div className='pl-32 pr-32 pt-10'>
+      <header className="bg-slate-200 p-5 text-black">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Manage upcomming </h1>
         </div>
@@ -39,7 +20,7 @@ function StaffPage() {
         <div className="w-3/5 mr-8">
           <h1 className="text-2xl font-semibold mb-4">New Issues ({total_number_issues})</h1>
           <div className="space-y-4">
-            {issues.map((issue) => (
+            {unassignedIssues?.map((issue) => (
               <div key={issue._id} className="bg-white p-4 shadow-md rounded-lg flex items-center justify-between">
                 <Link to={`/Home/middleman-issue-page/${issue._id}`}>
                   <div>

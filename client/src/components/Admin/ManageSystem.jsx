@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { authActions } from '../../redux/auth/authSlice';
+import { issueActions } from '../../redux/issue/issueSlice';
 
 
 
@@ -15,6 +16,10 @@ function ManageSystem() {
   const users = useSelector((state) => state.auth.users);
   const pendingUsers = users.filter((user) => user.approvalStatus === 'pending');
   const pendingUsersCount = pendingUsers.length;
+
+  // Unassigned issues
+  const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
+  const total_number_issues = unassignedIssues.length;
 
   useEffect(() => {
     axios
@@ -26,6 +31,21 @@ function ManageSystem() {
       .catch((error) => {
         console.error('Error fetching users:', error);
       });
+  }, [dispatch]);
+
+  // Unassigned Issues
+
+  useEffect(() => {
+    const fetchIssuesData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/issue/all-issues'); // Fetch all issues
+        dispatch(issueActions.setIssues(response.data)); // Update the issues state
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchIssuesData();
   }, [dispatch]);
 
   return (
@@ -44,15 +64,15 @@ function ManageSystem() {
           <Link to="/Home/middleman-issue-page">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><AiOutlineIssuesClose className='text-6xl text-blue-500'/></p>
-            <p className='text-xl text-slate-500'>7</p>
-            <p className='text-2xl'>Issues</p>    
+            <p className='text-xl text-red-500'>{total_number_issues}</p>
+            <p className='text-2xl'>New Issues</p>    
           </div>
           </Link>      
 
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><IoNotificationsOutline className='text-6xl text-blue-500'/></p>
-            <p className='text-xl text-slate-500'>77</p>
-            <p className='text-2xl'>Notifications</p>          
+            <p className='text-xl text-red-500'>77</p>
+            <p className='text-2xl'>Posts</p>          
           </div>
       </div>
     </div>

@@ -29,13 +29,28 @@ import UpdatePost from './components/General/UpdatePost'
 import ReadPost from './components/General/ReadPost';
 import BoardChat from './components/General/BoardChat';
 import BoardIssuesTOChatOn from './components/General/BoardIssuesTOChatOn';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserListDetails from './components/Admin/users/UserListDetails';
 import IssueDetailsPage from './components/Staff/IssueDetailsPage';
+import { issueActions } from './redux/issue/issueSlice';
+import axios from 'axios';
 
 
 const App = () => {
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/post`)
+      .then((response) => {
+        dispatch(issueActions.setPosts(response.data));
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
+  
+}, [dispatch]);
   
   useEffect(() => {
     const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
