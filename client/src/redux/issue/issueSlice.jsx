@@ -19,7 +19,9 @@ const initialState = {
 
   // Notification on issue
   notifications: [],
-  unReadNots: []
+  unReadNots: [],
+  // Post notification
+  
 
 
 };
@@ -39,21 +41,8 @@ const issueSlice = createSlice({
         state.unReadNots = state.unReadNots.filter((not) => not._id !== notificationId);
 
       },
-    // Add a new issue
-    addNewIssueStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    addNewIssueSuccess: (state, action) => {
-      state.issues.push(action.payload);
-      state.loading = false;
-      state.error = null;
-    },
-    addNewIssueFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    // Opened Issues on middleman page
+
+    //Opened Issues on middleman page
     setIssues: (state, action) => {
       state.issues=action.payload;
       state.unassignedIssues = state.issues.filter((issue) => issue.status === 'open');
@@ -86,6 +75,7 @@ const issueSlice = createSlice({
         state.unassignedIssues = state.unassignedIssues.filter((issue) => issue._id !== issueId);
 
       },
+      // Post actions
       // Add post to state
       addPost: (state, action) => {
         state.posts.unshift(action.payload);
@@ -121,6 +111,7 @@ const issueSlice = createSlice({
       setStaffStudentComment: (state, action) => {
         state.StudentStaffComment=(action.payload);
       },
+      // Post notification
   
     
     // Assign an issue to staff

@@ -55,7 +55,6 @@ useEffect(() => {
         });
 
         const commentsWithUserInfo = await Promise.all(authorInfoPromises);
-
         dispatch(issueActions.setGroupComment(commentsWithUserInfo));
       }
     } catch (error) {

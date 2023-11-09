@@ -1,30 +1,43 @@
 // controllers/postController.js
 import Post from '../models/Post.js';
+import Notification from '../models/Notification.js';
 import User from '../models/User.js';
 import { notifyAllStudentsAboutNewPost } from '../middleware/notificationService.js';
 
 
 // Create a new post
 const createPost = async (req, res) => {
-
   const { title, content, postedBy } = req.body;
   const image = req.file ? req.file.path : null;
 
   try {
-    const post = new Post({
+    const post = await Post.create({
       title,
       content,
       postedBy,
       image,
     });
 
-    await post.save();
+    // Get all users
+    const allUsers = await User.find();
+
+    // Create a notification for each user
+    const postNotificationMessage = 'New post created';
+    const postNotifications = allUsers.map((user) => ({
+      notificationType: 'PostCreated',
+      content: postNotificationMessage,
+      recipient: user._id,
+    }));
+
+    await Notification.insertMany(postNotifications);
+
     res.json({ message: 'Post created successfully', post });
   } catch (error) {
     console.error('Error creating post:', error);
     res.status(500).json({ error: 'An error occurred while creating the post.' });
   }
 };
+
 
 // Update a post
 const updatePost = async (req, res) => {

@@ -8,28 +8,28 @@ import User from '../models/User.js';
 // Create new issue
 const createIssue = async (req, res) => {
   try {
-    const newIssueData = { ...req.body, assignedTo: null };  // Set assignedTo to null initially
-    const issue = new Issue(newIssueData);
-    await issue.save();
+    const { body } = req;
+    const newIssueData = { ...body, assignedTo: null };
+    
+    const issue = await Issue.create(newIssueData);
 
-    const user = await User.find({role: 'Admin'})
-    if(user){
-      const MiddlemanNotificationMessage = `New issue come`;
-      // Send notification to staff
-      const MiddleManNotification = new Notification({
-        notificationType: 'IssueAssigned',
-        content: MiddlemanNotificationMessage,
-        recipient: user._id,
-
+    const adminUser = await User.findOne({ role: 'Admin' });
+    
+    if (adminUser) {
+      const adminNotification = new Notification({
+        notificationType: 'IssueCreated',
+        content: 'New issue created',
+        recipient: adminUser._id,
       });
-      await MiddlemanNotificationMessage.save();
+      await adminNotification.save();
     }
 
-    res.status(201).json({Meassage: "Issue is submitted very well", issue});
+    res.status(201).json({ message: 'Issue submitted successfully', issue });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 // Assign issue to Staff
 const updateAssignedTo = async (req, res) => {

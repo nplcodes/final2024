@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 function MeetingAndEscalate({ onClose, issueId }) {
   const [issue, setIssue] = useState(issueId);
   const [allStaffs, setAllStaffs] = useState([])
-  const staff='staff';
+  const staff='Staff';
   const [assignedTo, setSelectedStaff] = useState('');
 
 
