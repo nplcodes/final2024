@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { IoCreateOutline, IoNotificationsOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 
 const Sidebar = ({ isSidebarOpen }) => {
@@ -61,7 +62,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         {userInfo.role === 'Student' && (
         <Link to="/Home/notifications" className="text-gray-500">
         <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-            <IoNotificationsOutline className="text-xl" />
+            <TfiAnnouncement className="text-xl" />
           </div>
         </Link>
         )}

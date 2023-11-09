@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import User from '../models/User.js';
 
 
-
+// Create new issue
 const createIssue = async (req, res) => {
   try {
     const newIssueData = { ...req.body, assignedTo: null };  // Set assignedTo to null initially

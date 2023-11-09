@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { FaBars, FaSearch } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../redux/auth/authSlice';
+import axios from 'axios';
 
 
 const Topnav = ({ toggleSidebar }) => {
+  const user = useSelector((user)=> user.auth.user);
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
 
@@ -20,6 +22,23 @@ const Topnav = ({ toggleSidebar }) => {
     e.preventDefault();
     
   };
+  // fecth notification
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/notification/${user._id}`);
+        const userNotifications = response.data;
+        setNotifications(userNotifications);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchNotifications();
+  }, []); 
+
 
   return (
     <div className="bg-white text-gray-700 h-16 flex justify-between items-center px-6 shadow-md">
@@ -48,6 +67,11 @@ const Topnav = ({ toggleSidebar }) => {
           <button className="flex items-center focus:outline-none" onClick={handleLogout}>
             <div className="mr-3">
               <IoMdNotificationsOutline className="text-2xl" />
+              {notifications.length > 0 && (
+                <span className="bg-red-500 text-white rounded-full px-2 ml-1">
+                  {notifications.length}
+                </span>
+              )}
             </div>
             <MdPowerSettingsNew className="text-2xl" />
           </button>

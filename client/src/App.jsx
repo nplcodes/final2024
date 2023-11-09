@@ -99,7 +99,6 @@ const App = () => {
           <Route path="middleman-issue-page" element={<StaffPage />} />
           <Route path="middleman-issue-page/:issueId" element={<IssueDetailsPage />} />
 
-
         </Route>
       </Routes>
     </Router>

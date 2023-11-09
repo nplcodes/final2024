@@ -5,7 +5,7 @@ function NewNotifications() {
   return (
     <div>
     <div className='pb-10'>
-        <p className='text-blue-500'>Notifications (3)</p>
+        <p className='text-blue-500'>Announcements (3)</p>
     </div>
     <p className='pb-3 font-bold'>New</p>
     {/* Notification card */}

@@ -5,7 +5,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import issueRoutes from './routes/issueRoutes.js';
 import postRoutes from './routes/postRoutes.js';
-import availabilityRoutes from './routes/availabilityRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
 import cors from 'cors'
 import multer from 'multer';
@@ -27,7 +27,7 @@ app.use(cors());
 app.use('/auth', authRoutes);
 app.use('/issue', issueRoutes);
 app.use('/post', postRoutes);
-app.use('/staff', availabilityRoutes);
+app.use('/notification', notificationRoutes);
 app.use('/appointment', appointmentRoutes);
 
 
