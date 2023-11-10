@@ -63,11 +63,7 @@ function UserDetailComponent() {
       setErrors(error);
       console.error('Error updating user:', error);
     }
-
-    console.log('Form submitted:', formData);
   };
-  console.log('Form errors:', errors);
-  console.log('Form predata:', preData);
 
 
   return (

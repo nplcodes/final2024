@@ -50,14 +50,7 @@ function PasswordComponent() {
             name="newPassword"
             value=''
             className="border p-2 w-full rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="password"
-            id="confirmNewPassword"
-            name="confirmNewPassword"
-            className="border p-2 w-full"
+            placeholder='Comfirm password'
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">

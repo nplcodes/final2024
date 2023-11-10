@@ -6,9 +6,10 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const registerUser = async (req, res) => {
   const { username, password, fullName, email, role } = req.body;
+  const profile = req.file ? req.file.path : null;
+
 
   try {
-    // Check if the username or email is already taken
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'Email has already taken.' });
@@ -21,6 +22,7 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       role,
+      profile,
       faculty: '',
       level: 0,
     });
@@ -30,6 +32,22 @@ const registerUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Could not register user.' });
+  }
+};
+
+// Update profile picture
+const updateProfileImage = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const profileImage = req.file.path;
+
+    // Update the user's profile image
+    const updatedUser = await User.findByIdAndUpdate(userId, { profile: profileImage }, { new: true });
+
+    res.status(200).json({ message: 'Profile image updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating profile image:', error);
+    res.status(500).json({ error: 'An error occurred while updating the profile image.' });
   }
 };
 
@@ -363,4 +381,5 @@ export default {
   RejectUser,
   activateAccount,
   deactivateAccount,
+  updateProfileImage
 };

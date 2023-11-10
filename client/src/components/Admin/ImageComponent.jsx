@@ -1,18 +1,42 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function ImageComponent() {
+
+  // logged in user
+  const userInfo = useSelector((state) => state.auth.user);
+  const userId = userInfo._id;
+
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    // Add logic to handle image upload (e.g., update state with the image)
     setImage(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle image submission (e.g., send the image to the server)
-    console.log('Image submitted:', image);
+
+    try {
+      if (!image) {
+        console.log('Please select an image.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('profileImage', image);
+
+      const response = await axios.put(`http://localhost:8080/auth/update-profile-image/${userId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Profile image submitted successfully:', response.data);
+    } catch (error) {
+      console.error('Error submitting profile image:', error);
+    }
   };
 
   return (

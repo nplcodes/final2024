@@ -3,6 +3,8 @@
 import express from 'express';
 import verifyToken from '../middleware/auth.js';
 import authController from '../controllers/authController.js';
+import {upload} from '../middleware/multer.js';
+
 
 const router = express.Router();
 
@@ -25,6 +27,8 @@ router.put('/approve/:userId', authController.ApproveUser);
 router.delete('/reject/:userId', authController.RejectUser);
 router.put('/activate/:userId', authController.activateAccount);
 router.put('/deactivate/:userId', authController.deactivateAccount);
+router.put('/update-profile-image/:userId', upload.single('profileImage'), authController.updateProfileImage);
+
 
 // Issue
 
