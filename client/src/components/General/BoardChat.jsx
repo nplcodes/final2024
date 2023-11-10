@@ -9,19 +9,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 function BoardChat() {
+  const {issueId} = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const groupComments = useSelector((comments)=> comments.issue.groupComment)
 
 const [commentText, setCommentText] = useState('');
-const {issueId} = useParams()
 const allIssues = useSelector((state)=> state.issue.chatRoomIssue)
 const currentIssue = allIssues.filter((issue)=> issue._id === issueId)
 
 // filter report
 const allusers = useSelector((state)=> state.issue.IssueReporter);
-const reporters = allusers.users;
-const singleReport = reporters.filter((user)=> user._id === currentIssue[0]?.reporter);
+const singleReport = allusers.filter((user)=> user._id === currentIssue[0]?.reporter);
 
 // Current user
 const [userInfo, setUserId] = useState('')
@@ -181,7 +180,7 @@ const RemoveIssuefromGroup = async(e)=>{
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   );
 }

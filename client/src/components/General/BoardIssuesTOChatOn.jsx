@@ -19,7 +19,7 @@ function BoardIssuesTOChatOn() {
 
         // reporter info
         const reporterInfo = await axios.get(`http://localhost:8080/auth/users`);
-        dispatch(issueActions.setIssueReporter(reporterInfo.data))
+        dispatch(issueActions.setIssueReporter(reporterInfo.data));
       };
   
       fetchChatroomIssues();
