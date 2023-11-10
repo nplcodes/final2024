@@ -1,15 +1,46 @@
 import { FaBell } from 'react-icons/fa';
-import NotificationBadge from './notification/UseableNotifactionIcon';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useSelector, } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { BsPatchQuestion } from 'react-icons/bs';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { issueActions } from '../../redux/issue/issueSlice';
 
 function StaffHomePage() {
-const studentIssues = useSelector((state) => state.issue.issues);
-const unread = studentIssues.filter((read) => read.isRead === false)
 const userInfo = useSelector((state)=> state.auth.user);
-const notificationCount = unread.length;
+const dispatch = useDispatch();
+const newIssues = useSelector((state) => state.issue.newIssues);
+
+const [assignedToId, setUserId] = useState(null);
+
+
+useEffect(() => {
+    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+    
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserId(storedUserInfo.user._id);
+    } else {
+        //
+    }
+  }, []);
+
+
+  useEffect(() => {
+    if (assignedToId) {
+      const fetchStudentIssues = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
+          dispatch(issueActions.setAssignedToMe(response.data));
+
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchStudentIssues();
+    }
+  }, [dispatch, assignedToId]);
 
 
   return (
@@ -23,7 +54,7 @@ const notificationCount = unread.length;
                 <Link to="/Home/staff-issue-page">
                 <div className="relative inline-block">
                     <BsPatchQuestion className="text-4xl text-blue-500" />
-                    {notificationCount > 0 && <NotificationBadge count={notificationCount} />}
+                    {newIssues.length}
                 </div>
                 </Link>
             </div>
@@ -31,7 +62,6 @@ const notificationCount = unread.length;
             <Link to="/Home/staff-book-list">
                 <div className="relative inline-block">
                     <AiOutlineCalendar className="text-4xl text-blue-500" />
-                    {notificationCount > 0 && <NotificationBadge count={notificationCount} />}
                 </div>
             </Link>
             </div>
@@ -39,7 +69,6 @@ const notificationCount = unread.length;
                 <Link to="/Home/staff-notifications">
                 <div className="relative inline-block">
                     <FaBell className="text-4xl text-blue-500" />
-                    {notificationCount > 0 && <NotificationBadge count={notificationCount} />}
                 </div>
                 </Link>
                 </div>       

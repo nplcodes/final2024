@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BiMessage } from 'react-icons/bi'
 import { BsDot } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { issueActions } from '../../redux/issue/issueSlice';
-import axios from 'axios';
 import { TbArrowBearRight2 } from "react-icons/tb";
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
 
@@ -13,38 +11,8 @@ import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssu
 
 function AllIssues() {
     const dispatch = useDispatch();
-    const studentIssues = useSelector((state) => state.issue.issues);
-    const [assignedToId, setUserId] = useState(null);
+    const newIssues = useSelector((state) => state.issue.newIssues);
 
-    useEffect(() => {
-        const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-        
-        if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
-          setUserId(storedUserInfo.user._id);
-        } else {
-            //
-        }
-      }, []);
-
-
-      useEffect(() => {
-        if (assignedToId) {
-          const fetchStudentIssues = async () => {
-            try {
-              const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
-              const studentIssues = response.data;
-              dispatch(issueActions.getStudentIssue(studentIssues));
-
-            } catch (error) {
-              console.log(error);
-            }
-          };
-      
-          fetchStudentIssues();
-        }
-      }, [dispatch, assignedToId]);
-
-      // pop up form settings
       const handleIconClick = (issueId) => {
         setSelectedIssueId(issueId);
       };
@@ -53,12 +21,12 @@ function AllIssues() {
         setSelectedIssueId(null);
       };
       const [selectedIssueId, setSelectedIssueId] = useState(null);
-      console.log(assignedToId)
+
 
   return (
     <div>
       <p className='pb-3 font-bold'>My issues page</p>
-      {studentIssues.map((issue) => (
+      {newIssues?.map((issue) => (
         <div className='max-h-60 overflow-y-auto'>
           <div className='flex flex-row justify-between p-10 mb-1 border-b border-b-1'>
           <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}>

@@ -3,6 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   issues: [],
   studentIssues: [],
+  // Assigned to mstaff
+  assignedToMe: [],
+  newIssues: [],
+  progressIssues: [],
+
   comments: [],
   loading: false,
   error: null,
@@ -139,6 +144,12 @@ const issueSlice = createSlice({
     },
     getIssueDetails: (state, action) => {
       state.studentIssues = action.payload;
+    },
+    // Issues assigned to logged in staff
+    setAssignedToMe: (state, action) => {
+      state.assignedToMe = action.payload;
+      state.newIssues = state.assignedToMe.filter((issue) => issue.isRead === false);
+      state.progressIssues = state.assignedToMe.filter((issue) => issue.isRead === true);
     },
     commentsOnIssue: (state, action) => {
       state.comments = action.payload;
