@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import axios from 'axios';
 import Modal from '../pop_up/Model';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 
@@ -31,7 +31,6 @@ function NewIssueForm() {
     setIsModalOpen(false);
   };
   
-  const dispatch = useDispatch()
   const userInfo = useSelector((state)=> state.auth.user);
   const reporter = userInfo._id;
 
@@ -41,10 +40,23 @@ function NewIssueForm() {
     resolver: yupResolver(validationSchema),
   });
 
+
   const onSubmitHandler = async (data) => {
     try {
-      await axios.post('http://localhost:8080/issue/new-issue', data);
-        openModal();
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('reporter', data.reporter);
+      formData.append('description', data.description);
+      formData.append('category', data.category);
+      formData.append('attachment', data.attachment[0]); // Assuming a single file is selected
+
+      await axios.post('http://localhost:8080/issue/new-issue', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      openModal();
     } catch (error) {
       console.error('Error creating issue:', error);
     }
@@ -101,6 +113,7 @@ function NewIssueForm() {
                   <label className="text-sm font-medium text-gray-700">Files</label>
                   <input
                     type="file"
+                    required
                     {...register("attachment")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                   />

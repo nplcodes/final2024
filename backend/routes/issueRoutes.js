@@ -7,7 +7,8 @@ import upload from '../middleware/upload.js';
 const router = express.Router();
 
 
-router.post('/new-issue', issueController.createIssue);
+router.post('/new-issue', upload.single('attachment'), issueController.createIssue);
+router.post('/add-attachment/:issueId', upload.single('attachment'), issueController.addAttachment);
 router.put('/assign/:issueId', issueController.updateAssignedTo);
 router.put('/escalate/:issueId', issueController.EscalateIssue);
 router.put('/share/:issueId', issueController.ShareIssueToChatRoom);

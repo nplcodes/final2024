@@ -95,6 +95,32 @@ function MyTimeSlots() {
     fetchComments();
   }, [dispatch, issueId]);
 
+// attach additional file to attachment
+const [file, setFile] = useState(null);
+
+const handleFileChange = (event) => {
+  setFile(event.target.files[0]);
+};
+
+const handleAddAttachment = async (e) => {
+  e.preventDefault()
+  try {
+    const formData = new FormData();
+    formData.append('attachment', file);
+
+    await axios.post(`http://localhost:8080/issue/add-attachment/${issueId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    console.log('Attachment added successfully');
+  } catch (error) {
+    console.error('Error adding attachment:', error);
+  }
+};
+
+
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2">
@@ -167,13 +193,15 @@ function MyTimeSlots() {
         </div>
         <div className="p-4 border">
           <p className='pb-3'>Attachments or files</p>
-          <div className=''>
-            <li>ropon medical</li>
-            <li>identity</li>
-            <li>Ikibari</li>
+          <div className='pb-10'>
+          {issueDetails?.issue?.attachments.map((doc)=> (
+               <li className='text-blue-400 underline cursor-pointer'>{doc.filename}</li>
+          ))}
           </div>
-          <input type='file' className='mt-3'/>
-          <button className='mt-3 bg-blue-500 text-white p-1 rounded-md font-bold'>Attach file</button>
+          <form>
+            <input type='file' className='mt-3' onChange={handleFileChange} />
+            <button onClick={handleAddAttachment} className='mt-3 bg-blue-500 text-white p-1 rounded-md font-bold'>Attach file</button>
+          </form>
         </div>
       </div>
     </div>

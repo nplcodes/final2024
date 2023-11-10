@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashCard</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: rgb(236, 235, 235);
+            border: 1px solid rgba(224, 207, 207, 0.836);
+            width: 1000px;
+            height: 500px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .questionAndAnswerCard {
+            display: flex;
+            margin-top: 50px;
+        }
+
+        .QA {
+            width: 800px;
+            height: 200px;
+        }
+
+        .question,
+        .answer {
+            width: 98%;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .question {
+            background-color: white;
+            padding: 10px;
+        }
+        .answer {
+            background-color: white;
+            display: none;
+            padding: 10px;
+            color: blue;
+        }
+        .navigate {
+            padding-left: 10px;
+            height: 50px;
+        }
+        button {
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .view-answer {
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .page-number {
+            background-color: blue;
+            padding: 10px;
+            margin-top: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered-card">
+        <div class="card">
+            <h3>FlashCard App</h3>
+            <div class="questionAndAnswerCard">
+                <div class="QA">
+                    <div class="question">
+                        <p id="question"></p>
+                        <button class="view-answer">Show answer?</button>
+                    </div>
+                    <div class="answer" id="answer"></div>
+                </div>
+                <div class="navigate">
+                    <div class="allButons">
+                        <button id="prev">Prev</button>
+                        <button id="next">Next</button>
+                    </div>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        const flashcards = [
+            {
+                question: "Who is president of Rwanda?",
+                answer: "H.E Paul Kagame."
+            },
+            {
+                question: "Who is co-founder of BAG'?",
+                answer: "Yussouf Ntwali"
+            },
+            {
+                question: "Where is Panama located?",
+                answer: "US"
+            },
+            {
+                question: "Who is the first programmer?",
+                answer: "Ada Lovelace"
+            },
+        ];
+        const questionDiv = document.getElementById("question");
+        const answeDiv = document.getElementById("answer");
+        const prevButton = document.getElementById("prev");
+        const nextButton = document.getElementById("next");
+        const showAnswerButton = document.querySelector(".view-answer");
+        const pageNumberElement = document.querySelector(".page-number");
+    
+        let currentCardIndex = 0;
+    
+        function displayQuestions(index) {
+            const card = flashcards[index];
+            questionDiv.textContent = `${card.question}`;
+            answeDiv.textContent = card.answer;
+            answeDiv.style.display = "none";
+            pageNumberElement.textContent = `${index + 1}/${flashcards.length} pages`;
+        }
+        function showAnswers() {
+            answeDiv.style.display = "block";
+        }
+    
+        displayQuestions(currentCardIndex);
+        
+        // Go back to previous Question
+        prevButton.addEventListener("click", () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayQuestions(currentCardIndex);
+            }
+        });
+        // Go  to following Question
+        nextButton.addEventListener("click", () => {
+            if (currentCardIndex < flashcards.length - 1) {
+                currentCardIndex++;
+                displayQuestions(currentCardIndex);
+            }
+        });
+        // Show answer
+        showAnswerButton.addEventListener("click", () => {
+            showAnswers();
+        });
+    </script>
+</html>

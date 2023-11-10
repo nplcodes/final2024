@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { BiMessage } from 'react-icons/bi'
 import { BsDot } from 'react-icons/bs'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TbArrowBearRight2 } from "react-icons/tb";
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
@@ -10,7 +10,6 @@ import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssu
 
 
 function AllIssues() {
-    const dispatch = useDispatch();
     const newIssues = useSelector((state) => state.issue.newIssues);
 
       const handleIconClick = (issueId) => {

@@ -49,6 +49,8 @@ function IssueDetailsPage() {
 
     return `${day}, ${time}`;
   }
+
+  console.log(issueDetails)
   return (
     <div className="grid grid-cols-3 gap-4 pl-32 pr-32 pt-20">
       <div className="col-span-2">
@@ -81,9 +83,10 @@ function IssueDetailsPage() {
         <div className="p-4 border">
           <p className='pb-3'>Attachments or files</p>
           <div className=''>
-            <li>ropon medical</li>
-            <li>identity</li>
-            <li>Ikibari</li>
+          {issueDetails?.issue?.attachments.map((doc)=> (
+               <li className='text-blue-400 underline cursor-pointer'>{doc.filename}</li>
+          ))}
+
           </div>
         </div>
       </div>

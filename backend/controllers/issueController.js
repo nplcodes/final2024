@@ -8,10 +8,23 @@ import User from '../models/User.js';
 // Create new issue
 const createIssue = async (req, res) => {
   try {
-    const { body } = req;
-    const newIssueData = { ...body, assignedTo: null };
+    const { title, reporter, description, category } = req.body;
+
+    const newIssue = new Issue({
+      title,
+      reporter,
+      description,
+      assignedTo: null,
+      category,
+      attachments: req.file
+        ? [{
+            filename: req.file.filename,
+            url: `/uploads/${req.file.filename}`,
+          }]
+        : [],
+    });
     
-    const issue = await Issue.create(newIssueData);
+    const issue = await Issue.create(newIssue);
 
     const adminUser = await User.findOne({ role: 'Admin' });
     
@@ -30,6 +43,27 @@ const createIssue = async (req, res) => {
   }
 };
 
+// add additional attachment file
+const addAttachment = async (req, res) => {
+  try {
+    const { issueId } = req.params;
+    const issue = await Issue.findById(issueId);
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+
+    issue.attachments.push({
+      filename: req.file.filename,
+      url: `/uploads/${req.file.filename}`,
+    });
+    await issue.save();
+
+    res.status(200).json({ message: 'Attachment added successfully', issue });
+  } catch (error) {
+    console.error('Error adding attachment:', error);
+    res.status(500).json({ error: 'An error occurred while adding the attachment.' });
+  }
+};
 
 // Assign issue to Staff
 const updateAssignedTo = async (req, res) => {
@@ -326,7 +360,6 @@ const addCommentInStaffStudentChat = async (req, res) => {
   }
 };
 
-
 // fetch group comments
 const getCommentsByIssueId = async (req, res) => {
   try {
@@ -363,7 +396,6 @@ const getStaffStudentCommentsByIssueId = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch comments' });
   }
 }
-
 
 // Update the isRead field for an issue
 const markIssueAsRead = async (req, res) => {
@@ -406,7 +438,8 @@ export default {
       RemoveIssueToChatRoom,
       addCommentInStaffStudentChat,
       getStaffStudentCommentsByIssueId,
-      markIssueAsRead
+      markIssueAsRead,
+      addAttachment
 };
 
 
