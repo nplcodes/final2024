@@ -1,10 +1,10 @@
 import React, { useEffect, useState} from 'react'
 import { BsListTask, BsPlus } from "react-icons/bs";
-import {  FcCancel } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import IssuePageMenuAllIssues from './IssuePage_menu_All_issues';
 import NewIssueForm from './subComponents/NewIssueForm';
-import Rejected from './subComponents/Rejected';
+import { GoIssueClosed } from 'react-icons/go';
+import ClosedIssues from './subComponents/ClosedIssues';
 
 
 function IssuePage() {
@@ -29,8 +29,8 @@ function IssuePage() {
           return <IssuePageMenuAllIssues />;
         case 'new-issue':
           return <NewIssueForm />;
-        case 'rejected':
-          return <Rejected />;
+        case 'closed':
+          return <ClosedIssues />;
         default:
           return null;
       }
@@ -43,7 +43,7 @@ function IssuePage() {
             <Link to="#">
                <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('new-issue')}><BsPlus /></div>
             </Link>
-            <div className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'rejected' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('rejected')}><FcCancel /></div>
+            <div className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'closed' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('closed')}><GoIssueClosed /></div>
         </div>
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
