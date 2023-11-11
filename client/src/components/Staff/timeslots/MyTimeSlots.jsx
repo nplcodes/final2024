@@ -134,7 +134,7 @@ const handleAddAttachment = async (e) => {
             <div className="flex gap-2 p-2" key={comment._id}>
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
+                src={`http://localhost:8080/${comment?.userInfo?.profile}`} 
                 alt=""
               />
               <div>
@@ -184,7 +184,7 @@ const handleAddAttachment = async (e) => {
 
       <div className="col-span-1">
         <div className="p-4 border flex gap-3 mb-5">
-          <img className='w-20 h-20 rounded-md' src="https://media.istockphoto.com/id/1386479313/photo/happy-millennial-afro-american-business-woman-posing-isolated-on-white.jpg?s=2048x2048&w=is&k=20&c=JecbHiBxM7ZzAADbPkqJuvNoCs3uO2VrK2LmrSpm3Ek=" alt="" />
+          <img className='w-20 h-20 rounded-md' src={`http://localhost:8080/${reporter?.profile}`}  alt="" />
           <div>
             <p className='text-xl font-bold'>{reporter.fullName}</p>
             <p className='text-xs text-gray-500'>{reporter.role}</p>
@@ -192,7 +192,7 @@ const handleAddAttachment = async (e) => {
           </div>
         </div>
         <div className="p-4 border">
-          <p className='pb-3'>Attachments or files</p>
+          <p className='pb-3'>Attachments or files ....</p>
           <div className='pb-10'>
           {issueDetails?.issue?.attachments.map((doc)=> (
                <li className='text-blue-400 underline cursor-pointer'>{doc.filename}</li>

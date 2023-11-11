@@ -135,7 +135,7 @@ const RemoveIssuefromGroup = async(e)=>{
           <div className="flex gap-2 p-2 pb-5" >
             <img
               className="w-8 h-8 rounded-full"
-              src="https://media.istockphoto.com/id/1399788030/photo/portrait-of-young-confident-indian-woman-pose-on-background.jpg?s=1024x1024&w=is&k=20&c=VQ_i-ojGNiLSNYrco2c2xM0iUjsZKLF7zRJ4PSMpmEI="
+              src={`http://localhost:8080/${comment?.authorInfo?.profile}`} 
               alt=""
             />
             <div>

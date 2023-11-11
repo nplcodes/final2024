@@ -73,7 +73,7 @@ function IssueDetailsPage() {
 
       <div className="col-span-1">
         <div className="p-4 border flex gap-3 mb-5">
-          <img className='w-20 h-20 rounded-md' src="https://media.istockphoto.com/id/1386479313/photo/happy-millennial-afro-american-business-woman-posing-isolated-on-white.jpg?s=2048x2048&w=is&k=20&c=JecbHiBxM7ZzAADbPkqJuvNoCs3uO2VrK2LmrSpm3Ek=" alt="" />
+          <img className='w-20 h-20 rounded-md' src={`http://localhost:8080/${reporter?.profile}`} alt="" />
           <div>
             <p className='text-xl font-bold'>{reporter.fullName}</p>
             <p className='text-xs text-gray-500'>{reporter.role}</p>

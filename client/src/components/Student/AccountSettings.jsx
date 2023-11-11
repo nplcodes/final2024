@@ -59,15 +59,16 @@ function AccountSettings() {
           }
       };
 
+
   return (
     <div className='flex gap-3 p-12'>
          <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col">
                 <div className="mb-8">
-                    <img className="object-center object-cover rounded-md h-36 w-36" src="https://police.gov.rw/fileadmin/user_upload/gumira.jpg" alt="qw" />
+                    <img className="object-center object-cover rounded-md h-36 w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="qw" />
                 </div>
                 <div className="text-center">
-                    <p className="text-xl text-gray-700 font-bold mb-2">Lucy Carter</p>
-                    <p className="text-base text-gray-400 font-normal">Academic Officer</p>
+                    <p className="text-xl text-gray-700 font-bold mb-2">{userInfo?.fullName}</p>
+                    <p className="text-base text-gray-400 font-normal">{userInfo?.role}</p>
                     <div className='add '>
                         <button type="file" className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-sm w-full" > Edit Profile
                         </button>
