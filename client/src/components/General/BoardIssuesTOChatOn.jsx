@@ -14,7 +14,7 @@ function BoardIssuesTOChatOn() {
       const fetchChatroomIssues = async () => {
         const response = await axios.get('http://localhost:8080/issue/chatroom-issues');
         const chatroomIssues = response.data;
-        dispatch(issueActions.setChatRoomIssue(response.data))
+        dispatch(issueActions.setChatRoomIssue(chatroomIssues));
         setChatroomIssues(chatroomIssues);
 
         // reporter info

@@ -7,8 +7,8 @@ function Board() {
     const posts = useSelector((state)=> state.issue.posts)
 
   return (
-    <div className='flex justify-center pt-10'>
-        <div className=''>
+     <div className="grid grid-cols-7 gap-4 p-32 pt-10">
+        <div className=" flex flex-col justify-center col-span-5">
             {posts.length === 0 ? (
              <p>No posts available</p>
             ) : (
@@ -18,9 +18,9 @@ function Board() {
             </div>
              )))}
         </div>
-    <div className=''>
+        <div className="col-span-2">
             <div>
-               <p className='text-red-500'>New posts...</p>
+               <p className=''>New posts .....</p>
             </div>
             <div class="flex justify-between py-6 px-4 bg-white/30 rounded-lg">
                 <div class="flex items-center space-x-4">

@@ -35,7 +35,6 @@ useEffect(() => {
 }, []);
 
 
-
 useEffect(() => {
   const fetchCommentsData = async () => {
     try {
@@ -104,12 +103,13 @@ const RemoveIssuefromGroup = async(e)=>{
 
 }
 
+
   return (
     <div className="grid grid-cols-3 gap-4 pl-32 pt-10">
 
       <div className="col-span-1">
         <div className="p-4 border flex gap-3 mb-5">
-          <img className='w-20 h-20 rounded-md' src="https://images.unsplash.com/photo-1521132293557-5b908a59d1e1?auto=format&fit=crop&q=80&w=1674&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+          <img className='w-20 h-20 rounded-md' src={`http://localhost:8080/${singleReport[0]?.profile}`}  alt="" />
           <div>
             <p className='text-xl font-bold'>{singleReport[0]?.fullName}</p>
             <p className='text-xs text-gray-500'>{singleReport[0]?.role}</p>
