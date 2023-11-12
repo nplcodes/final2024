@@ -12,7 +12,7 @@ function CreatePost() {
 
 
   useEffect(() => {
-    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setPostedBy(storedUserInfo.user._id);
     } else {
@@ -92,8 +92,8 @@ function CreatePost() {
               type="text"
               value={postData.title}
               onChange={handleTitleChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="John"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-gray-100 block w-full p-2.5 dark:focus:ring-gray-500"
+              placeholder="Post title ..."
               required
             />
           </div>
@@ -106,7 +106,7 @@ function CreatePost() {
               value={postData.content}
               onChange={handleContentChange}
               placeholder='Text ...'
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-gray-500 focus:border-gray-100 block w-full p-2.5  dark:focus:ring-gray-500"
             />
           </div>
           <div className=''>

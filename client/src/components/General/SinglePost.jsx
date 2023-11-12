@@ -14,7 +14,7 @@ export default function SinglePost({ post }) {
 
 
       useEffect(() => {
-        const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+        const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
         
         if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
           setUserId(storedUserInfo.user._id);

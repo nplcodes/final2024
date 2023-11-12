@@ -37,7 +37,9 @@ import axios from 'axios';
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const authState = useSelector((state) => state.auth);
+  const { isLoggedIn } = authState;
+
 
   useEffect(() => {
     axios
@@ -51,12 +53,6 @@ const App = () => {
   
 }, [dispatch]);
   
-  useEffect(() => {
-    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
-    if (storedUserInfo && storedUserInfo.isLoggedIn) {
-      console.log('')
-    }
-  }, []);
 
   return (
     <Router>

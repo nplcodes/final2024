@@ -11,7 +11,7 @@ function IssuePage() {
   const [userInfo, setUserState] = useState(null);
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('authState'));
+    const userInfo = JSON.parse(sessionStorage.getItem('authState'));
     if (userInfo && userInfo.isLoggedIn) {
       setUserState(userInfo);
     }
@@ -35,7 +35,7 @@ function IssuePage() {
           return null;
       }
     };
-    
+    console.log(userInfo)
     return (
     <div className='p-20 gap-20 w-full  grid grid-cols-6'>
         <div className='pt-10 flex flex-col p-10 gap-3 col-span-1'>
@@ -48,7 +48,7 @@ function IssuePage() {
         {/* Main part with IssuePage   */}
         <div className='col-span-5'>
             <div className='pb-10'>
-                <p className='text-blue-500'>Role: {userInfo?.user?.position} </p>
+                <p className='text-blue-500'>Role: {userInfo?.user?.role} </p>
             </div>
             {renderMenuSelection()}
 

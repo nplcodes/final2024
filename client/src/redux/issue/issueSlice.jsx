@@ -140,7 +140,7 @@ const issueSlice = createSlice({
     // student 
     getStudentIssue: (state, action)=>{
       state.issues =  action.payload;
-      localStorage.setItem('issueState', JSON.stringify(state));
+      sessionStorage.setItem('issueState', JSON.stringify(state));
     },
     getIssueDetails: (state, action) => {
       state.studentIssues = action.payload;

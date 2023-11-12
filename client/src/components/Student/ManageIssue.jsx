@@ -38,8 +38,8 @@ function ManageIssue() {
   }, [dispatch, issueId]);
 
   useEffect(() => {
-    // Fetch user ID from localStorage
-    const storedUserInfo = JSON.parse(localStorage.getItem('authState'));
+    // Fetch user ID from sessionStaorage
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setUserId(storedUserInfo.user._id);
     } else {

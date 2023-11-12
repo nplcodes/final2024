@@ -9,7 +9,7 @@ function MyStaffPage() {
   const [userInfo, setUserState] = useState(null);
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('authState'));
+    const userInfo = JSON.parse(sessionStorage.getItem('authState'));
     if (userInfo && userInfo.isLoggedIn) {
       setUserState(userInfo);
     }

@@ -128,7 +128,7 @@ const authSlice = createSlice({
       state.user.level = level || state.user.level;
       state.user.faculty = faculty || state.user.faculty;
 
-      localStorage.setItem('authState', JSON.stringify(state));
+      sessionStorage.setItem('authState', JSON.stringify({ user: state.user, isLoggedIn: state.isLoggedIn }));
     },
 
     userInfoUpdate: (state, action)=>{
@@ -136,7 +136,7 @@ const authSlice = createSlice({
       state.user.email = email || state.user.email;
       state.user.username = username || state.user.username;
       state.user.fullName = fullName || state.user.fullName;
-      localStorage.setItem('authState', JSON.stringify(state));
+      sessionStorage.setItem('authState', JSON.stringify(state));
     },
     updatePassword: (state, action) => {
       state.user.password = action.payload;
@@ -151,7 +151,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.isLoggedIn = true; 
-        localStorage.setItem('authState', JSON.stringify(state));
+        sessionStorage.setItem('authState', JSON.stringify({ user: state.user, isLoggedIn: state.isLoggedIn }));
       },
       loginUserFailure: (state, action) => {
         state.loading = false;
@@ -159,11 +159,7 @@ const authSlice = createSlice({
       },
     //   Logout Action ................................
       logoutUser(state) {
-        state.user = null;
-        state.isLoggedIn = false;
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('issueState'); 
-        localStorage.removeItem('authState'); 
+        sessionStorage.removeItem('authState'); 
 
         window.location.replace('/');
       },
