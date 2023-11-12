@@ -40,7 +40,8 @@ const issueSchema = new mongoose.Schema({
   groupComments: [commentSchema], 
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   attachments: [attachmentSchema],
-  isRead: {type: Boolean, default: false}
+  isRead: {type: Boolean, default: false},
+  feedback: {type: String, default: null},
 }, {
   timestamps: true,
 });

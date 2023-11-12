@@ -50,17 +50,11 @@ const authSlice = createSlice({
     activateAccount: (state, action) => {
       const userId = action.payload;
 
-      // Find the user to activate in inactiveUsers
       const userToActivate = state.inactiveUsers.find((user) => user._id === userId);
 
       if (userToActivate) {
-        // Activate the user by updating their accountStatus
         userToActivate.accountStatus = 'active';
-
-        // Remove the user from inactiveUsers
         state.inactiveUsers = state.inactiveUsers.filter((user) => user._id !== userId);
-
-        // Add the user to systemUsers
         state.systemUsers.push(userToActivate);
       }
     },

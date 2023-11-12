@@ -417,6 +417,25 @@ const markIssueAsRead = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while marking the issue as read.' });
   }
 };
+
+// close issue
+const closeIssue = async (req, res) => {
+  const { issueId } = req.params;
+  const { feedback } = req.body;
+
+  try {
+    const updatedIssue = await Issue.findByIdAndUpdate(
+      issueId,
+      { status: 'closed', feedback: feedback },
+      { new: true }
+    );
+
+    res.json(updatedIssue);
+  } catch (error) {
+    console.error('Error closing issue:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
   
 
 export default { 
@@ -439,7 +458,8 @@ export default {
       addCommentInStaffStudentChat,
       getStaffStudentCommentsByIssueId,
       markIssueAsRead,
-      addAttachment
+      addAttachment,
+      closeIssue
 };
 
 

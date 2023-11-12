@@ -1,4 +1,3 @@
-import { AiFillCheckSquare } from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +16,7 @@ function MyTimeSlots() {
   const [reporter, setReporter] = useState([]);
   const [commentText, setComment] = useState('');
   const [authorId, setUserId] = useState('');
+  const [closerInfo, setCloserInfo] = useState('')
 
   useEffect(() => {
     const fetchIssueDetails = async () => {
@@ -39,6 +39,7 @@ function MyTimeSlots() {
     const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setUserId(storedUserInfo.user._id);
+      setCloserInfo(storedUserInfo.user);
     } else {
       console.log('Failed to fetch userID');
     }
@@ -119,6 +120,37 @@ const handleAddAttachment = async (e) => {
     console.error('Error adding attachment:', error);
   }
 };
+// close issue
+
+// feed back
+const [feedback, setFeedBack] = useState('')
+
+const handleCloseIssue = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.put(`http://localhost:8080/issue/close/${issueId}`, {
+      feedback
+    });
+    dispatch(issueActions.setIssueToClose(response.data));
+
+    console.log('Issue closed successfully', feedback);
+
+  } catch (error) {
+    console.error('Error closing issue:', error);
+  }
+};
+
+// Feedback pop up form
+const [isFormOpen, setIsFormOpen] = useState(false);
+
+const openForm = () => {
+  setIsFormOpen(true);
+};
+
+// Function to close the form
+const closeForm = () => {
+  setIsFormOpen(false);
+};
 
 
   return (
@@ -173,10 +205,50 @@ const handleAddAttachment = async (e) => {
                   </button>
                 </div>
               </form>
-              <div className='flex gap-3 items-center'>
-                <AiFillCheckSquare className='bg-blue-500 text-white mt-3 cursor-pointer'/>
-                <p>want to close issue?</p>
-              </div>
+              {closerInfo?.role === 'Staff' && (
+                  <div className='flex gap-3 items-center'>
+                    <button 
+                      className='bg-blue-500 text-white p-2 rounded-sm focus:border-none'
+                      onClick={openForm}
+                      >Close issue
+                    </button>
+                  </div>
+              )}
+
+                  {/* Form with darkened background */}
+ {/* Form with darkened background */}
+                {isFormOpen && (
+                        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+                          <div className="bg-white p-8 rounded-md w-[350px] h-[300px]">
+                            <form className="flex flex-col space-y-4">
+                              <textarea
+                                placeholder='Type feedback....'
+                                onChange={(e) => setFeedBack(e.target.value)}
+                                className="w-full p-2 border rounded-md"
+                              />
+                              <label>Attach File</label>
+                              <input type="file" />
+
+                              {/* Button to submit the form */}
+                              <button
+                              onClick={handleCloseIssue}
+                                type="submit"
+                                className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+                              >
+                                Submit
+                              </button>
+                            </form>
+
+                            {/* Button to close the form */}
+                            <button
+                              onClick={closeForm}
+                              className="mt-4 bg-gray-300 text-gray-700 p-2 rounded-md hover:bg-gray-400"
+                            >
+                              Close Form
+                            </button>
+                          </div>
+                        </div>
+                      )}
             </div>
           </div>
         </div>

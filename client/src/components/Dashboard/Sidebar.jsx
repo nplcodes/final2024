@@ -1,7 +1,7 @@
 import { GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle, BsPeople } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
-import { PiNewspaperClipping, PiNotionLogoThin } from "react-icons/pi";
+import { PiNewspaperClipping } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { IoCreateOutline } from "react-icons/io5";

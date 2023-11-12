@@ -7,6 +7,7 @@ const initialState = {
   assignedToMe: [],
   newIssues: [],
   progressIssues: [],
+  closedIssues: [],
 
   comments: [],
   loading: false,
@@ -149,7 +150,24 @@ const issueSlice = createSlice({
     setAssignedToMe: (state, action) => {
       state.assignedToMe = action.payload;
       state.newIssues = state.assignedToMe.filter((issue) => issue.isRead === false);
-      state.progressIssues = state.assignedToMe.filter((issue) => issue.isRead === true);
+      state.progressIssues = state.assignedToMe.filter((issue) => issue.isRead === true && issue.status === 'open');
+      state.closedIssues = state.assignedToMe.filter((issue) => issue.status === 'closed' && issue.status === 'closed');
+    },
+    // CloseIssue
+    setIssueToClose: (state, action) => {
+      const issueId = action.payload;
+      const feedback = action.payload;
+
+      const issueToClose = state.assignedToMe.find((issue) => issue._id === issueId);
+
+      if (issueToClose) {
+        issueToClose.status = 'closed';
+        issueToClose.feedback = feedback;
+        state.assignedToMe = state.assignedToMe.filter((issue) => issue._id !== issueId);
+        state.closedIssues.push(issueToClose);
+        state.progressIssues = state.progressIssues.filter((issue) => issue._id !== issueId);
+
+      }
     },
     commentsOnIssue: (state, action) => {
       state.comments = action.payload;
