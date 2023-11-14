@@ -5,6 +5,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { authActions } from '../redux/auth/authSlice';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '../authService';
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
 
 const containerStyle = {
@@ -41,9 +42,10 @@ const LoginForm = () => {
       dispatch(authActions.loginUserStart());
 
       // Make an API call to fetch user information based on the login credentials
-      await axios.post('http://localhost:8080/auth/login', formData);
+     const res=  await axios.post('http://localhost:8080/auth/login', formData);
       const userDataResponse = await axios.get(`http://localhost:8080/auth/login/${formData.email}`);
       const userData = userDataResponse.data;
+      setToken(res.data.token)
 
       // Assuming response.data contains user data including the role
       if (userData.role === 'Student') {

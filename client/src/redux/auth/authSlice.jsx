@@ -155,7 +155,11 @@ const authSlice = createSlice({
       },
     //   Logout Action ................................
       logoutUser(state) {
-        sessionStorage.removeItem('authState');
+        sessionStorage.removeItem('authState', 'authToken');
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('issueState');
+
+
         window.location.replace('/');
       },
   },

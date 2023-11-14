@@ -93,7 +93,6 @@ const App = () => {
           <Route path="admin/setting" element={<AccountSettingsAdmin />} />
           <Route path="middleman-issue-page" element={<StaffPage />} />
           <Route path="middleman-issue-page/:issueId" element={<IssueDetailsPage />} />
-
         </Route>
       </Routes>
     </Router>
