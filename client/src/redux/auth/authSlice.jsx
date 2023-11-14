@@ -21,11 +21,9 @@ const authSlice = createSlice({
     setUsers: (state, action) => {
       state.users = action.payload;
       // Filter users and set them to systemUsers
-      state.systemUsers = state.users.filter(
-        (user) => user.approvalStatus !== 'pending' && user.accountStatus !== 'inactive');
+      state.systemUsers = state.users.filter((user) => user.approvalStatus !== 'pending' && user.accountStatus !== 'inactive');
       state.inactiveUsers = state.users.filter((user) => user.accountStatus === 'inactive');
       state.pendingUsers = state.users.filter((user) => user.approvalStatus === 'pending');
-
 
     },
 

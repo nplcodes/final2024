@@ -14,12 +14,14 @@ function ManageSystem() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state)=> state.auth.user);
   const users = useSelector((state) => state.auth.users);
-  const pendingUsers = users.filter((user) => user.approvalStatus === 'pending');
+  const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending') : [];
   const pendingUsersCount = pendingUsers.length;
+  
 
-  // Unassigned issues
-  const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
-  const total_number_issues = unassignedIssues.length;
+// Unassigned issues
+const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
+const total_number_issues = unassignedIssues.length;
+
 
   useEffect(() => {
     axios
@@ -38,8 +40,8 @@ function ManageSystem() {
   useEffect(() => {
     const fetchIssuesData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/issue/all-issues'); // Fetch all issues
-        dispatch(issueActions.setIssues(response.data)); // Update the issues state
+        const response = await axios.get('http://localhost:8080/issue/all-issues');
+        dispatch(issueActions.setIssues(response.data)); 
       } catch (error) {
         console.log(error);
       }
@@ -47,6 +49,7 @@ function ManageSystem() {
 
     fetchIssuesData();
   }, [dispatch]);
+
 
   return (
     <div className='bg-gray-100'>
