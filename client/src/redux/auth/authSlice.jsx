@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+const storedAuthState = JSON.parse(sessionStorage.getItem('authState'));
+
 
 const initialState = {
-  user: null,
+  user: storedAuthState?.user || null,
   loading: false,
   error: null,
-  isLoggedIn: false,
-  users: [],
+  isLoggedIn: storedAuthState?.isLoggedIn || false,
+  users:  storedAuthState ? storedAuthState.users : [],
   systemUsers: [], 
   inactiveUsers: [],
-  pendingUsers: [], 
+  pendingUsers: [],
 
 };
 
@@ -24,6 +26,8 @@ const authSlice = createSlice({
       state.systemUsers = state.users.filter((user) => user.approvalStatus !== 'pending' && user.accountStatus !== 'inactive');
       state.inactiveUsers = state.users.filter((user) => user.accountStatus === 'inactive');
       state.pendingUsers = state.users.filter((user) => user.approvalStatus === 'pending');
+
+      sessionStorage.setItem('authState', JSON.stringify({ user: state.user, isLoggedIn: state.isLoggedIn, users: state.users }));
 
     },
 
@@ -151,8 +155,7 @@ const authSlice = createSlice({
       },
     //   Logout Action ................................
       logoutUser(state) {
-        sessionStorage.removeItem('authState'); 
-
+        sessionStorage.removeItem('authState');
         window.location.replace('/');
       },
   },
