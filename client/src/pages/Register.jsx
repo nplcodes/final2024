@@ -62,6 +62,8 @@ const RegisterForm = () => {
     role: '',
   });
   const [error, setError] = useState(null); // Add error state
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
 
 
   const handleChange = (e) => {
@@ -76,7 +78,8 @@ const RegisterForm = () => {
       dispatch(authActions.registerUserStart());
       const response = await axios.post('http://localhost:8080/auth/register', formData);
       dispatch(authActions.registerUserSuccess(response.data));
-      navigate('/');
+      setRegistrationSuccess(true); // Set registration success
+      
     } 
     catch (error) {
       console.error('Error saving data to MongoDB', error);
@@ -91,6 +94,20 @@ const RegisterForm = () => {
     reset();
   };
 
+
+    // Verify verification code
+    const [verificationCode, setVerificationCode] = useState('');
+    const handleVerifyCode = async () => {
+      try {
+        await axios.put(`http://localhost:8080/auth/verifycode/${verificationCode}`);
+        navigate('/');
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+
   return (
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative" style={containerStyle}>
@@ -99,8 +116,8 @@ const RegisterForm = () => {
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" alt=''/>
-              <h1 className="mb-3 font-bold text-5xl">Hi! welcome to npc </h1>
-              <p className="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
+              <h1 className="mb-3 font-bold text-3xl">Hello Student, we are here for you </h1>
+              <p className="pr-3 text-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
                 and publishing industries for previewing layouts and visual mockups</p>
               <p className='mt-5'>Join npc on #social medias:</p>
                  <SocialIcons />
@@ -187,6 +204,21 @@ const RegisterForm = () => {
               </button>
               <p>Have account? <Link to='/' className='text-blue-500'>Login</Link></p>
             </form>
+
+            {registrationSuccess && (
+              <div>
+                <label className="text-sm font-thin text-red-500">Check your email, Verification Code</label>
+                <input
+                  type="text"
+                  className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                  placeholder="Enter verification code"
+                  name="verificationCode"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                />
+                <button className='bg-red-500 p-1 text-white mt-5 rounded-sm' onClick={handleVerifyCode}>Verify</button>
+              </div>
+            )}
               
               <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>

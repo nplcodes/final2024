@@ -1,12 +1,20 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import nodemailer from 'nodemailer'
+import Mailgen from 'mailgen'
+import { generateVerificationCode } from '../VerificationCode.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
+const EMAIL = process.env.EMAIL;
+const PASSWORD = process.env.PASSWORD;
+
 
 const registerUser = async (req, res) => {
   const { username, password, fullName, email, role } = req.body;
   const profile = req.file ? req.file.path : null;
+  const verificationCode = generateVerificationCode();
+
 
 
   try {
@@ -25,15 +33,68 @@ const registerUser = async (req, res) => {
       profile,
       faculty: '',
       level: 0,
+      verificationCode: verificationCode,
     });
+
+    // Send email to user to comfirm registration
+    let config = {
+        service : 'gmail',
+        auth : {
+            user: EMAIL,
+            pass: PASSWORD
+        }
+    }
+
+    let transporter = nodemailer.createTransport(config);
+
+    // email template or design
+    let MailGenerator = new Mailgen({
+      theme: "default",
+      product : {
+          name: "nplcodes",
+          link : 'https://mailgen.js/'
+      }
+  })
+
+  // Email contents or body
+  let response = {
+    body: {
+        name : "Leon",
+        intro: "Your Account have been created, copy the code to verify your account!",
+        table : {
+            data : [
+                {
+                    code : verificationCode,
+                    description: "Verification code",
+                }
+            ]
+        },
+        outro: "Looking forward!"
+    }
+} 
+
+    // template and body together
+    let mail = MailGenerator.generate(response);
+    // Message to send
+    let message = {
+      from : EMAIL,
+      to : email,
+      subject: "Comfirm registration",
+      html: mail
+    }
+
+    // 
+    transporter.sendMail(message)
 
     await user.save();
     res.status(201).json({ message: 'User registered successfully.', user });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Could not register user.' });
   }
 };
+
 
 // Update profile picture
 const updateProfileImage = async (req, res) => {
@@ -347,7 +408,7 @@ const deactivateAccount = async (req, res) => {
 };
 
 
-// Controller for activating a user's account
+// Controller for activating a user's account 
 const activateAccount = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -359,6 +420,32 @@ const activateAccount = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// verification code check user
+const VerifyCode = async (req, res) => {
+  try {
+    const { verificationCode } = req.params;
+
+    const checkCode = await User.findOneAndUpdate(
+      { verificationCode: verificationCode },
+      { 
+        approvalStatus: 'pending',
+        verificationCode: 0,  // Set verificationCode to 0
+      },
+      { new: true }
+    );
+
+    if (!checkCode) {
+      return res.status(404).json({ error: 'verificationCode not found' });
+    }
+
+    return res.json(checkCode);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 export default {
@@ -381,5 +468,6 @@ export default {
   RejectUser,
   activateAccount,
   deactivateAccount,
-  updateProfileImage
+  updateProfileImage,
+  VerifyCode
 };

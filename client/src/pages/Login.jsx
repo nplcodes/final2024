@@ -78,14 +78,14 @@ const LoginForm = () => {
 
   return (
 <form onSubmit={handleLogin}>
-<div class="bg-no-repeat bg-cover bg-center relative" style={containerStyle}>
+<div class="bg-no-repeat bg-cover bg-center relative " style={containerStyle}>
     <div class="absolute bg-gradient-to-b from-blue-700 to-black opacity-75 inset-0 z-0"></div>
   <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
       <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
         <div class="self-start hidden lg:flex flex-col  text-white">
           <img src="" class="mb-3" alt=''/>
-          <h1 class="mb-3 font-bold text-5xl">Hey! welcome to npc </h1>
-          <p class="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
+          <h1 class="mb-3 font-bold text-3xl">Hey! welcome to npc </h1>
+          <p class="pr-3 text-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
             and publishing industries for previewing layouts and visual mockups</p>
             <p className='mt-5'>Join npc on #social medias:</p>
             
@@ -94,7 +94,7 @@ const LoginForm = () => {
         </div>
       </div>
       <div class="flex justify-center self-center  z-10">
-        <div class="p-12 bg-white mx-auto rounded-2xl w-100 ">
+        <div class="p-12 bg-white mx-auto rounded-2xl w-100">
             <div class="mb-4">
               <h3 class="font-semibold text-2xl text-gray-800">Sign In </h3>
               <p class="text-gray-500">Please sign in to your account.</p>

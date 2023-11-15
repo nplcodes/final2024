@@ -14,8 +14,9 @@ const userSchema = new mongoose.Schema({
     enum: ['Ci', 'Io', 'Academic', 'Logistics', 'Admin', 'Commandant','Student', '']
   },
   accountStatus: { type: String, enum: ['active', 'inactive'], default: 'inactive' },
-  approvalStatus: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
-  profile: {type: String}
+  approvalStatus: { type: String, enum: ['pending', 'approved', 'rejected', null], default: null },
+  profile: {type: String},
+  verificationCode: {type: Number, default: 0},
 });
 
 const User = mongoose.model('User', userSchema);

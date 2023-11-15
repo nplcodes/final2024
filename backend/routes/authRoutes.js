@@ -28,6 +28,9 @@ router.delete('/reject/:userId', authController.RejectUser);
 router.put('/activate/:userId', authController.activateAccount);
 router.put('/deactivate/:userId', authController.deactivateAccount);
 router.put('/update-profile-image/:userId', upload.single('profileImage'), authController.updateProfileImage);
+router.put('/verifycode/:verificationCode', authController.VerifyCode);
+
+
 
 
 // Issue
