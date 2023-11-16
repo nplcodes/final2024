@@ -1,6 +1,6 @@
 import { FaBell } from 'react-icons/fa';
-import { AiOutlineCalendar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { FaBook } from "react-icons/fa6";
 import { useDispatch, useSelector, } from 'react-redux';
 import { BsPatchQuestion } from 'react-icons/bs';
 import axios from 'axios';
@@ -61,7 +61,7 @@ useEffect(() => {
             <div className='p-16 flex flex-col items-center justify-center gap-3 rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
             <Link to="/Home/staff-book-list">
                 <div className="relative inline-block">
-                    <AiOutlineCalendar className="text-4xl text-blue-500" />
+                    <FaBook className="text-4xl text-blue-500" />
                 </div>
             </Link>
             </div>

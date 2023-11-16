@@ -17,8 +17,8 @@ function UserDetailComponent() {
   const userInfo = useSelector((state) => state.auth.user);
   const userId = userInfo._id;
 
-  const [errors, setErrors] = useState(null);
-  const [preData, setPreData] = useState(null);
+  // const [errors, setErrors] = useState(null);
+  // const [preData, setPreData] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -29,14 +29,14 @@ function UserDetailComponent() {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/auth/${userId}`);
-        setPreData(response.data);
+        // setPreData(response.data);
         setFormData({
           fullName: response.data.fullName || '',
           email: response.data.email || '',
           username: response.data.username || '',
         });
       } catch (error) {
-        setErrors(error)
+        // setErrors(error)
         console.error('Error fetching user data:', error);
       }
     };
@@ -60,7 +60,7 @@ function UserDetailComponent() {
       dispatch(authActions.userInfoUpdate(formData));
       setIsModalOpen(true);  // Open the modal upon successful update
     } catch (error) {
-      setErrors(error);
+      // setErrors(error);
       console.error('Error updating user:', error);
     }
   };

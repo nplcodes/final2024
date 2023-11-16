@@ -8,6 +8,8 @@ import { IoCreateOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { GiConvergenceTarget } from "react-icons/gi";
+
 
 
 const Sidebar = ({ isSidebarOpen }) => {
@@ -108,7 +110,7 @@ const Sidebar = ({ isSidebarOpen }) => {
                 {userInfo.role === 'Staff' && (
             <Link to="/Home/board-issues" className="text-gray-500">
                     <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white'>
-                      Board Chat
+                      <GiConvergenceTarget className="text-xl" />
                     </div>
             </Link>
         )}
