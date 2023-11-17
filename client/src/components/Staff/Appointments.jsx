@@ -6,6 +6,7 @@ import SingleStaffReport from './report/SingleStaffReport';
 import { useState } from 'react';
 
 
+
 function Appointments() {
 
   const [selectedSetting, setSelectedSetting] = useState('single-report');
@@ -27,7 +28,7 @@ function Appointments() {
     return (
       <div className='p-10'>
         <div>
-          <p className='text-blue-500 text-2xl'>Overall Report</p>
+          <p className='text-blue-500 text-2xl'>Overall report</p>
         </div>
         {/* Booking left part */}
         <div className='w-full flex p-10'>
@@ -54,7 +55,7 @@ function Appointments() {
                 <input type='date' id="from" class="p-2 border border-gray-300 rounded" />
                 <label class="text-gray-600" for="to">To:</label>
                 <input type='date' id="to" class="p-2 border border-gray-300 rounded" />
-                <button id="okButton" class="bg-green-500 text-white px-4 py-2 rounded">OK</button>
+                <button id="okButton" class="bg-blue-500 text-white px-4 py-2 rounded">Filter</button>
             </div>
             {renderMenuSelection()}
           </div>
