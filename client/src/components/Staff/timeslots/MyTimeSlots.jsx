@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
+import * as timeago from 'timeago.js';
 
 function MyTimeSlots() {
   const { issueId } = useParams();
@@ -173,7 +174,7 @@ const closeForm = () => {
                 <p className="font-bold">
                 {comment?.userInfo?.fullName}
                   <span className="text-gray-300 text-xs pl-10">
-                    {comment.createdAt}
+                    {timeago.format(comment.createdAt)}
                   </span>
                 </p>
                 <p className="text-xs text-gray-500">{comment.text}</p>

@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 
 function PendingUsers() {
   const pendingUsers = useSelector((state) => state.auth.pendingUsers);
-  const pendingUsersCount = pendingUsers.length;
+  const pendingUsersCount = pendingUsers?.length;
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,14 +20,16 @@ function PendingUsers() {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  console.log(currentUsers)
+
   return (
-    <div>
+    <>
       <div className="pb-10">
         <p className="text-blue-500 text-2xl">Users List</p>
       </div>
       <p className="pb-3 font-bold">Pending Users ({pendingUsersCount})</p>
 
-      <table className="min-w-full bg-white border border-gray-300">
+      <table className="min-w-full border border-gray-300">
         <thead>
           <tr>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left font-semibold text-sm">Name</th>
@@ -37,10 +39,10 @@ function PendingUsers() {
           </tr>
         </thead>
         <tbody>
-          {currentUsers.map((user) => (
-          <Link to={`/Home/admin/manage-users/${user._id}`}>
-            <tr key={user._id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-no-wrap">
+        {currentUsers.map((user, index) => (
+          <tr key={user._id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              <Link to={`/Home/admin/manage-users/${user._id}`}>
                 <div className="flex items-center">
                   <div className="flex-shrink-0 w-10 h-10">
                     <img
@@ -53,30 +55,40 @@ function PendingUsers() {
                     <p className="text-gray-900">{user?.fullName}</p>
                   </div>
                 </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
+              </Link>
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              <Link to={`/Home/admin/manage-users/${user._id}`}>
                 <p className="text-gray-900">{user?.role}</p>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
-                <p className="text-gray-900">{/* Add date logic here */}</p>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
+              </Link>
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              <Link to={`/Home/admin/manage-users/${user._id}`}>
+                <p className="text-gray-900">
+                  {new Date(user?.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </p>
+              </Link>
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              <Link to={`/Home/admin/manage-users/${user._id}`}>
                 <span className="relative inline-block px-3 py-1 font-semibold text-red-500 leading-tight">
-                  <span
-                    className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                  ></span>
+                  <span className="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                   <span className="relative">{user?.approvalStatus}</span>
                 </span>
-              </td>
-            </tr>
-            </Link>
-          ))}
+              </Link>
+            </td>
+          </tr>
+        ))}
         </tbody>
       </table>
 
       {/* Include Pagination component */}
       <Pagination itemsPerPage={itemsPerPage} totalItems={pendingUsers.length} paginate={paginate} />
-    </div>
+    </>
   );
 }
 

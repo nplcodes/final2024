@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AiOutlineClockCircle } from 'react-icons/ai'
-import { BiCommentEdit, BiMessage } from 'react-icons/bi'
-import { BsDot, BsEye } from 'react-icons/bs'
-import { TiDeleteOutline } from 'react-icons/ti'
+import { BsDot } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { issueActions } from '../../redux/issue/issueSlice';
@@ -49,40 +46,31 @@ function IssuePageMenuAllIssues() {
 
     return (
         <div>
-            <p className='pb-3 font-bold text-xl'>My Concerns page</p>
             {studentIssues && studentIssues.length > 0 ? (
                 studentIssues.map((issue) => (
                     <div className='max-h-60 overflow-y-auto'>
-                        <div className='flex flex-row justify-between p-10 mb-1'>
+                        <div className='flex flex-row justify-between mb-1 border-b border-b-1'>
                             <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}>
-                                <div className='flex gap-5'>
-                                    <div className='text-red-500 text-4xl'><BsDot /></div>
-                                    <img className='w-10 h-10 rounded-full' src="https://www.shutterstock.com/image-illustration/male-default-placeholder-avatar-profile-260nw-582509551.jpg" alt={issue.title} />
+                                <div className='flex gap-2'>
+                                    <div className='text-green-500 text-4xl'><BsDot /></div>
                                     <div onClick={()=> dispatch(issueActions.setAssignedTo(issue.assignedTo))}>
-                                        <p className='text-xl pb-2 font-semibold italic'>{issue.category}</p>
-                                        <div className='flex gap-2'>
-                                            <p className='text-slate-500'>
-                                            </p>
-                                            <div className='h-5 w-[0.5px] bg-slate-300'></div>
-                                            <p className='text-slate-500 flex items-center gap-2'> <AiOutlineClockCircle />{formatDate(issue.dateReported)}</p>
-                                            <div className='h-5 w-[0.5px] bg-slate-300'></div>
-                                            <p className='flex items-center gap-2 text-slate-500'> <BiMessage />({issue?.staffStudentDiscussion?.length}) Comments</p>
-                                        </div>
+                                        <p className='pb-2'>{issue.description}</p>
                                     </div>
                                 </div>
                             </Link>
-                            <div className=''>
-                                <Link to={`/Home/manage-issue/${issue._id}`} key={issue._id}><p className='cursor-pointer'><BsEye /></p></Link>
-                                <Link to={`/Home/update-issue/${issue._id}`}><p className='cursor-pointer'><BiCommentEdit /></p></Link>
+                            <div className='flex gap-2'>
+                                <Link to={`/Home/update-issue/${issue._id}`} key={issue._id}>
+                                    <button className='bg-blue-500 px-8 py-2 text-white cursor-pointer rounded-md'>Edit</button>
+                                </Link>
                                 <Link to='#'>
-                                    <p className='text-red-500 cursor-pointer'><TiDeleteOutline /></p>
+                                    <button className='bg-red-500 px-8 py-2 text-white cursor-pointer rounded-md'>Delete</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
                 ))
             ) : (
-                <p>Not available</p>
+                <p>Not Current issue found :)</p>
             )}
         </div>
     )

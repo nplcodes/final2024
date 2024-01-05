@@ -180,6 +180,7 @@ const updateApprovalStatus = async (req, res) => {
 
     // Update the approvalStatus
     user.approvalStatus = approvalStatus;
+    //
     await user.save();
 
     // Create a notification

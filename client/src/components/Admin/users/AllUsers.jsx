@@ -21,8 +21,10 @@ function AllUsers() {
   return (
     <div className="container mx-auto my-10">
       <div className="pb-6">
-        <p className="text-3xl font-bold text-blue-500">Users List</p>
+        <p className="text-xl font-bold text-blue-500">Users List</p>
       </div>
+      <p className="pb-3 font-bold">All Users</p>
+
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr className="border-b">
@@ -33,9 +35,8 @@ function AllUsers() {
           </tr>
         </thead>
         <tbody>
-          {currentUsers.map((user) => (
-          <Link to={`/Home/admin/manage-users/${user._id}`}>
-            <tr key={user._id} className="border-b">
+          {currentUsers.map((user, index) => (
+            <tr key={user._id} className={index % 2 === 0 ? 'bg-gray-50 hover:bg-gray-100' : 'bg-white hover:bg-gray-100 border-b'}>
               <td className="py-4 px-6 text-left">
                 <Link to={`/Home/admin/manage-users/${user._id}`}>
                   <div className='flex items-center gap-4'>
@@ -53,7 +54,6 @@ function AllUsers() {
                 </span>
               </td>
             </tr>
-            </Link>
           ))}
         </tbody>
       </table>

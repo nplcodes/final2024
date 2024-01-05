@@ -84,7 +84,10 @@ function IssueDetailsPage() {
           <p className='pb-3'>Attachments or files</p>
           <div className=''>
           {issueDetails?.issue?.attachments.map((doc)=> (
-               <li className='text-blue-400 underline cursor-pointer'>{doc.filename}</li>
+               <a key={Date.now()} // Add a key to each element when mapping over an array
+               href={doc.url} // Assuming doc.url is the actual URL of the file
+               download={doc.filename} // Set the download attribute with the filename
+               className='text-blue-400 underline cursor-pointer'>{doc.filename}</a>
           ))}
 
           </div>

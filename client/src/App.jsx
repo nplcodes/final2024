@@ -33,6 +33,7 @@ import UserListDetails from './components/Admin/users/UserListDetails';
 import IssueDetailsPage from './components/Staff/IssueDetailsPage';
 import { issueActions } from './redux/issue/issueSlice';
 import axios from 'axios';
+import SingleStaffReport from './components/Staff/report/SingleStaffReport';
 
 
 const App = () => {
@@ -82,6 +83,7 @@ const App = () => {
           <Route path="staf-post" element={<CreatePost />} />
           <Route path="timeslots/:issueId" element={<TimeSlots />} />
           <Route path="staff-issue-page" element={<MyStaffPage />} />
+          <Route path="staff-report" element={<SingleStaffReport />} />
           <Route path="staff-update-post/:postId" element={<UpdatePost />} />
 
            {/* Middleman page */}

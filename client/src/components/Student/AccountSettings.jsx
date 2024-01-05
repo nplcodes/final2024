@@ -61,8 +61,8 @@ function AccountSettings() {
 
 
   return (
-    <div className='flex gap-3 p-12'>
-         <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col">
+    <div className='flex gap-3 ml-10 mr-10 mt-10 border px-32'>
+         <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col  border-r-2">
                 <div className="mb-8">
                     <img className="object-center object-cover rounded-md h-36 w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="qw" />
                 </div>

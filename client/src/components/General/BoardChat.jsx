@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { useNavigate } from 'react-router-dom';
+import { format, render, cancel, register } from 'timeago.js';
 
 
 function BoardChat() {
@@ -139,7 +140,7 @@ const RemoveIssuefromGroup = async(e)=>{
               alt=""
             />
             <div>
-              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10">{comment.createdAt}</span></p>
+              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10">{format(comment.createdAt)}</span></p>
               <p className="text-xs text-gray-500">{comment.text}</p>
             </div>
           </div>

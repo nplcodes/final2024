@@ -1,9 +1,6 @@
 import React, { useEffect, useState} from 'react'
-import { BsListTask, BsPlus } from "react-icons/bs";
-import { Link } from 'react-router-dom';
 import IssuePageMenuAllIssues from './IssuePage_menu_All_issues';
 import NewIssueForm from './subComponents/NewIssueForm';
-import { GoIssueClosed } from 'react-icons/go';
 import ClosedIssues from './subComponents/ClosedIssues';
 
 
@@ -37,23 +34,40 @@ function IssuePage() {
     };
     console.log(userInfo)
     return (
-    <div className='p-20 gap-20 w-full  grid grid-cols-6'>
-        <div className='pt-10 flex flex-col p-10 gap-3 col-span-1'>
-            <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'all-issues' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('all-issues')}><BsListTask /></div>
-            <Link to="#">
-               <div  className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('new-issue')}><BsPlus /></div>
-            </Link>
-            <div className={`p-5 text-2xl text-black cursor-pointer ${selectedSetting === 'closed' ? 'bg-blue-500 text-white' : ''}`} onClick={() => handleSettingClick('closed')}><GoIssueClosed /></div>
-        </div>
-        {/* Main part with IssuePage   */}
-        <div className='col-span-5'>
-            <div className='pb-10'>
-                <p className='text-blue-500'>Role: {userInfo?.user?.role} </p>
-            </div>
-            {renderMenuSelection()}
-
-        </div>
+    <div className="px-32 py-16 w-full grid grid-cols-6">
+    <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
+      <div
+        className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
+          selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
+        }`}
+        onClick={() => handleSettingClick('new-issue')}
+      >
+        New
+      </div>
+      <div
+        className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
+          selectedSetting === 'all-issues' ? 'bg-blue-500 text-white' : ''
+        }`}
+        onClick={() => handleSettingClick('all-issues')}
+      >
+       Progressing
+      </div>
+      <div
+        className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
+          selectedSetting === 'closed' ? 'bg-blue-500 text-white' : ''
+        }`}
+        onClick={() => handleSettingClick('closed')}
+      >
+         Done
+      </div>
     </div>
+    {/* Main part with MyStaffPage   */}
+    <div className="col-span-5 border  h-screen px-8">
+      <div className="pb-10">
+      </div>
+      {renderMenuSelection()}
+    </div>
+  </div>
   )
 }
 export default IssuePage

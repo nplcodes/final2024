@@ -150,7 +150,7 @@ const issueSlice = createSlice({
     setAssignedToMe: (state, action) => {
       state.assignedToMe = action.payload;
       state.newIssues = state.assignedToMe.filter((issue) => issue.isRead === false);
-      state.progressIssues = state.assignedToMe.filter((issue) => issue.isRead === true && issue.status === 'open');
+      state.progressIssues = state.assignedToMe.filter((issue) => issue.isRead === true && issue.status === 'assigned');
       state.closedIssues = state.assignedToMe.filter((issue) => issue.status === 'closed' && issue.status === 'closed');
     },
     // CloseIssue

@@ -66,37 +66,22 @@ function NewIssueForm() {
   return (
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
-        <div className="flex   z-10">
-          <div className="p-1 bg-white rounded-2xl w-100 ">
-            <div>
-              <p className='text-2xl pt-1 pb-10'>Forward new #Issue</p>
-              <p className='pb-5'>Create new issue to be solved by elders</p>
-            </div>
-            <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit(onSubmitHandler)}>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Title</label>
+        <div className="flex z-10 px-32">
+          <div className="p-8 rounded-2xl w-[80%]">
+           <p className='pb-8 text-2xl font-bold'>Rise Issue Here </p>
+            <form className="grid grid-cols-1 gap-4 " onSubmit={handleSubmit(onSubmitHandler)}>
+              <div className="grid grid-cols-1 gap-4">
+                <div className=''>
                   <input
                     {...register("title")}
                     type="text"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="We want to see you"
+                    className="w-full  text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="Type a Title"
                     name="title"
                   />
                   <label className="text-sm font-medium text-red-500">{errors.title?.message}</label>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Description</label>
-                  <textarea {...register("description")}
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Enter issue description"
-                    rows={5}
-                    name="description"
-                  ></textarea>
-                  <p className="text-sm font-medium text-red-500">{errors.description?.message}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Category</label>
                   <select
                     {...register("category")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
@@ -110,13 +95,20 @@ function NewIssueForm() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Files</label>
                   <input
                     type="file"
                     required
                     {...register("attachment")}
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                   />
+                </div>
+                <div>
+                  <textarea {...register("description")} rows={10}
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="Enter issue description"
+                    name="description"
+                  ></textarea>
+                  <p className="text-sm font-medium text-red-500">{errors.description?.message}</p>
                 </div>
                 <div>
                   <input
@@ -137,7 +129,7 @@ function NewIssueForm() {
                 Rise
               </button>
               <p>
-                <Link to='#' className='text-blue-500'>Back</Link>
+                <Link to='#' className='text-blue-500 max-w-64'>Back</Link>
               </p>
             </form>
           </div>

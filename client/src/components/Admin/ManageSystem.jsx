@@ -55,14 +55,14 @@ function ManageSystem() {
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><AiOutlineIssuesClose className='text-6xl text-blue-500'/></p>
             <p className='text-xl text-red-500'>{total_number_issues}</p>
-            <p className='text-2xl'>New Issues</p>
+            <p className='text-2xl'>Pending Issues</p>
           </div>
         </Link>
 
         <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
           <p><IoNotificationsOutline className='text-6xl text-blue-500'/></p>
           <p className='text-xl text-red-500'>10</p>
-          <p className='text-2xl'>Posts</p>
+          <p className='text-2xl'>Requests</p>
         </div>
       </div>
     </div>
