@@ -8,13 +8,16 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
   }
 
   return (
-    <nav className="pagination">
-      {pageNumbers.map((number) => (
-        <a key={number} onClick={() => paginate(number)} className="page-link">
-          {number}
-        </a>
-      ))}
-    </nav>
+    <div className='flex justify-end gap-2'>
+        <nav className="pagination">
+          {pageNumbers.map((number) => (
+            <a key={number} onClick={() => paginate(number)} href='#' className="page-link">
+              {number}
+            </a>
+          ))}
+        </nav>
+    </div>
+
   );
 };
 

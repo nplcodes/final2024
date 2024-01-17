@@ -66,7 +66,7 @@ const Topnav = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className="bg-white text-gray-700 h-16 flex justify-between items-center px-6 shadow-md">
+    <div className="bg-white text-gray-700 h-32 flex justify-between items-center px-6 shadow-md">
       <div className="flex items-center">
         <button
           className="text-gray-700 focus:outline-none mr-3 md:hidden"

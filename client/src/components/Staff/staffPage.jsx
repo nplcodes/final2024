@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { format, render, cancel, register } from 'timeago.js';
+import { format} from 'timeago.js';
 
 
 function StaffPage() {

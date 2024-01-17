@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { useNavigate } from 'react-router-dom';
-import { format, render, cancel, register } from 'timeago.js';
+import { format } from 'timeago.js';
 
 
 function BoardChat() {

@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { GiConvergenceTarget } from "react-icons/gi";
 import { CiFolderOn } from "react-icons/ci";
+import { PiStudentLight } from "react-icons/pi";
+import { FaPersonMilitaryToPerson } from "react-icons/fa6";
+
 
 
 
@@ -79,6 +82,16 @@ const Sidebar = ({ isSidebarOpen }) => {
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
             <BsInfoCircle className="text-xl" /> Info
           </div>
+          <Link to="/Home/school" className="text-gray-500">
+            <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+              <PiStudentLight className="text-xl" /> Students
+            </div>
+          </Link>
+          <Link to="/Home/school/staff" className="text-gray-500">
+            <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+              <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
+            </div>
+          </Link>
         </Link>
         <Link to="/Home/admin/setting" className="text-gray-500">
               <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>

@@ -1,7 +1,7 @@
 import { BsDot } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { format, render, cancel, register } from 'timeago.js';
+
 
 
 function IssuesInProgress() {

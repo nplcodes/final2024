@@ -30,8 +30,8 @@ function AccountSettingsAdmin() {
 
   return (
     <div className='p-10'>
-      <div className='w-full flex p-16 h-screen border'>
-        <div className='min-w-[30%] h-full flex flex-col items-center pt-10 gap-2'>
+      <div className='w-full flex p-16 h-auto border'>
+        <div className='min-w-[30%]  flex flex-col items-center pt-10 gap-2'>
           <p
             className='text-3xl cursor-pointer bg-blue-500 text-white p-2 hover:bg-blue-500 hover:text-white'
             onClick={() => handleSettingClick('user-detail')}

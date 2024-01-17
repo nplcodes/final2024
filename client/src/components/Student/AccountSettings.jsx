@@ -87,7 +87,7 @@ function AccountSettings() {
                         <label className="text-sm font-medium text-gray-700">Full names</label>
                         <input
                             type="text"
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Muneza Ben"
                             name="fullName"
                             value={formData.fullName}
@@ -97,7 +97,7 @@ function AccountSettings() {
                         <div>
                         <label className="text-sm font-medium text-gray-700">Faculty</label>
                         <select
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             name="faculty"
                             onChange={handleChange}
                         >
@@ -112,7 +112,7 @@ function AccountSettings() {
                         <div>
                         <input 
                             type="text"
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="@lamar250"
                             name="username"
                             value={formData.username}
@@ -122,7 +122,7 @@ function AccountSettings() {
                         <div>
                         <input                    
                             type="email"
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="lamar250@yahoo.com"
                             name="email"
                             value={formData.email}
@@ -132,7 +132,7 @@ function AccountSettings() {
                         <div>
                         <label className="text-sm font-medium text-gray-700">Position</label>
                         <select
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             name="position"
                             onChange={handleChange}
                         >
@@ -148,7 +148,7 @@ function AccountSettings() {
                         <label className="text-sm font-medium text-gray-700">  Role</label>
                         <input
                             type="text"
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-basep-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             placeholder="Comfirm  password @123"
                             name="reserved"
                             value={formData.role}
@@ -158,7 +158,7 @@ function AccountSettings() {
                         <div>
                         <label className="text-sm font-medium text-gray-700">Level</label>
                         <select
-                            className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             name="level"
                             onChange={handleChange}
                         >
