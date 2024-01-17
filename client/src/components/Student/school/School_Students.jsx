@@ -6,19 +6,6 @@ const School_Students = () => {
   const [students, setStudents] = useState([
     { id: 1, name: "John Doe", age: 20, grade: "A" },
     { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
-    { id: 4, name: "Alice Brown", age: 23, grade: "B" },
-    { id: 5, name: "Charlie Davis", age: 22, grade: "A" },
-    { id: 1, name: "John Doe", age: 20, grade: "A" },
-    { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
-    { id: 4, name: "Alice Brown", age: 23, grade: "B" },
-    { id: 5, name: "Charlie Davis", age: 22, grade: "A" },
-    { id: 1, name: "John Doe", age: 20, grade: "A" },
-    { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
-    { id: 4, name: "Alice Brown", age: 23, grade: "B" },
-    { id: 5, name: "Charlie Davis", age: 22, grade: "A" },
     { id: 1, name: "John Doe", age: 20, grade: "A" },
     { id: 2, name: "Jane Smith", age: 22, grade: "B" },
     { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
@@ -28,7 +15,7 @@ const School_Students = () => {
   ]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6); // Change this to the desired number of items per page
+  const [itemsPerPage] = useState(4); // Change this to the desired number of items per page
 
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(search.toLowerCase())
