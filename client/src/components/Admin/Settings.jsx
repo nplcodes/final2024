@@ -29,30 +29,35 @@ function AccountSettingsAdmin() {
   };
 
   return (
-    <div className='p-10'>
-      <div className='w-full flex p-16 h-auto border'>
-        <div className='min-w-[30%]  flex flex-col items-center pt-10 gap-2'>
-          <p
-            className='text-3xl cursor-pointer bg-blue-500 text-white p-2 hover:bg-blue-500 hover:text-white'
-            onClick={() => handleSettingClick('user-detail')}
-          >
-            <BiSolidUserDetail />
-          </p>
-          <p
-            className='text-3xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
-            onClick={() => handleSettingClick('image')}
-          >
-            <GoImage />
-          </p>
-          <p
-            className='text-3xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
-            onClick={() => handleSettingClick('password')}
-          >
-            <PiPasswordLight />
-          </p>
+    <div className=''>
+      
+      <div className='w-full flex h-[8%] px-32 flex-col items-center'>
+        <div className='flex w-[70%] justify-between bg-slate-200 p-5'>
+            <div className=''>
+              <p>Account Settings</p>
+            </div>
+            <div className=' flex flex-row items-center gap-2'>
+              <p
+                className='text-3xl cursor-pointer bg-blue-500 text-white p-2 hover:bg-blue-500 hover:text-white'
+                onClick={() => handleSettingClick('user-detail')}
+              >
+                <BiSolidUserDetail />
+              </p>
+              <p
+                className='text-3xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
+                onClick={() => handleSettingClick('image')}
+              >
+                <GoImage />
+              </p>
+              <p
+                className='text-3xl cursor-pointer p-2 hover:bg-blue-500 hover:text-white'
+                onClick={() => handleSettingClick('password')}
+              >
+                <PiPasswordLight />
+              </p>
+            </div>
         </div>
-
-        <div className='w-[70%] h-auto bg-white border p-4'>
+        <div className='w-[70%] flex justify-center bg-white border p-24'>
           {renderSettingContent()}
         </div>
       </div>

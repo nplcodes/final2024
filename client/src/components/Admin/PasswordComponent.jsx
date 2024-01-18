@@ -30,16 +30,16 @@ function PasswordComponent() {
   };
 
   return (
-    <div className="max-w-md  mt-1 p-6 bg-white rounded-lg shadow-xl">
+    <div className="w-[70%] mt-1 p-6 bg-white rounded-lg shadow-xl">
       <h2 className="text-2xl mb-4 pb-7">Edit Password</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='p-8'>
         <div className="mb-4">
           <input 
             type="password"
             id="currentPassword"
             name="password"
             onChange={(e)=> setPassword (e.target.value)}
-            className="border p-2 w-full rounded-md"
+            className="border-none bg-gray-100 p-3 w-full rounded-md"
             placeholder='Type new password'
           />
         </div>
@@ -49,7 +49,7 @@ function PasswordComponent() {
             id="newPassword"
             name="newPassword"
             value=''
-            className="border p-2 w-full rounded-md"
+            className="border-none bg-gray-100 p-3 w-full rounded-md"
             placeholder='Comfirm password'
           />
         </div>

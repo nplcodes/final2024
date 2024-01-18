@@ -40,7 +40,7 @@ function ImageComponent() {
   };
 
   return (
-    <div className="max-w-md mt-1 p-6 bg-white rounded-lg shadow-xl">
+    <div className="w-[70%] mt-1 p-6 bg-white rounded-lg shadow-xl">
       <h2 className="text-2xl mb-4 pb-7">Edit Profile Image</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -49,7 +49,7 @@ function ImageComponent() {
             accept="image/*"
             id="image"
             onChange={handleImageChange}
-            className="border p-2 w-full rounded-md"
+            className="border-none bg-gray-100 p-3 w-full rounded-md"
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
