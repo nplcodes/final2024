@@ -48,7 +48,7 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('new-issue')}
         >
-         Progressing
+         My concerns
         </div>
         <div
           className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -56,15 +56,17 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('report')}
         >
-           Closed
+           Feedback
         </div>
       </div>
       {/* Main part with MyStaffPage   */}
-      <div className="col-span-5 border  h-screen px-8">
+      <div className="col-span-5 border h-screen px-8">
         <div className="pb-10">
-          {/* <p className="text-blue-500">Role: {userInfo?.user?.position} </p> */}
+          {/* Your other content */}
         </div>
-        {renderMenuSelection()}
+        <div className="overflow-auto">
+          <AllIssues />
+        </div>
       </div>
     </div>
   );

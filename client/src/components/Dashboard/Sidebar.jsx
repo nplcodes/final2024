@@ -82,11 +82,13 @@ const Sidebar = ({ isSidebarOpen }) => {
           <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
             <BsInfoCircle className="text-xl" /> Info
           </div>
+          
           <Link to="/Home/school" className="text-gray-500">
             <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
               <PiStudentLight className="text-xl" /> Students
             </div>
           </Link>
+          
           <Link to="/Home/school/staff" className="text-gray-500">
             <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
               <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
