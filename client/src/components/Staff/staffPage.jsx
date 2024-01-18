@@ -45,20 +45,16 @@ function StaffPage() {
       </header>
       <div className="flex p-8 border rounded-md">
         <div className="w-4/5 mr-8 border px-4">
-          <h1 className="text-2xl font-semibold mb-4 p-4">New Issues ({totalNumberIssues})</h1>
 
           {/* Search by Category */}
-          <div className="mb-4">
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Search by Category:
-            </label>
+          <div className="mb-4 py-8">
             <input
               type="text"
               id="category"
               value={searchCategory}
               onChange={handleCategoryChange}
               className="mt-1 p-2 border rounded-md"
-              placeholder="Enter category..."
+              placeholder="Search category..."
             />
           </div>
 

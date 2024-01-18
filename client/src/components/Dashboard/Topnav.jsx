@@ -75,16 +75,7 @@ const Topnav = ({ toggleSidebar }) => {
           <FaBars />
         </button>
         <div className="flex items-center flex-grow justify-center">
-          <div className="relative">
-            <input
-              type="text"
-              value={searchValue}
-              onChange={handleSearchChange}
-              placeholder=" tap to search ....."
-              className="bg-transparent text-gray-700 rounded-md py-2 px-10 focus:outline-none focus:shadow-outline"
-            />
-            <FaSearch className="absolute left-3 top-2 text-gray-500" />
-          </div>
+        <p>NPC</p>
         </div>
       </div>
       <div className="flex items-center">
