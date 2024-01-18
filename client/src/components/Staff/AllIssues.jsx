@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { BsDot } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { TbArrowBearRight2 } from 'react-icons/tb';
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
 
 function AllIssues() {

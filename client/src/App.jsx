@@ -41,6 +41,7 @@ import NewStaffForm from './components/Staff/school/NewStaffForm';
 import EditStudentInfo from './components/Student/school/EditStudent';
 import EditStaffInfo from './components/Staff/school/EditStaffInfo';
 import Users from './components/Admin/UsersList';
+import RequestedCodes from './components/Admin/RequestCodes/RequestedCodes';
 
 
 const App = () => {
@@ -94,6 +95,7 @@ const App = () => {
                 <Route path="staff-report" element={<SingleStaffReport />} />
                 <Route path="staff-update-post/:postId" element={<UpdatePost />} />
                 <Route path="admin/manage" element={<ManageSystem />} />
+                <Route path="admin/manage/requests" element={<RequestedCodes />} />
                 <Route path="admin/users" element={<Users />} />
                 <Route path="admin/manage-users/:userId" element={<UserListDetails />} />
                 <Route path="admin/issues" element={<IssuesToAssign />} />
