@@ -10,6 +10,7 @@ import appointmentRoutes from './routes/appointmentRoutes.js';
 import cors from 'cors'
 import multer from 'multer';
 import staffRoutes from './routes/staffRoutes.js'
+import studentRoutes from './routes/studentRoutes.js'
 
 
 
@@ -32,6 +33,7 @@ app.use('/post', postRoutes);
 app.use('/notification', notificationRoutes);
 app.use('/appointment', appointmentRoutes);
 app.use("/api/school", staffRoutes);
+app.use("/api/school", studentRoutes);
 
 
 

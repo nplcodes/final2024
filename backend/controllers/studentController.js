@@ -1,5 +1,5 @@
 // studentController.js
-import Student from "../models/Student";
+import Student from "../models/Student.js";
 
 const registerStudent = async (req, res) => {
   try {
