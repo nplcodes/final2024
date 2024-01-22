@@ -1,7 +1,6 @@
 // controllers/issueController.js
 import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
-import mongoose from 'mongoose';
 import User from '../models/User.js';
 
 

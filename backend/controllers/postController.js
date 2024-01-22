@@ -2,7 +2,6 @@
 import Post from '../models/Post.js';
 import Notification from '../models/Notification.js';
 import User from '../models/User.js';
-import { notifyAllStudentsAboutNewPost } from '../middleware/notificationService.js';
 
 
 // Create a new post
