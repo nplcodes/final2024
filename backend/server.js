@@ -8,9 +8,10 @@ import postRoutes from './routes/postRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
 import cors from 'cors'
-import multer from 'multer';
 import staffRoutes from './routes/staffRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
+import codeRequestRoutes from './routes/codeRequestRoutes.js'
+
 
 
 
@@ -34,6 +35,8 @@ app.use('/notification', notificationRoutes);
 app.use('/appointment', appointmentRoutes);
 app.use("/api/school", staffRoutes);
 app.use("/api/school", studentRoutes);
+app.use('/api/code', codeRequestRoutes); // Use the new route
+
 
 
 
