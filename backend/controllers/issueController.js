@@ -1,4 +1,5 @@
 // controllers/issueController.js
+import CodeRequest from '../models/CodeRequestModel.js';
 import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
 import User from '../models/User.js';
@@ -7,7 +8,7 @@ import User from '../models/User.js';
 // Create new issue
 const createIssue = async (req, res) => {
   try {
-    const { title, reporter, description, category } = req.body;
+    const { title, reporter, description, category, private_channel_code  } = req.body;
 
     const newIssue = new Issue({
       title,
@@ -22,6 +23,17 @@ const createIssue = async (req, res) => {
           }]
         : [],
     });
+
+     // If private_channel_code exists, add it to newIssueData
+     if (private_channel_code) {
+      const codeRequest = await CodeRequest.findOne({ _id: private_channel_code });
+      if (codeRequest && codeRequest.staff) {
+        newIssue.assignedTo = codeRequest.staff;
+        newIssue.status = 'assigned';
+      }
+      newIssue.private_channel_code = private_channel_code;
+      await CodeRequest.findOneAndDelete({_id: private_channel_code});
+    }
     
     const issue = await Issue.create(newIssue);
 

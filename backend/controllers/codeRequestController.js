@@ -6,6 +6,13 @@ const createCodeRequest = async (req, res) => {
     // Extract data from the request
     const { staff, reason, requester, why } = req.body;
 
+      // Check if there is an existing code request with the same staff and requester
+      const existingCodeRequest = await CodeRequest.findOne({ staff, requester });
+
+      if (existingCodeRequest) {
+        return res.status(400).json({ message: 'Channel already exists' });
+      }
+
     // Create a new code request
     const newCodeRequest = new CodeRequest({
       staff,
@@ -26,7 +33,7 @@ const createCodeRequest = async (req, res) => {
 
 const confirmCodeRequest = async (req, res) => {
     try {
-      const { codeRequestId } = req.body;
+      const { codeRequestId } = req.params;
   
       // Update the code request status to "Approved" and set the confirmedBy field
       const updatedCodeRequest = await CodeRequest.findByIdAndUpdate(
@@ -76,4 +83,21 @@ const confirmCodeRequest = async (req, res) => {
     }
   };
 
-export { createCodeRequest, confirmCodeRequest, deleteCodeRequest, getAllCodeRequests  };
+  // single code for requester
+  const getSingleCodeRequests = async (req, res) => {
+    try {
+      // Retrieve the logged-in requester's ID from the request object
+      const {requesterId} = req.params; // Adjust this based on your authentication setup
+  
+      // Retrieve code requests from the database filtered by the logged-in requester's ID
+      const codeRequests = await CodeRequest.find({ requester: requesterId });
+  
+      res.status(200).json(codeRequests);
+    } catch (error) {
+      console.error('Error fetching code requests:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
+
+export { createCodeRequest, confirmCodeRequest, deleteCodeRequest, getAllCodeRequests , getSingleCodeRequests };

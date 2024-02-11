@@ -21,13 +21,18 @@ const validationSchema = object().shape({
 });
 
 function RequestCode() {
+  // Logged user Id
+  const userInfo = useSelector((state)=> state.auth.user);
+  const requester = userInfo._id;
+
+  const [errorMessage, setErrorMessage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allStaffs, setAllStaffs] = useState([]);
   const [staff_to_interact, setSelectedStaff] = useState('');
+  const [myCodes, setMyCodes] = useState([])
   
   // select staff to interact with
   const staff = 'Staff';
-
   useEffect(() => {
     const fetchIssuesData = async () => {
       try {
@@ -41,6 +46,23 @@ function RequestCode() {
     fetchIssuesData();
   }, []);
 
+  // fetch all codes for one user(logged in)
+  useEffect(() => {
+    const fetchCodeRequests = async () => {
+      try {
+        // Make a GET request to your backend API to fetch code requests for the logged-in requester
+        const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${requester}`); // Update the URL as needed
+
+        // Update the state with the fetched code requests
+        setMyCodes(response.data);
+      } catch (error) {
+        console.error('Error fetching code requests:', error);
+      }
+    };
+
+    fetchCodeRequests();
+  }, []);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -49,8 +71,6 @@ function RequestCode() {
     setIsModalOpen(false);
   };
   
-  const userInfo = useSelector((state)=> state.auth.user);
-  const requester = userInfo._id;
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
@@ -66,12 +86,19 @@ function RequestCode() {
 
       openModal();
     } catch (error) {
-      console.error('Error creating issue:', error);
+            // Check if the error is an AxiosError and if it has a response with a message
+            if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
+              // Set the error message to be displayed to the user
+              setErrorMessage(error.response.data.message);
+            } else {
+              // If the error does not have a specific message, display a generic error message
+              setErrorMessage('An error occurred while creating the code request.');
+            }
     }
     reset();
   };
 
-  const code=false;
+  const code=true;
 
   return (
     <div>
@@ -79,7 +106,7 @@ function RequestCode() {
         <div className="flex z-10 px-2">
           <div className="p-8 rounded-2xl w-full">
             {/* CodeCard component */}
-            {code ? <div className='flex justify-end'><CodeCard /></div> : ''}
+            {code ? <div className='flex justify-end'><CodeCard codes={myCodes}/></div> : ''}
             <p className='pb-8 text-2xl font-bold'>Request Private Channel</p>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="grid grid-cols-2 gap-4">
@@ -114,7 +141,7 @@ function RequestCode() {
                   <div className='mt-2'>
                     <input
                       {...register('requester')}
-                      type="text"
+                      type="hidden"
                       className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                       placeholder="We want to see you"
                       defaultValue={requester}
@@ -145,6 +172,7 @@ function RequestCode() {
                 <Link to='#' className='text-blue-500 max-w-64'>Back</Link>
               </p>
             </form>
+            {errorMessage && <div className="error-message text-red-500">{errorMessage}</div>}
           </div>
         </div>
       </div>

@@ -33,7 +33,8 @@ function IssuePage() {
           return null;
       }
     };
-    console.log(userInfo)
+
+    
     return (
     <div className="px-32 py-5 w-full grid grid-cols-6">
     <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">

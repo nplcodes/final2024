@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { codesActions } from '../../../redux/request_codes/codesSlice';
 
-const dummyCodeRequests = [
-  { code: 'ABC123', fullName: 'John Doe', staffAssigned: 'Staff A' },
-  { code: 'DEF456', fullName: 'Jane Smith', staffAssigned: 'Staff B' },
-  { code: 'GHI789', fullName: 'Bob Johnson', staffAssigned: 'Staff C' },
-  // Add more dummy data as needed
-];
+
+
 
 function RequestedCodes() {
+  const dispatch = useDispatch(); // Initialize useDispatch
+
+
+  const dummyCodeRequests = useSelector(state => state.codes.codeRequests.filter(request => request.status === 'Pending'));
   const [codeRequests, setCodeRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  // request codes data
   const [selectedCode, setSelectedCode] = useState(null);
+  const [reasonforrrequest, setreasonforRequest] = useState(null);
+  const [why, setWhy] = useState(null);
+
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [reason, setReason] = useState('');
   const codesPerPage = 2;
@@ -20,22 +27,59 @@ function RequestedCodes() {
     setCodeRequests(dummyCodeRequests);
   }, []);
 
-  const handleConfirm = (code) => {
+  const handleConfirm = (code, reason, why) => {
     setSelectedCode(code);
+    setreasonforRequest(reason)
+    setWhy(why)
+
+
     setIsConfirmModalOpen(true);
   };
 
-  const handleReject = (code) => {
-    // Handle logic for rejecting code
-    console.log(`Reject code: ${code}`);
-  };
+ // Function to handle rejecting a code request
+ const handleReject = async (code) => {
+  try {
+    // Remove the code request from the state
+    const updatedCodeRequests = dummyCodeRequests.filter(request => request._id !== code);
+      
+    // Update the state with the filtered array
+    setCodeRequests(updatedCodeRequests);
+    
+    // Send a DELETE request to your server endpoint to delete the code request from the database
+    const response = await fetch(`http://localhost:8080/api/code/delete-code-request/${code}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-  const handleReasonSubmit = () => {
-    // Handle logic for submitting reason
-    console.log(`Reason for ${selectedCode}: ${reason}`);
+    if (!response.ok) {
+      throw new Error('Failed to reject code request');
+    }
+
+    console.log(`Code request with code ${code} rejected successfully`);
+  } catch (error) {
+    console.error('Error rejecting code request:', error.message);
+  }
+};
+
+  const ComfirmRequestCode = async() => {
+
     setIsConfirmModalOpen(false);
     setSelectedCode(null);
     setReason('');
+
+    try {
+      // Make API call to update status to "Approved"
+      const response = await axios.put(
+        `http://localhost:8080/api/code/confirm-code-request/${selectedCode}`,
+        { status: 'Approved' }
+      );
+      dispatch(codesActions.updateCodeRequest(selectedCode))
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
   // Pagination
@@ -51,6 +95,7 @@ function RequestedCodes() {
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
 
   return (
     <div>
@@ -77,18 +122,18 @@ function RequestedCodes() {
                       key={request.code}
                       className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
                     >
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.code}</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.fullName}</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.staffAssigned}</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">Leon</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.requester}</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">ci</td>
                       <td className="py-3 px-6 text-left whitespace-nowrap">
                         <button
-                          onClick={() => handleConfirm(request.code)}
+                          onClick={() => handleConfirm(request._id, request.why, request.reason )}
                           className="bg-green-500 text-white px-4 py-2 mr-2 rounded-md"
                         >
                           Confirm
                         </button>
                         <button
-                          onClick={() => handleReject(request.code)}
+                          onClick={() => handleReject(request._id)}
                           className="bg-red-500 text-white px-4 py-2 rounded-md"
                         >
                           Reject
@@ -126,9 +171,20 @@ function RequestedCodes() {
       {/* Confirm Modal */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none bg-black bg-opacity-50">
-          <div className="relative w-[500px] bg-white rounded-lg shadow-lg">
+          <div className="relative w-[1000px] bg-white rounded-lg shadow-lg">
             <div className="flex flex-col p-6 space-y-4">
               <p className="text-lg font-bold">Confirm Code</p>
+              <p>Yes, Leon</p>
+              <p>{why}</p>
+              <p>{why}</p>
+              <p>{selectedCode}</p>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                 when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                  essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
+                  Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including
+                   versions of Lorem Ipsum</p>
               <textarea
                 className="w-full h-48 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400"
                 placeholder="Enter reason for confirmation..."
@@ -143,7 +199,7 @@ function RequestedCodes() {
                   Cancel
                 </button>
                 <button
-                  onClick={handleReasonSubmit}
+                  onClick={ComfirmRequestCode}
                   className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none"
                 >
                   Confirm

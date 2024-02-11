@@ -42,6 +42,9 @@ const issueSchema = new mongoose.Schema({
   attachments: [attachmentSchema],
   isRead: {type: Boolean, default: false},
   feedback: {type: String, default: null},
+  private_channel_code: {
+    type: String
+  },
 }, {
   timestamps: true,
 });

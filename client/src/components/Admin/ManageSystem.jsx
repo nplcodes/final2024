@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { authActions } from '../../redux/auth/authSlice';
 import { issueActions } from '../../redux/issue/issueSlice';
+import { codesActions } from '../../redux/request_codes/codesSlice';
 
 
 
@@ -21,6 +22,23 @@ function ManageSystem() {
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
   const total_number_issues = unassignedIssues.length;
 
+
+  // initial request codes here
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const codesResponse = await axios.get('http://localhost:8080/api/code/all-code-requests');
+        dispatch(codesActions.setCodeRequests(codesResponse.data));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+  
+
+  // fetch all users
   useEffect(() => {
     const fetchData = async () => {
       try {
