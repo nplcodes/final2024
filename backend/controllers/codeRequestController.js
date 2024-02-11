@@ -4,13 +4,14 @@ import CodeRequest from "../models/CodeRequestModel.js";
 const createCodeRequest = async (req, res) => {
   try {
     // Extract data from the request
-    const { staff, reason, requester } = req.body;
+    const { staff, reason, requester, why } = req.body;
 
     // Create a new code request
     const newCodeRequest = new CodeRequest({
       staff,
       reason,
-      requester
+      requester,
+      why
     });
 
     // Save the code request to the database

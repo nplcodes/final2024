@@ -12,6 +12,10 @@ const codeRequestSchema = new mongoose.Schema({
     ref: 'Student', 
     required: true,
   },
+  why: {
+    type: String,
+    required: true,
+  },
   reason: {
     type: String,
     required: true,
