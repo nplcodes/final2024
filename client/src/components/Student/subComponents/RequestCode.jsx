@@ -54,7 +54,7 @@ function RequestCode() {
         const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${requester}`); // Update the URL as needed
 
         // Update the state with the fetched code requests
-        setMyCodes(response.data);
+        setMyCodes(response.data.filter((code)=> code.in_use ==false));
       } catch (error) {
         console.error('Error fetching code requests:', error);
       }

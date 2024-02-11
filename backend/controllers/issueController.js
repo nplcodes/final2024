@@ -32,7 +32,9 @@ const createIssue = async (req, res) => {
         newIssue.status = 'assigned';
       }
       newIssue.private_channel_code = private_channel_code;
-      await CodeRequest.findOneAndDelete({_id: private_channel_code});
+      await CodeRequest.findOneAndUpdate({_id: private_channel_code}, {
+        in_use: true
+      });
     }
     
     const issue = await Issue.create(newIssue);
