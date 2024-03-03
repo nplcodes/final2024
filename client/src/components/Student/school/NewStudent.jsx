@@ -30,7 +30,6 @@ const NewStudentForm = () => {
       if(addNewStudent){
         setLoading(false)
         setError("Student successfully registered")
-        setFormData('')
       }
     } catch (error) {
       console.log(error);
@@ -106,11 +105,13 @@ const NewStudentForm = () => {
           <select
             id="faculty"
             name="faculty"
+            required
             placeholder="Select faculty"
             value={formData.faculty}
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
+            <option value="">Select faculty</option>
             <option value="CSC">Computer Science</option>
             <option value="LANG">Modern Lanuages</option>
             <option value="PPS">Police Prof. Studies</option>
@@ -120,6 +121,7 @@ const NewStudentForm = () => {
 
         <div className="mb-4">
           <select
+            required
             id="level"
             name="level"
             placeholder="Select level"
@@ -127,6 +129,8 @@ const NewStudentForm = () => {
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
+
+            <option value="">Select Level</option>
             <option value="Level 1">Level 1</option>
             <option value="Level 2">Level 2</option>
             <option value="Level 3">Level 3</option>

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { studentActions } from "../../../redux/students/studentSlice";
+import axios from "axios";
 
 
 
@@ -47,19 +48,16 @@ const School_Students = () => {
     setSearch(e.target.value);
   };
 
-  const handleAddNew = () => {
-    // Implement logic to add a new student
-    // For example, you can show a modal or navigate to a new page
-    console.log("Add New clicked");
-  };
 
-  const handleEdit = (studentId) => {
-    // Implement logic to edit the student with the given ID
-    console.log(`Edit clicked for student ID: ${studentId}`);
-  };
-
-  const handleDelete = (studentId) => {
-    // Implement logic to delete the student with the given ID
+  const handleDelete = async(studentId) => {
+    try {
+      const deleteStudent = await axios.delete(`http://localhost:8080/api/school/student/delete/${studentId}`);
+      if(deleteStudent){
+        window.location.href= 'http://localhost:3000/Home/school'
+      }
+    } catch (error) {
+      
+    }
     console.log(`Delete clicked for student ID: ${studentId}`);
   };
 
@@ -81,7 +79,6 @@ const School_Students = () => {
           />
           <Link to="new">
             <button
-              onClick={handleAddNew}
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
             >
               Add New
@@ -114,14 +111,13 @@ const School_Students = () => {
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <Link to={`edit/${student._id}`}>
                     <button
-                      onClick={() => handleEdit(student.id)}
                       className="text-blue-500 hover:text-blue-700 mr-2"
                     >
                       Edit
                     </button>
                   </Link>
                   <button
-                    onClick={() => handleDelete(student.id)}
+                    onClick={() => handleDelete(student._id)}
                     className="text-red-500 hover:text-red-700"
                   >
                     Delete
