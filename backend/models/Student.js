@@ -19,10 +19,11 @@ const studentSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true
   },
   faculty: {
     type: String,
-    enum: ["Computer Science", "PPs", "Languages", "Law"],
+    enum: ["CSC", "PPS", "LANG", "LAW"],
   },
   level: {
     type: String,

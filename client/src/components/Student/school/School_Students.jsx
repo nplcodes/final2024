@@ -1,18 +1,36 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { studentActions } from "../../../redux/students/studentSlice";
+
+
 
 const School_Students = () => {
+  const dispatch = useDispatch();
+  // const sts = useSelector(state => state.students);
   const [search, setSearch] = useState("");
-  const [students, setStudents] = useState([
-    { id: 1, name: "John Doe", age: 20, grade: "A" },
-    { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 1, name: "John Doe", age: 20, grade: "A" },
-    { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
-    { id: 4, name: "Alice Brown", age: 23, grade: "B" },
-    { id: 5, name: "Charlie Davis", age: 22, grade: "A" },
-    // Add more sample data as needed
-  ]);
+  const [students, setStudents] = useState([]);
+
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/school/student/all');
+        if (response.ok) {
+          const data = await response.json();
+          dispatch(studentActions.setuStudents(data));
+          setStudents(data);
+        } else {
+          console.error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4); // Change this to the desired number of items per page
@@ -76,7 +94,7 @@ const School_Students = () => {
         <table className="min-w-max w-full table-auto">
           <thead>
             <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
-              <th className="py-3 px-6 text-left">No</th>
+              <th className="py-3 px-6 text-left">Email</th>
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">Age</th>
               <th className="py-3 px-6 text-left">Grade</th>
@@ -89,12 +107,12 @@ const School_Students = () => {
                 key={student.id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} hover:bg-gray-200`}
               >
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.id}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{student.email}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.name}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.age}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.grade}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">
-                  <Link to='edit'>
+                  <Link to={`edit/${student._id}`}>
                     <button
                       onClick={() => handleEdit(student.id)}
                       className="text-blue-500 hover:text-blue-700 mr-2"

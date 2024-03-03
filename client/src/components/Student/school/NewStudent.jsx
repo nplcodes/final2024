@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import axios from "axios"
 
 const NewStudentForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
-    sex: "male",
+    surname:"",
     age: "",
     telephone: "",
     email: "",
-    faculty: "engineering",
-    level: "undergraduate",
-    studentClass: "classA",
+    faculty: "",
+    level: "",
   });
 
   const handleChange = (e) => {
@@ -19,10 +22,20 @@ const NewStudentForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to the server
-    console.log("Form submitted with data:", formData);
+    try {
+      setLoading(true)
+      const addNewStudent = await axios.post('http://localhost:8080/api/school/student/register', formData);
+      if(addNewStudent){
+        setLoading(false)
+        setError("Student successfully registered")
+        setFormData('')
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Student No registered :)")
+    }
   };
 
   return (
@@ -98,9 +111,10 @@ const NewStudentForm = () => {
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
-            <option value="engineering">Engineering</option>
-            <option value="science">Science</option>
-            {/* Add more options as needed */}
+            <option value="CSC">Computer Science</option>
+            <option value="LANG">Modern Lanuages</option>
+            <option value="PPS">Police Prof. Studies</option>
+            <option value="LAW">Law</option>
           </select>
         </div>
 
@@ -120,28 +134,14 @@ const NewStudentForm = () => {
           </select>
         </div>
 
-        <div className="mb-4">
-          <select
-            id="class"
-            name="studentClass"
-            placeholder="Select class"
-            value={formData.studentClass}
-            onChange={handleChange}
-            className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
-          >
-            <option value="classA">Class A</option>
-            <option value="classB">Class B</option>
-            {/* Add more options as needed */}
-          </select>
-        </div>
-
         <div className="mt-4 col-span-2">
           <button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
           >
-            Save
+            Save {loading ? ".......": ''}
           </button>
+          <p className="text-green-500">{error? error: ""}</p>
         </div>
       </form>
     </div>

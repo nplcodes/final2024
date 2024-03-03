@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 
 const EditStudentInfo = () => {
+  const {id} = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+
   const [formData, setFormData] = useState({
     name: "",
-    sex: "male",
+    surname: "",
     age: "",
     telephone: "",
     email: "",
-    faculty: "engineering",
-    level: "undergraduate",
-    studentClass: "classA",
+    faculty: "",
+    level: "",
   });
 
   const handleChange = (e) => {
@@ -19,14 +26,52 @@ const EditStudentInfo = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to the server
-    console.log("Form submitted with data:", formData);
+    try {
+      setLoading(true)
+      const editStudent = await axios.put(`http://localhost:8080/api/school/student/update/${id}`, formData);
+      if(editStudent){
+        setLoading(false)
+        setError("Student successfully Updated")
+        setFormData('')
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Student No Updated :)")
+    }
   };
 
+  // Populate data with edit form 
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/school/student/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setFormData({
+          name: data.name || "",
+          surname: data.surname || "",
+          age: data.age || "",
+          telephone: data.telephone || "",
+          email: data.email || "",
+          faculty: data.faculty || "",
+          level: data.level || "",
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchStudentData();
+
+  }, [id]);
+
+
   return (
-    <div className="container mx-auto mt-8 px-32 py-2">
+    <div className="container mx-auto mt-8 px-4 py-2">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Update Student Info</h2>
       <form onSubmit={handleSubmit} className="border p-24 grid grid-cols-2 gap-4">
         <div className="mb-4">
@@ -98,9 +143,10 @@ const EditStudentInfo = () => {
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
-            <option value="engineering">Engineering</option>
-            <option value="science">Science</option>
-            {/* Add more options as needed */}
+            <option value="CSC">Computer Science</option>
+            <option value="LANG">Modern Lanuages</option>
+            <option value="PPS">Police Prof. Studies</option>
+            <option value="LAW">Law</option>
           </select>
         </div>
 
@@ -120,20 +166,6 @@ const EditStudentInfo = () => {
           </select>
         </div>
 
-        <div className="mb-4">
-          <select
-            id="class"
-            name="studentClass"
-            placeholder="Select class"
-            value={formData.studentClass}
-            onChange={handleChange}
-            className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
-          >
-            <option value="classA">Class A</option>
-            <option value="classB">Class B</option>
-            {/* Add more options as needed */}
-          </select>
-        </div>
 
         <div className="mt-4 col-span-2">
           <button
@@ -142,6 +174,7 @@ const EditStudentInfo = () => {
           >
             Update
           </button>
+          <p className="text-green-500">{error ? error: ""}</p>
         </div>
       </form>
     </div>

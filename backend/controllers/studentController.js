@@ -47,11 +47,22 @@ const deleteStudent = async (req, res) => {
 const getAllStudents = async (req, res) => {
     try {
       const allStudents = await Student.find();
-      res.status(200).json({ students: allStudents });
+      res.status(200).json(allStudents);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };
 
-export default { registerStudent, updateStudent, deleteStudent, getAllStudents  };
+  const getSingleStudent = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const singleStudent = await Student.findById(id);
+      res.status(200).json(singleStudent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+export default { registerStudent, updateStudent, deleteStudent, getAllStudents, getSingleStudent  };

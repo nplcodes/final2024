@@ -20,7 +20,7 @@ import StaffMembers from './components/Student/StaffMembers';
 import HeroSectionStudent from './components/Student/HeroSectionStudent';
 import IssuesList from './components/Student/IssuesList';
 import IssuePage from './components/Student/IssuePage';
-import TimeSlots from './components/Staff/TimeSlots';
+import TimeSlots from './components/Staff/IssueDiscusion';
 import Appointments from './components/Staff/Appointments';
 import CreatePost from './components/General/CreatePost';
 import MyStaffPage from './components/Staff/MyStaffPage';
@@ -102,7 +102,7 @@ const App = () => {
 
                 <Route path="school" element={<School_Students />} />
                 <Route  path="school/new" element={<NewStudentForm />} />
-                <Route  path="school/edit" element={<EditStudentInfo />} />
+                <Route  path="school/edit/:id" element={<EditStudentInfo />} />
                 <Route path="school/staff" element={<School_Staffs />} />
                 <Route  path="school/staff/new" element={<NewStaffForm />} />
                 <Route  path="school/staff/edit" element={<EditStaffInfo />} />
