@@ -26,9 +26,9 @@ const NewStudentForm = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 px-32 py-2">
+    <div className="container mx-auto mt-8 px-4 py-2">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Add New Student</h2>
-      <form onSubmit={handleSubmit} className="border p-24 grid grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="border p-16 grid grid-cols-2 gap-4">
         <div className="mb-4">
           <input
             type="text"

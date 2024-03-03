@@ -30,8 +30,8 @@ function PasswordComponent() {
   };
 
   return (
-    <div className="w-[70%] mt-1 p-6 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl mb-4 pb-7">Edit Password</h2>
+    <div className="w-[90%] mt-1 p-6 bg-white rounded-lg shadow-xl">
+      <h2 className="text-2xl mb-4 pb-7">Change account Password</h2>
       <form onSubmit={handleSubmit} className='p-8'>
         <div className="mb-4">
           <input 

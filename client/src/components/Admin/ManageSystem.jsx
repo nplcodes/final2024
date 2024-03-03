@@ -1,5 +1,4 @@
 import { AiOutlineIssuesClose } from 'react-icons/ai'
-import { IoNotificationsOutline } from 'react-icons/io5'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +7,8 @@ import { useEffect } from 'react';
 import { authActions } from '../../redux/auth/authSlice';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { codesActions } from '../../redux/request_codes/codesSlice';
+import { GrChannel } from "react-icons/gr";
+
 
 
 
@@ -66,7 +67,7 @@ function ManageSystem() {
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><FiUsers className='text-6xl text-blue-500'/></p>
             <p className='text-xl text-red-500'>{pendingUsersCount}</p>
-            <p className='text-2xl'>Pending users</p>
+            <p className='text-2xl'>Manage Users</p>
           </div>
         </Link>
         <Link to="/Home/middleman-issue-page">
@@ -79,9 +80,9 @@ function ManageSystem() {
 
         <Link to="requests">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
-            <p><IoNotificationsOutline className='text-6xl text-blue-500'/></p>
+            <p><GrChannel  className='text-6xl text-blue-500'/></p>
             <p className='text-xl text-red-500'>10</p>
-            <p className='text-2xl'>Requests</p>
+            <p className='text-2xl text-center'>Private Channels</p>
           </div>
         </Link>
       </div>

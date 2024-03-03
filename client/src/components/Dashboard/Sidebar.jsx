@@ -33,7 +33,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`bg-white text-white h-screen w-72 border border-r-1${
+      className={`bg-white text-white h-screen w-48 border border-r-1${
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >
@@ -83,17 +83,23 @@ const Sidebar = ({ isSidebarOpen }) => {
             <BsInfoCircle className="text-xl" /> Info
           </div>
           
+          {userInfo.role === 'Admin' && (
           <Link to="/Home/school" className="text-gray-500">
             <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
               <PiStudentLight className="text-xl" /> Students
             </div>
           </Link>
+
+          )}
           
+          {userInfo.role === 'Admin' && (
           <Link to="/Home/school/staff" className="text-gray-500">
             <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
               <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
             </div>
           </Link>
+          )}
+
         </Link>
         <Link to="/Home/admin/setting" className="text-gray-500">
               <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>

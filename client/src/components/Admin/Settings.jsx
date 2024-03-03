@@ -30,9 +30,9 @@ function AccountSettingsAdmin() {
 
   return (
     <div className=''>
-      
-      <div className='w-full flex h-[8%] px-32 flex-col items-center'>
-        <div className='flex w-[70%] justify-between bg-slate-200 p-5'>
+  
+      <div className='w-full flex h-[8%] px-4 flex-col items-center'>
+        <div className='flex w-[90%] justify-between bg-slate-200 p-5'>
             <div className=''>
               <p>Account Settings</p>
             </div>
@@ -57,7 +57,7 @@ function AccountSettingsAdmin() {
               </p>
             </div>
         </div>
-        <div className='w-[70%] flex justify-center bg-white border p-24'>
+        <div className='w-[90%] flex justify-center bg-white border p-24'>
           {renderSettingContent()}
         </div>
       </div>

@@ -20,7 +20,7 @@ function RequestedCodes() {
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [reason, setReason] = useState('');
-  const codesPerPage = 2;
+  const codesPerPage = 5;
 
   useEffect(() => {
     // Use dummy data for code requests
@@ -101,7 +101,7 @@ function RequestedCodes() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative pt-10">
         <div className="flex z-10">
-          <div className="p-12 bg-white mx-auto rounded-2xl w-[60%] border">
+          <div className="p-12 bg-white mx-auto rounded-2xl w-[90%] border">
             <div>
               <p className="text-2xl pt-5">Requested Codes</p>
               <p className="pb-5">View and manage code requests</p>

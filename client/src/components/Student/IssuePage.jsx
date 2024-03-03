@@ -36,7 +36,7 @@ function IssuePage() {
 
     
     return (
-    <div className="px-32 py-5 w-full grid grid-cols-6">
+    <div className="px-8 py-5 w-full grid grid-cols-6">
     <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
       <div
         className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -60,11 +60,11 @@ function IssuePage() {
         }`}
         onClick={() => handleSettingClick('requestCode')}
       >
-         Request Private Channel
+         Request Code
       </div>
     </div>
     {/* Main part with MyStaffPage   */}
-    <div className="col-span-5 border h-full px-8">
+    <div className="col-span-5 border h-full px-2">
       <div className="pb-5">
       </div>
       {renderMenuSelection()}

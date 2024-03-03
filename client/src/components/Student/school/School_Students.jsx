@@ -50,7 +50,7 @@ const School_Students = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 px-8 border w-[80%] py-8 h-[90%]">
+    <div className="container mx-auto mt-8 px-2 border w-[90%] py-8 h-[90%]">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Student List</h1>
         <div className="flex space-x-4">
