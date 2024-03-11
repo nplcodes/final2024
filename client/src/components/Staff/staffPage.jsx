@@ -37,10 +37,10 @@ function StaffPage() {
   };
 
   return (
-    <div className='pl-32 pr-32 pt-10'>
+    <div className='pl-4 pr-4 pt-10'>
       <header className="bg-slate-200 p-5 text-black">
         <div className="container mx-auto flex justify-between items-center rounded-md">
-          <h1 className="text-xl font-bold">New Issues Page</h1>
+          <h1 className="text-xl font-bold">New Issues</h1>
         </div>
       </header>
       <div className="flex p-8 border rounded-md">
@@ -126,7 +126,7 @@ function StaffPage() {
               <Link key={issue._id} to={`/Home/middleman-issue-page/${issue._id}`}>
                 <div className="bg-white p-4 shadow-md rounded-md">
                   <h2 className="text-sm font-semibold">{issue.title}</h2>
-                  {/* <p className="text-gray-600">{issue.description}</p> */}
+                  <h2 className="text-sm font-semibold">{issue.title}</h2>
                   <p className='pt-3 text-gray-400'>{format(issue?.dateReported)}</p>
                 </div>
               </Link>
