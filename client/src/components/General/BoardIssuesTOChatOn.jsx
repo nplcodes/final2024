@@ -29,7 +29,7 @@ function BoardIssuesTOChatOn() {
   
   return (
     <div className='flex justify-center pt-10'>
-        <div className='h-screen w-[70%] max-auto bg-gray-100 p-5'>
+        <div className='h-screen w-[90%] max-auto bg-gray-100 p-5'>
         <div className='p-10'>
             <p className='text-2xl'>Staffs Chat Room</p>
             <p className="text-sm pl-4"> Click on card to share your point of view</p>

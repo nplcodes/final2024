@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
 
 function AllIssues() {
-  const newIssues = useSelector((state) => state.issue.newIssues);
+  const newIssues = useSelector((state) => state.issue.assignedToMe);
   const [selectedIssueId, setSelectedIssueId] = useState(null);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,10 +25,10 @@ function AllIssues() {
 
   const indexOfLastIssue = currentPage * issuesPerPage;
   const indexOfFirstIssue = indexOfLastIssue - issuesPerPage;
-  const currentIssues = filteredIssues.slice(indexOfFirstIssue, indexOfLastIssue);
+  const currentIssues = newIssues.slice(indexOfFirstIssue, indexOfLastIssue);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredIssues.length / issuesPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(newIssues.length / issuesPerPage); i++) {
     pageNumbers.push(i);
   }
 

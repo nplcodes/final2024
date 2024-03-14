@@ -19,7 +19,8 @@ const staffSchema = new mongoose.Schema({
   },
   position: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   telephone: String,
 }, {

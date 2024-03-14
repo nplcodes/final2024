@@ -13,8 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['Ci', 'Io', 'Academic', 'Logistics', 'Admin', 'Commandant','Student', '']
   },
-  accountStatus: { type: String, enum: ['active', 'inactive'], default: 'inactive' },
-  approvalStatus: { type: String, enum: ['pending', 'approved', 'rejected', null], default: null },
+  accountStatus: { type: String, enum: ['active', 'inactive'], default: 'active' },
   profile: {type: String},
   verificationCode: {type: Number, default: 0},
 });

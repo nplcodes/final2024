@@ -59,6 +59,7 @@ function AccountSettings() {
           }
       };
 
+      console.log(userInfo)
 
   return (
     <div className='flex gap-3 ml-10 mr-10 mt-10 border px-32'>
@@ -94,22 +95,25 @@ function AccountSettings() {
                             onChange={handleChange}
                         />
                         </div>
+                        {userInfo.role ==='Student' && (
                         <div>
-                        <label className="text-sm font-medium text-gray-700">Faculty</label>
-                        <select
-                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="faculty"
-                            onChange={handleChange}
-                        >
-                            <option value={formData.faculty}>{formData.faculty}</option>
-                            <option value="Law">Law</option>
-                            <option value="Ict">Ict</option>
-                            <option value="Languages">Languages</option>
-                            <option value="Pps">Pps</option>
+                          <label className="text-sm font-medium text-gray-700">Faculty</label>
+                          <select
+                              className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
+                              name="faculty"
+                              onChange={handleChange}
+                          >
+                              <option value={formData.faculty}>{formData.faculty}</option>
+                              <option value="Law">Law</option>
+                              <option value="Ict">Ict</option>
+                              <option value="Languages">Languages</option>
+                              <option value="Pps">Pps</option>
 
-                        </select>
+                          </select>
                         </div>
+                        )}
                         <div>
+                        <label className="text-sm font-medium text-gray-700">Username</label>
                         <input 
                             type="text"
                             className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
@@ -120,6 +124,7 @@ function AccountSettings() {
                         />
                         </div>
                         <div>
+                        <label className="text-sm font-medium text-gray-700">Email adress</label>
                         <input                    
                             type="email"
                             className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
@@ -129,6 +134,7 @@ function AccountSettings() {
                             onChange={handleChange}
                         />
                         </div>
+                        {userInfo.role ==='Student' && (
                         <div>
                         <label className="text-sm font-medium text-gray-700">Position</label>
                         <select
@@ -144,6 +150,7 @@ function AccountSettings() {
                             <option value="Logistics">Logistics</option>
                         </select>
                         </div>
+                        )}
                         <div>
                         <label className="text-sm font-medium text-gray-700">  Role</label>
                         <input
@@ -155,6 +162,7 @@ function AccountSettings() {
                             onChange={handleChange}
                         />
                         </div>
+                        {userInfo.role ==='Student' && (
                         <div>
                         <label className="text-sm font-medium text-gray-700">Level</label>
                         <select
@@ -169,6 +177,7 @@ function AccountSettings() {
                             <option value="4">4</option>
                         </select>
                         </div>
+                        )}
                     </div>
                     <div className='flex gap-3'>
                         <button

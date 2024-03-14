@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Student from '../models/Student.js';
+import Staff from '../models/Staff.js';
 import nodemailer from 'nodemailer'
 import Mailgen from 'mailgen'
 import { generateVerificationCode } from '../VerificationCode.js';
@@ -11,10 +13,9 @@ const PASSWORD = process.env.PASSWORD;
 
 
 const registerUser = async (req, res) => {
-  const { username, password, fullName, email, role } = req.body;
+  const { username, password, fullName, email } = req.body;
   const profile = req.file ? req.file.path : null;
   const verificationCode = generateVerificationCode();
-
 
 
   try {
@@ -29,7 +30,6 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       fullName,
       email,
-      role,
       profile,
       faculty: '',
       level: 0,
@@ -425,16 +425,23 @@ const activateAccount = async (req, res) => {
 // verification code check user
 const VerifyCode = async (req, res) => {
   try {
-    const { verificationCode } = req.params;
+    const { verificationCode, email } = req.params;
+
+    // Find this person in School's database
+    const validPerson = await Student.findOne({email: email}) || await Staff.findOne({email: email});
+    if (!validPerson) {
+      console.log('You are not in schools Database');
+      return res.status(404).json({ Message: 'You are not in schools Database' });
+    }
 
     const checkCode = await User.findOneAndUpdate(
       { verificationCode: verificationCode },
       { 
-        approvalStatus: 'pending',
-        verificationCode: 0,  // Set verificationCode to 0
+        verificationCode: 0,
       },
       { new: true }
     );
+
 
     if (!checkCode) {
       return res.status(404).json({ error: 'verificationCode not found' });

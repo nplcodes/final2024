@@ -32,7 +32,7 @@ function MyStaffPage() {
   };
 
   return (
-    <div className="px-32 py-16 w-full grid grid-cols-6">
+    <div className="px-8 py-16 w-full grid grid-cols-6">
       <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
         <div
           className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -40,15 +40,7 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('all-issues')}
         >
-          New
-        </div>
-        <div
-          className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
-            selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
-          }`}
-          onClick={() => handleSettingClick('new-issue')}
-        >
-         My concerns
+          Issues
         </div>
         <div
           className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -56,7 +48,15 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('report')}
         >
-           Feedback
+           Feedbacks
+        </div>
+        <div
+          className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
+            selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
+          }`}
+          onClick={() => handleSettingClick('new-issue')}
+        >
+         Busting issues
         </div>
       </div>
       {/* Main part with MyStaffPage   */}

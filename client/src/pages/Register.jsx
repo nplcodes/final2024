@@ -33,8 +33,6 @@ password: string()
   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
   ),
 
-role: string().required("select your role"),
-
 });
 
 const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
@@ -51,6 +49,7 @@ const RegisterForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -59,9 +58,8 @@ const RegisterForm = () => {
     password: '',
     username: '',
     fullName: '',
-    role: '',
   });
-  const [error, setError] = useState(null); // Add error state
+  const [error, setError] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
 
@@ -99,11 +97,11 @@ const RegisterForm = () => {
     const [verificationCode, setVerificationCode] = useState('');
     const handleVerifyCode = async () => {
       try {
-        await axios.put(`http://localhost:8080/auth/verifycode/${verificationCode}`);
+        await axios.put(`http://localhost:8080/auth/verifycode/${verificationCode}/${formData.email}`);
         navigate('/');
 
       } catch (error) {
-        console.error(error);
+        setError(error.response.data.Message)
       }
     };
 
@@ -179,7 +177,7 @@ const RegisterForm = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div>
+                {/* <div>
                 <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
                   <select
                   {...register("role")}
@@ -192,9 +190,8 @@ const RegisterForm = () => {
                     <option value="Student">Student</option>
                     <option value="Staff">Staff</option>
                   </select>
-                </div>
+                </div> */}
               </div>
-              {/* Display error message if there's an error */}
               {error && <div style={{ color: 'red' }}>{ error }</div>}
               <button
                 type="submit"
