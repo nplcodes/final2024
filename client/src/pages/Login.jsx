@@ -61,7 +61,6 @@ const LoginForm = () => {
         // Handle other roles or cases if needed
       }
     } catch (error) {
-      console.error('Login failed', error);
       if (error.response.data.error === 'Your account is pending.') {
         setError('Wait ..., Your account is pending.');
       } else if (error.response.data.error === 'User not exist.') {
@@ -84,7 +83,7 @@ const LoginForm = () => {
       <div class="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
         <div class="self-start hidden lg:flex flex-col  text-white">
           <img src="" class="mb-3" alt=''/>
-          <h1 class="mb-3 font-bold text-3xl">Hey! welcome to npc </h1>
+          <h1 class="mb-8 font-bold text-3xl">RWANDA NATIONAL POLICE COLLAGE </h1>
           <p class="pr-3 text-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
             and publishing industries for previewing layouts and visual mockups</p>
             <p className='mt-5'>Join npc on #social medias:</p>

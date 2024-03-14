@@ -47,11 +47,22 @@ const updateStaff = async (req, res) => {
   const getAllStaff = async (req, res) => {
     try {
       const allStaff = await Staff.find();
-      res.status(200).json({ staff: allStaff });
+      res.status(200).json(allStaff);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+  const getSingleStaff = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const singleStaff = await Staff.findById(id);
+      res.status(200).json(singleStaff);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error" });
     }
   };
   
-  export default { registerStaff, updateStaff, deleteStaff , getAllStaff };
+  export default { registerStaff, updateStaff, deleteStaff , getAllStaff, getSingleStaff };

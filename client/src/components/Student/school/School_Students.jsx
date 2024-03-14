@@ -9,7 +9,6 @@ import axios from "axios";
 
 const School_Students = () => {
   const dispatch = useDispatch();
-  // const sts = useSelector(state => state.students);
   const [search, setSearch] = useState("");
   const [students, setStudents] = useState([]);
 
@@ -18,7 +17,7 @@ const School_Students = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/school/student/all');
+        const response = await axios.get('http://localhost:8080/api/school/student/all');
         if (response.ok) {
           const data = await response.json();
           dispatch(studentActions.setuStudents(data));
@@ -66,7 +65,7 @@ const School_Students = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8 px-2 border w-[90%] py-8 h-[90%]">
+    <div className="container mx-auto mt-8 px-16 border w-[90%] py-8 h-[90%]">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Student List</h1>
         <div className="flex space-x-4">

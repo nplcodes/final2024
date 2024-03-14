@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const EditStaffInfo = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const {id} = useParams();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
-    role: "teacher",
-    position: "lecturer",
+    role: "",
+    position: "",
     telephone: "",
   });
 
@@ -17,10 +22,47 @@ const EditStaffInfo = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted with data:", formData);
-  };
+    // Populate data with edit form 
+    useEffect(() => {
+      const fetchStudentData = async () => {
+        try {
+          const response = await fetch(`http://localhost:8080/api/school/staff/${id}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await response.json();
+          setFormData({
+            name: data.name || "",
+            surname: data.surname || "",
+            telephone: data.telephone || "",
+            email: data.email || "",
+            role: data.role || "",
+            position: data.position || "",
+          });
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchStudentData();
+  
+    }, [id]);
+
+    const handleSubmit = async(e) => {
+      e.preventDefault()
+      try {
+        setLoading(true)
+        const editStaff = await axios.put(`http://localhost:8080/api/school/staff/update/${id}`, formData);
+        if(editStaff){
+          setLoading(false)
+          setError("Staff successfully Updated")
+          setFormData('')
+        }
+      } catch (error) {
+        console.log(error);
+        setError("Staff No Updated :)")
+      }
+    };
 
   return (
     <div className="container mx-auto mt-8 px-32 py-2">
@@ -87,7 +129,6 @@ const EditStaffInfo = () => {
           >
             <option value="lecturer">Lecturer</option>
             <option value="assistant">Assistant</option>
-            {/* Add more options as needed */}
           </select>
         </div>
 
@@ -111,6 +152,7 @@ const EditStaffInfo = () => {
           >
             Update
           </button>
+          <p className="text-green-500">{error ? error: ""}</p>
         </div>
       </form>
     </div>

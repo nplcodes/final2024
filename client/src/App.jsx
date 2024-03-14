@@ -105,7 +105,7 @@ const App = () => {
                 <Route  path="school/edit/:id" element={<EditStudentInfo />} />
                 <Route path="school/staff" element={<School_Staffs />} />
                 <Route  path="school/staff/new" element={<NewStaffForm />} />
-                <Route  path="school/staff/edit" element={<EditStaffInfo />} />
+                <Route  path="school/staff/edit/:id" element={<EditStaffInfo />} />
                 <Route path="admin/setting" element={<AccountSettingsAdmin />} />
                 <Route path="middleman-issue-page" element={<StaffPage />} />
                 <Route path="middleman-issue-page/:issueId" element={<IssueDetailsPage />} />

@@ -1,12 +1,16 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const NewStaffForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
-    role: "teacher",
-    position: "lecturer",
+    role: "",
+    position: "",
     telephone: "",
   });
 
@@ -17,9 +21,19 @@ const NewStaffForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
+    try {
+      setLoading(true)
+      const addNewStaff = await axios.post('http://localhost:8080/api/school/staff/register', formData);
+      if(addNewStaff){
+        setLoading(false)
+        setError("new Staff is successfully registered")
+        window.location.href = '/Home/school/staff'
+      }
+    } catch (error) {
+      setError("Staff is no registered")
+    }
   };
 
   return (
@@ -71,9 +85,7 @@ const NewStaffForm = () => {
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
-            <option value="teacher">Teacher</option>
             <option value="staff">Staff</option>
-            {/* Add more options as needed */}
           </select>
         </div>
 
@@ -85,9 +97,15 @@ const NewStaffForm = () => {
             onChange={handleChange}
             className="mt-1 p-3 bg-gray-100 border-none rounded-md w-full"
           >
-            <option value="lecturer">Lecturer</option>
-            <option value="assistant">Assistant</option>
-            {/* Add more options as needed */}
+            <option value="">Appointment</option>
+            <option value="dept.commdt">Dept Commandant</option>
+            <option value="ci">Chief Instructor Offiver</option>
+            <option value="io">Intelligent Officer</option>
+            <option value="academic">Academic Officer</option>
+            <option value="Doctor">Health doctor Officer</option>
+            <option value="Rogistics">Logistcis Officer</option>
+            <option value="oic">Course cordinator Officer- Undergraduent</option>
+            <option value="admin">Admin Officer</option>
           </select>
         </div>
 
@@ -109,8 +127,10 @@ const NewStaffForm = () => {
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md border-none hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
           >
-            Submit
+            Add New
+            Save {loading ? ".......": ''}
           </button>
+          <p className="text-green-500">{error? error: ""}</p>
         </div>
       </form>
     </div>

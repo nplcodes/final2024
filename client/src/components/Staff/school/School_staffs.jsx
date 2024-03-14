@@ -1,27 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { studentActions } from "../../../redux/students/studentSlice";
+import axios from "axios";
 
 const School_Students = () => {
+  const dispatch = useDispatch()
   const [search, setSearch] = useState("");
-  const [students, setStudents] = useState([
-    { id: 1, name: "John Doe", age: 20, grade: "A" },
-    { id: 2, name: "Jane Smith", age: 22, grade: "B" },
-    { id: 3, name: "Bob Johnson", age: 21, grade: "C" },
-    { id: 4, name: "Alice Brown", age: 23, grade: "B" },
-    { id: 5, name: "Charlie Davis", age: 22, grade: "A" },
-    // Add more sample data as needed
-  ]);
+  const [staffs, setStaffs] = useState([]);
+
+
+  // LIst of all staffs
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/school/staff/all');
+        if (response.ok) {
+          const data = await response.json();
+          dispatch(studentActions.setuStudents(data));
+          setStaffs(data);
+        } else {
+          console.error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
+  
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3); // Change this to the desired number of items per page
 
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(search.toLowerCase())
+  const filteredStaffs = staffs.filter((staff) =>
+  staff.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredStudents.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredStaffs.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -47,10 +65,13 @@ const School_Students = () => {
     setCurrentPage(pageNumber);
   };
 
+
+
+
   return (
     <div className="container mx-auto mt-8 px-8 border w-[80%] py-8 h-[90%]">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Student List</h1>
+        <h1 className="text-2xl font-bold">NPC Staffs List</h1>
         <div className="flex space-x-4">
           <input
             type="text"
@@ -75,33 +96,35 @@ const School_Students = () => {
           <thead>
             <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
               <th className="py-3 px-6 text-left">No</th>
-              <th className="py-3 px-6 text-left">Name</th>
-              <th className="py-3 px-6 text-left">Age</th>
-              <th className="py-3 px-6 text-left">Grade</th>
-              <th className="py-3 px-6 text-left">Actions</th>
+              <th className="py-3 px-6 text-left">Full Names</th>
+              <th className="py-3 px-6 text-left">Email</th>
+              <th className="py-3 px-6 text-left">Role</th>
+              <th className="py-3 px-6 text-left">Appointment</th>
+              <th className="py-3 px-6 text-left">Action</th>
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {currentItems.map((student, index) => (
+            {currentItems.map((staff, index) => (
               <tr
-                key={student.id}
+                key={staff.id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} hover:bg-gray-200`}
               >
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.id}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.name}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.age}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.grade}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{staff.surname}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{staff.name} </td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{staff.email}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{staff.role}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{staff.position}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">
-                  <Link to='edit'>
+                  <Link to={`edit/${staff._id}`}>
                     <button
-                      onClick={() => handleEdit(student.id)}
+                      onClick={() => handleEdit(staff._id)}
                       className="text-blue-500 hover:text-blue-700 mr-2"
                     >
                       Edit
                     </button>
                   </Link>
                   <button
-                    onClick={() => handleDelete(student.id)}
+                    onClick={() => handleDelete(staff.id)}
                     className="text-red-500 hover:text-red-700"
                   >
                     Delete
@@ -116,7 +139,7 @@ const School_Students = () => {
       <div className="flex justify-end mt-4">
         <nav>
           <ul className="pagination flex space-x-2">
-            {[...Array(Math.ceil(filteredStudents.length / itemsPerPage)).keys()].map((number) => (
+            {[...Array(Math.ceil(filteredStaffs.length / itemsPerPage)).keys()].map((number) => (
               <li key={number + 1} className="page-item">
                 <button
                   onClick={() => paginate(number + 1)}

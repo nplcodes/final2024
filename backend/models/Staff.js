@@ -15,14 +15,15 @@ const staffSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["staff"],
-    default: "staff",
+    default: "Staff",
   },
   position: {
     type: String,
-    enum: ["io", "admin", "ci", "comndt", "deputy", "rogistics", "io", "cc"],
+    required: true
   },
   telephone: String,
+}, {
+  timestamps: true
 });
 
 const Staff = mongoose.model("Staff", staffSchema);

@@ -8,6 +8,7 @@ router.post("/staff/register", staffController.registerStaff);
 router.put("/staff/update/:id", staffController.updateStaff);
 router.delete("/staff/delete/:id", staffController.deleteStaff);
 router.get("/staff/all", staffController.getAllStaff);
+router.get("/staff/:id", staffController.getSingleStaff);
 
 
 
