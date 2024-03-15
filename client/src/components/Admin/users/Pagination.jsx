@@ -11,9 +11,9 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     <div className='flex justify-end gap-2'>
         <nav className="pagination">
           {pageNumbers.map((number) => (
-            <a key={number} onClick={() => paginate(number)} href='#' className="page-link">
+            <p key={number} onClick={() => paginate(number)} className="page-link">
               {number}
-            </a>
+            </p>
           ))}
         </nav>
     </div>

@@ -177,20 +177,6 @@ const RegisterForm = () => {
                     onChange={handleChange}
                   />
                 </div>
-                {/* <div>
-                <label className="text-sm font-thin text-red-500">{errors.role?.message}</label>
-                  <select
-                  {...register("role")}
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    value={formData.role}
-                    onChange={handleChange}
-                    name="role"
-                  >
-                    <option value="">Select role</option>
-                    <option value="Student">Student</option>
-                    <option value="Staff">Staff</option>
-                  </select>
-                </div> */}
               </div>
               {error && <div style={{ color: 'red' }}>{ error }</div>}
               <button

@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { studentActions } from "../../../redux/students/studentSlice";
 import axios from "axios";
 
 
 
 const School_Students = () => {
-  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [students, setStudents] = useState([]);
 
@@ -20,20 +17,17 @@ const School_Students = () => {
         const response = await axios.get('http://localhost:8080/api/school/student/all');
         if (response.ok) {
           const data = await response.json();
-          dispatch(studentActions.setuStudents(data));
           setStudents(data);
-        } else {
-          console.error('Failed to fetch data');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4); // Change this to the desired number of items per page
+  const [itemsPerPage] = useState(4);
 
   const filteredStudents = students.filter((student) =>
     student.name.toLowerCase().includes(search.toLowerCase())

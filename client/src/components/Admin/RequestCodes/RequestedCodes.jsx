@@ -119,7 +119,7 @@ function RequestedCodes() {
                 <tbody className="text-gray-600 text-sm font-light">
                   {currentCodes.map((request, index) => (
                     <tr
-                      key={request.code}
+                      key={request.requester}
                       className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
                     >
                       <td className="py-3 px-6 text-left whitespace-nowrap">Leon</td>

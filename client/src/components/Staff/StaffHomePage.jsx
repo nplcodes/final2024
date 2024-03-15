@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { Link } from 'react-router-dom';
-import { Bar } from 'react-chartjs-2';
 
 
 const StaffHomePage = () => {
@@ -115,7 +114,7 @@ useEffect(() => {
             </Link>
           </div>
           <div className="graph py-32">
-            <Bar data={chartData} options={options} />
+            {/* <Bar data={chartData} options={options} /> */}
           </div>
         </div>
       <div className="latest-issue border px-8 py-4">
@@ -124,7 +123,7 @@ useEffect(() => {
         </div>
         <div className="issues-list flex flex-col gap-5 py-4">
         {Issues?.map((issue) =>(
-            <div className="issue-1 border p-4 rounded-md space-y-2">
+            <div className="issue-1 border p-4 rounded-md space-y-2" key={Date.now()}>
               <p className=''>{issue.title}</p>
               {issue.status==='assigned' && <p className='px-3 text-red-500'>{issue.status}</p> }
               {issue.status==='progress' && <p className='px-3 text-green-500 '>{issue.status}</p>}

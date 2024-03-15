@@ -69,7 +69,7 @@ function AllIssues() {
                   className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap">
-                    <Link to={`/Home/manage-issue/${issue._id}`}>
+                    <Link to={`/Home/manage-issue/${issue._id}`} key={Date.now()}>
                       <div className="flex gap-1">
                         <div>
                           <p className="pb-2">{issue.title}</p>
@@ -104,7 +104,7 @@ function AllIssues() {
             <nav>
               <ul className="pagination flex space-x-2">
                 {pageNumbers.map((number) => (
-                  <li key={number} className="page-item">
+                  <li key={Date.now()} className="page-item">
                     <button
                       onClick={() => handlePageClick(number)}
                       className={`${

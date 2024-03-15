@@ -50,7 +50,6 @@ function IssueDetailsPage() {
     return `${day}, ${time}`;
   }
 
-  console.log(issueDetails)
   return (
     <div className="grid grid-cols-3 gap-4 pl-32 pr-32 pt-20">
       <div className="col-span-2">
@@ -84,10 +83,11 @@ function IssueDetailsPage() {
           <p className='pb-3'>Attachments or files</p>
           <div className=''>
           {issueDetails?.issue?.attachments.map((doc)=> (
-               <a key={Date.now()} // Add a key to each element when mapping over an array
-               href={doc.url} // Assuming doc.url is the actual URL of the file
-               download={doc.filename} // Set the download attribute with the filename
-               className='text-blue-400 underline cursor-pointer'>{doc.filename}</a>
+            <a key={Date.now() + doc._id}
+               href={doc.url} 
+               download={doc.filename} 
+               className='text-blue-400 underline cursor-pointer'>{doc.filename}
+            </a>
           ))}
 
           </div>

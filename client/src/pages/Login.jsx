@@ -128,9 +128,9 @@ const LoginForm = () => {
                 </label>
               </div>
               <div class="text-sm">
-                <a href="n" class="text-gray-400 hover:text-blue-500">
+                <div class="text-gray-400 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </div>
               </div>
             </div>
             <div>

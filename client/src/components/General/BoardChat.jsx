@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { useNavigate } from 'react-router-dom';
-import { format } from 'timeago.js';
 
 
 function BoardChat() {
@@ -133,14 +132,14 @@ const RemoveIssuefromGroup = async(e)=>{
           <p className='pb-5'>({groupComments.length})Comments</p>
 
           {groupComments.map((comment, index) => (
-          <div className="flex gap-2 p-2 pb-5" >
+          <div className="flex gap-2 p-2 pb-5" key={Date.now()+ Math.floor(Math.random() * 1000000)} >
             <img
               className="w-8 h-8 rounded-full"
               src={`http://localhost:8080/${comment?.authorInfo?.profile}`} 
               alt=""
             />
             <div>
-              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10">{format(comment.createdAt)}</span></p>
+              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10">{comment.createdAt}</span></p>
               <p className="text-xs text-gray-500">{comment.text}</p>
             </div>
           </div>

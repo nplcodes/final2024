@@ -53,13 +53,10 @@ function AccountSettings() {
         try {
             await axios.put(`http://localhost:8080/auth/users/${userId}`, formData)
             dispatch(authActions.updateAdditionalUserInfo(formData))
-            console.log(formData)
           } catch (error) {
             console.error('Error updating user:', error);
           }
       };
-
-      console.log(userInfo)
 
   return (
     <div className='flex gap-3 ml-10 mr-10 mt-10 border px-32'>

@@ -21,7 +21,6 @@ function PasswordComponent() {
       })
       .then(()=>{
         dispatch(authActions.updatePassword(password));
-        console.log(password)
       })
       .catch((error)=>{
         console.log(error);
@@ -48,7 +47,6 @@ function PasswordComponent() {
             type="password"
             id="newPassword"
             name="newPassword"
-            value=''
             className="border-none bg-gray-100 p-3 w-full rounded-md"
             placeholder='Comfirm password'
           />

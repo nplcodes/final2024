@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { format } from 'timeago.js';
 
 function StaffPage() {
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
@@ -81,7 +80,7 @@ function StaffPage() {
                       {issue.category}
                     </td>
                     <td className="py-3 px-6 text-left whitespace-nowrap">
-                      {format(issue?.createdAt)}
+                      {(issue?.createdAt)}
                     </td>
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <button
@@ -127,7 +126,7 @@ function StaffPage() {
                 <div className="bg-white p-4 shadow-md rounded-md">
                   <h2 className="text-sm font-semibold">{issue.title}</h2>
                   <h2 className="text-sm font-semibold">{issue.title}</h2>
-                  <p className='pt-3 text-gray-400'>{format(issue?.dateReported)}</p>
+                  <p className='pt-3 text-gray-400'>{issue?.dateReported}</p>
                 </div>
               </Link>
             ))}

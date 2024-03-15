@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { studentActions } from "../../../redux/students/studentSlice";
-import axios from "axios";
 
 const School_Students = () => {
-  const dispatch = useDispatch()
   const [search, setSearch] = useState("");
   const [staffs, setStaffs] = useState([]);
 
@@ -17,17 +13,14 @@ const School_Students = () => {
         const response = await fetch('http://localhost:8080/api/school/staff/all');
         if (response.ok) {
           const data = await response.json();
-          dispatch(studentActions.setuStudents(data));
           setStaffs(data);
-        } else {
-          console.error('Failed to fetch data');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
   
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,19 +39,15 @@ const School_Students = () => {
   };
 
   const handleAddNew = () => {
-    // Implement logic to add a new student
-    // For example, you can show a modal or navigate to a new page
-    console.log("Add New clicked");
+    // console.log("Add New clicked");
   };
 
   const handleEdit = (studentId) => {
-    // Implement logic to edit the student with the given ID
-    console.log(`Edit clicked for student ID: ${studentId}`);
+    // console.log(`Edit clicked for student ID: ${studentId}`);
   };
 
   const handleDelete = (studentId) => {
-    // Implement logic to delete the student with the given ID
-    console.log(`Delete clicked for student ID: ${studentId}`);
+    // console.log(`Delete clicked for student ID: ${studentId}`);
   };
 
   const paginate = (pageNumber) => {
@@ -106,7 +95,7 @@ const School_Students = () => {
           <tbody className="text-gray-600 text-sm font-light">
             {currentItems.map((staff, index) => (
               <tr
-                key={staff.id}
+                key={staff._id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} hover:bg-gray-200`}
               >
                 <td className="py-3 px-6 text-left whitespace-nowrap">{staff.surname}</td>

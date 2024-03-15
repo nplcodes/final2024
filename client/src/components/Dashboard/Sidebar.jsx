@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { GiConvergenceTarget } from "react-icons/gi";
-import { CiFolderOn } from "react-icons/ci";
 import { PiStudentLight } from "react-icons/pi";
 import { FaPersonMilitaryToPerson } from "react-icons/fa6";
 
@@ -106,13 +105,6 @@ const Sidebar = ({ isSidebarOpen }) => {
                   <GrUserSettings className="text-xl" />Settings
               </div>
         </Link>
-        {userInfo.role === 'Staff' && (
-            <Link to="/Home/staff-report" className="text-gray-500">
-                    <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
-                      <CiFolderOn  className="text-xl" />Report
-                    </div>
-            </Link>
-        )}
 
       </div>
     </div>

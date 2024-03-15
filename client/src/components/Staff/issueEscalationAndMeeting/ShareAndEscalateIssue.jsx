@@ -35,7 +35,7 @@ useEffect(() => {
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/escalate/${issueId}`, {assignedTo})
     .then((response)=>{
-        console.log("",response.data)
+        console.log("")
     })
     .catch((error)=>{
         console.log(error)
@@ -70,7 +70,7 @@ useEffect(() => {
                 value={assignedTo}
                 onChange={(e) => setSelectedStaff(e.target.value)}
               >
-                {allStaffs.map((s)=> <option  value={s._id}>{s.position}</option>)}
+                {allStaffs.map((s)=> <option  value={s._id} key={Date.now()}>{s.position}</option>)}
               </select>
               <button
                 className="bg-blue-500 text-white p-2 rounded-md w-full mt-6"

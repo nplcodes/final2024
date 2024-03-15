@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
-import * as timeago from 'timeago.js';
 
 function MyTimeSlots() {
   const { issueId } = useParams();
@@ -61,7 +60,7 @@ function MyTimeSlots() {
         dispatch(issueActions.addStaffStudentComment(newComment));
         setComment('');
       } else {
-        console.error('commentText and userId are required to create a comment');
+        console.log('commentText and userId are required to create a comment');
       }
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -90,7 +89,7 @@ function MyTimeSlots() {
 
         dispatch(issueActions.setStaffStudentComment(commentsWithUserInfo));
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        console.log('Error fetching comments:', error);
       }
     };
 
@@ -173,7 +172,7 @@ const closeForm = () => {
                 <p className="font-bold">
                 {comment?.userInfo?.fullName}
                   <span className="text-gray-300 text-xs pl-10">
-                    {timeago.format(comment.createdAt)}
+                    {comment.createdAt}
                   </span>
                 </p>
                 <p className="text-xs text-gray-500">{comment.text}</p>
@@ -194,7 +193,7 @@ const closeForm = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <input type="text" value={authorId} hidden />
+                  <input type="text" value={authorId} hidden readOnly />
                 </div>
                 <div className="p-3">
                   <button
@@ -223,6 +222,7 @@ const closeForm = () => {
                               <textarea
                                 placeholder='Type feedback....'
                                 onChange={(e) => setFeedBack(e.target.value)}
+                                value={feedback}
                                 className="w-full p-2 border rounded-md"
                               />
                               <label>Attach File</label>
@@ -266,7 +266,7 @@ const closeForm = () => {
           <p className='pb-3'>Attachments or files ....</p>
           <div className='pb-10'>
           {issueDetails?.issue?.attachments.map((doc)=> (
-               <li className='text-blue-400 underline cursor-pointer'>{doc.filename}</li>
+               <li className='text-blue-400 underline cursor-pointer' key={doc._id}>{doc.filename}</li>
           ))}
           </div>
           <form>

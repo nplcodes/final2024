@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { issueActions } from "../../redux/issue/issueSlice";
 import { useDispatch } from "react-redux";
 import {GoCommentDiscussion } from 'react-icons/go'
-import * as timeago from 'timeago.js';
+
 
 function BoardIssuesTOChatOn() {
     // const groupComments = useSelector((comments)=> comments.issue.groupComment)
@@ -37,7 +37,7 @@ function BoardIssuesTOChatOn() {
         <hr />
         <div className="h-auto w-[80%] grid grid-cols-3 gap-3">
         {chatroomIssues.map((chatroomIssue) => (
-        <Link to={`/Home/staff-chatboard/${chatroomIssue._id}`}>
+        <Link to={`/Home/staff-chatboard/${chatroomIssue._id}`} key={Date.now()}>
             <div className="col-span-1 flex flex-col bg-white rounded-md mt-5">
                 <div className="flex justify-between p-7 gap-5">
                     <div className="flex gap-2">
@@ -47,7 +47,7 @@ function BoardIssuesTOChatOn() {
                     <div className="text-red-500 rounded-sm">{chatroomIssue.inDiscusion}</div>
                 </div>
                 <div className="flex flex-col pl-7">
-                <p className="text-gray-400 text-xs">{timeago.format(chatroomIssue.updatedAt)}</p>
+                <p className="text-gray-400 text-xs">{chatroomIssue.updatedAt}</p>
                     <div className="flex items-center gap-1">
                        <p>{chatroomIssue.groupComments.length}</p>
                        <GoCommentDiscussion className="text-blue-500" />

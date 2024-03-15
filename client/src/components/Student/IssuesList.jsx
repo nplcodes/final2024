@@ -24,7 +24,6 @@ function IssuesList() {
         </div>
 
         <div className='space-x-2'>
-          <a href="#b">
             <button
               className="
                 bg-blue-500
@@ -38,8 +37,6 @@ function IssuesList() {
             >
               All
             </button>
-          </a>
-          <a href="#v">
             <button
               className="
                 bg-blue-500
@@ -53,8 +50,6 @@ function IssuesList() {
             >
               In Progress
             </button>
-          </a>
-          <a href="#bn">
             <button
               className="
                 bg-blue-500
@@ -67,7 +62,7 @@ function IssuesList() {
               "
             >
               Solved
-            </button></a>
+            </button>
         </div>
       </div>
       <table className="table text-gray-400 border-separate space-y-6 text-sm">
