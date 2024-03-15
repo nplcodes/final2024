@@ -97,7 +97,7 @@ useEffect(() => {
           <div className="cards grid grid-cols-3 gap-3">
           <Link to="/Home/staff-issue-page">
             <div className="card-1 cursor-pointer bg-blue-500 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
-              <p className='text-2xl'>Open </p>
+              <p className='text-2xl'>New </p>
               <h1 className='text-2xl'>{newLeng}</h1>
             </div>
             </Link>

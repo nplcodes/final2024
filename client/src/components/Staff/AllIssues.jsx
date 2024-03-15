@@ -19,7 +19,7 @@ function AllIssues() {
   };
 
   const filteredIssues = newIssues.filter((issue) => {
-    if (filter === 'all') return true;
+    if (filter === 'assigned') return true;
     return issue.status === filter;
   });
 
@@ -45,8 +45,8 @@ function AllIssues() {
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="progress">In Progress</option>
+          {/* <option value="pending">Pending</option> */}
+          <option value="assigned">In Progress</option>
           <option value="closed">Closed</option>
         </select>
       </div>

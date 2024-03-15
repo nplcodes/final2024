@@ -29,7 +29,7 @@ function MyTimeSlots() {
         const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
         setReporter(reporterInfo.data);
       } catch (error) {
-        console.error('Error fetching issue details:', error);
+        console.log('Error fetching issue details:', error);
       }
     };
 
@@ -133,11 +133,10 @@ const handleCloseIssue = async (e) => {
       feedback
     });
     dispatch(issueActions.setIssueToClose(response.data));
-
-    console.log('Issue closed successfully', feedback);
+    window.location.href = '/Home/staff-issue-page'
 
   } catch (error) {
-    console.error('Error closing issue:', error);
+    console.log('Error closing issue:', error);
   }
 };
 
@@ -217,7 +216,6 @@ const closeForm = () => {
               )}
 
                   {/* Form with darkened background */}
- {/* Form with darkened background */}
                 {isFormOpen && (
                         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
                           <div className="bg-white p-8 rounded-md w-[350px] h-[300px]">
