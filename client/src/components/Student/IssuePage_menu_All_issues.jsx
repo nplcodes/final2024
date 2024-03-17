@@ -60,17 +60,16 @@ function IssuePageMenuAllIssues() {
   return (
     <div>
       <div className="mb-4 flex items-center space-x-4">
-        <label htmlFor="filterOption">Filter By Status: </label>
         <select
           id="filterOption"
           name="filterOption"
-          className="border p-2 rounded-md"
+          className="border p-2 rounded-md w-96"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="progress">In Progress</option>
+          <option value="new">Pending</option>
+          <option value="assigned">In Progress</option>
           <option value="closed">Closed</option>
         </select>
       </div>

@@ -258,7 +258,9 @@ const getOpenIssues = async (req, res) => {
     try {
       const {reporterId} = req.params;
       if (reporterId) {
-        const issues = await Issue.find({ reporter: reporterId , status: 'assigned'});
+        const issues = await Issue.find({ reporter: reporterId});
+        // const issues = await Issue.find({ reporter: reporterId , $or: [ { status: 'assigned' }, { status: 'closed' } ] });
+
         res.status(200).json(issues);
       } else {
         res.status(400).json({ message: 'Invalid reporterId' });

@@ -166,13 +166,14 @@ function MyTimeSlots() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="col-span-2">
-        <div className="border p-5">
+    // grid grid-cols-3 gap-4
+    <div className="">
+      {/* col-span-2 */}
+        <div className="w-[100%] p-5">
           <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
           <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
         </div>
-        <div className="p-4 border">
+        <div className="p-10 border">
           <p className='pb-5'>({StaffStudentComments.length})Comments</p>
           {Array.isArray(StaffStudentComments) && StaffStudentComments.map((comment) => (
             <div className="flex gap-2 p-2" key={comment._id}>
@@ -290,7 +291,6 @@ function MyTimeSlots() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
