@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { CiChat2 } from 'react-icons/ci';
 import MyTimeSlots from './timeslots/MyTimeSlots';
 import SingleFeedback from './timeslots/SingleFeedback';
+import { VscFeedback } from "react-icons/vsc";
+
 
 function TimeSlots() {
   const [selectedSetting, setSelectedSetting] = useState('my-slots');
@@ -12,7 +14,7 @@ function TimeSlots() {
   const renderSettingContent = () => {
     switch (selectedSetting) {
       case 'my-slots':
-        return <MyTimeSlots />;
+        return <MyTimeSlots />
       case 'feedback':
           return <SingleFeedback />;
       default:
@@ -28,7 +30,7 @@ function TimeSlots() {
             <CiChat2 />
           </p>
           <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 text-white bg-blue-500 hover:text-white" onClick={() => handleSettingClick('feedback')}>
-            Feedback
+            <VscFeedback />
           </p>
         </div>
         <div className="w-[90%] ml-4">

@@ -124,6 +124,7 @@ const ClaimFormModal = ({ onClose }) => {
   );
 };
 
+
 const SingleFeedback = ({ feedback }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -154,6 +155,16 @@ const SingleFeedback = ({ feedback }) => {
         <p className="text-sm mb-2"><strong>Date:</strong> {new Date(feedback.date).toLocaleDateString()}</p>
         <p className="text-sm mb-2"><strong>Status:</strong> {feedback.status}</p>
         <p className="text-sm mb-2"><strong>Description:</strong> {feedback.description}</p>
+        
+        {/* Steps to be followed */}
+        <div className="font-bold text-lg mt-4 mb-2">Steps to Follow</div>
+        <ol className="list-decimal pl-6">
+          <li>Step 1: Analyze the feedback thoroughly.</li>
+          <li>Step 2: Identify the necessary actions to resolve the issue.</li>
+          <li>Step 3: Assign tasks to relevant team members.</li>
+          <li>Step 4: Monitor progress and provide updates.</li>
+          <li>Step 5: Close the feedback once resolved.</li>
+        </ol>
       </div>
       <div className='flex justify-end px-6 py-4'>
         <button
@@ -167,5 +178,4 @@ const SingleFeedback = ({ feedback }) => {
     </div>
   );
 };
-
 export default SingleFeedback;
