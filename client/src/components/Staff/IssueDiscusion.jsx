@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CiChat2 } from 'react-icons/ci';
-import CreateNewSlot from './timeslots/CreateNewSlot';
 import MyTimeSlots from './timeslots/MyTimeSlots';
 
 function TimeSlots() {
@@ -11,11 +10,8 @@ function TimeSlots() {
   };
   const renderSettingContent = () => {
     switch (selectedSetting) {
-      case 'create-new-slot':
-        return <CreateNewSlot />;
       case 'my-slots':
         return <MyTimeSlots />;
-
       default:
         return null;
     }

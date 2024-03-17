@@ -25,6 +25,14 @@ const StaffStudentcommentSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+const feedbackSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: { type: Date, default: Date.now },
+  steps: [{ type: String }], 
+});
+
+
 
 const issueSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -41,7 +49,7 @@ const issueSchema = new mongoose.Schema({
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   attachments: [attachmentSchema],
   isRead: {type: Boolean, default: false},
-  feedback: {type: String, default: null},
+  feedback: [feedbackSchema],
   private_channel_code: {
     type: String
   },

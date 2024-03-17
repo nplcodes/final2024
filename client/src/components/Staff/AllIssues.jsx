@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
 
 function AllIssues() {
-  const newIssues = useSelector((state) => state.issue.assignedToMe);
+  const MyIssues_Staff = useSelector((state) => state.issue.assignedToMe);
   const [selectedIssueId, setSelectedIssueId] = useState(null);
   const [filter, setFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,17 +18,17 @@ function AllIssues() {
     setSelectedIssueId(null);
   };
 
-  const filteredIssues = newIssues.filter((issue) => {
-    if (filter === 'assigned') return true;
+  const filteredIssues = filter === 'all' ? MyIssues_Staff : MyIssues_Staff.filter((issue) => {
     return issue.status === filter;
   });
+  
 
   const indexOfLastIssue = currentPage * issuesPerPage;
   const indexOfFirstIssue = indexOfLastIssue - issuesPerPage;
-  const currentIssues = newIssues.slice(indexOfFirstIssue, indexOfLastIssue);
+  const currentIssues = filteredIssues.slice(indexOfFirstIssue, indexOfLastIssue);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(newIssues.length / issuesPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(MyIssues_Staff.length / issuesPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -40,12 +40,12 @@ function AllIssues() {
     <div>
       <div className="mb-4 flex items-center space-x-4">
         <select
-          className="border p-2 rounded-md"
+          className="border p-2 rounded-md w-64"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="all">All</option>
-          {/* <option value="pending">Pending</option> */}
+          <option value="new">Pending</option>
           <option value="assigned">In Progress</option>
           <option value="closed">Closed</option>
         </select>
@@ -82,12 +82,22 @@ function AllIssues() {
                   </td>
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex flex-col gap-1">
-                      <button
-                        onClick={() => handleIconClick(issue._id)}
-                        className="cursor-pointer text-red-500 text-sx font-semibold"
-                      >
-                        Level Up
-                      </button>
+                      {issue.status ==="closed" && (
+                        <button
+                            onClick={() => handleIconClick(issue._id)}
+                            className="cursor-pointer text-blue-500 text-sx font-semibold"
+                          >
+                           Solved
+                        </button>
+                      )}
+                      {issue.status !=="closed" && (
+                        <button
+                            onClick={() => handleIconClick(issue._id)}
+                            className="cursor-pointer text-red-500 text-sx font-semibold"
+                          >
+                           Escalate
+                        </button>
+                      )}
                       {selectedIssueId === issue._id && (
                         <MeetingAndEscalate
                           onClose={handleClosePopUp}

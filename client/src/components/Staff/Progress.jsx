@@ -10,7 +10,7 @@ function IssuesInProgress() {
   return (
     <div>
       {progressIssues.length === 0 ? (
-        <p>No  issue Progress</p>
+        <p>No Statistical chart</p>
       ) : (
         progressIssues.map((issue) => (
           <div className='max-h-60 overflow-y-auto' key={issue._id}>

@@ -8,7 +8,7 @@ function Report() {
   return (
     <div>
       {closedIssues.length === 0 ? (
-        <p>No  Closed issues</p>
+        <p>No  statistical Chart</p>
       ) : (
         closedIssues.map((issue) => (
           <div className='max-h-60 overflow-y-auto' key={issue._id}>

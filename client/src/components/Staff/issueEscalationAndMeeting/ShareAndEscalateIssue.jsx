@@ -1,68 +1,59 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-
 function MeetingAndEscalate({ onClose, issueId }) {
   const [issue, setIssue] = useState(issueId);
-  const [allStaffs, setAllStaffs] = useState([])
-  const staff='Staff';
+  const [allStaffs, setAllStaffs] = useState([]);
   const [assignedTo, setSelectedStaff] = useState('');
-
-
 
   // Use useEffect to update the issue state when issueId changes
   useEffect(() => {
     setIssue(issueId);
   }, [issueId]);
 
-//   fetch all staff
-
-useEffect(() => {
-    const fetchIssuesData = async () => {
+  // Fetch all staff
+  useEffect(() => {
+    const fetchStaffData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/auth/staffs/'+staff);
-        setAllStaffs(response.data)
+        const response = await axios.get('http://localhost:8080/auth/staffs/Staff');
+        setAllStaffs(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
   
-    fetchIssuesData();
+    fetchStaffData();
   }, []);
 
-//   Escalate Issue to top level
-  const EscalateIssue = async(e) => {
-    e.preventDefault()
-    await axios.put(`http://localhost:8080/issue/escalate/${issueId}`, {assignedTo})
-    .then((response)=>{
-        console.log("")
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
-  }
-  // Share issue to group chat
-  const HandleShare = async(e)=>{
-    e.preventDefault()
-    await axios.put(`http://localhost:8080/issue/share/${issue}`)
-    .then((response)=>{
-      console.log(response.data)
-    })
-    .catch(error =>{
-      console.log(error)
-    })
+  // Escalate Issue to top level
+  const escalateIssue = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:8080/issue/escalate/${issueId}`, { assignedTo });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  }
+  // Share issue to group chat
+  const handleShare = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:8080/issue/share/${issue}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-      <div className="bg-white w-[500px] h-[500px] p-4 rounded-lg shadow-md z-10 flex flex-col justify-center items-center">
-        <div className="w-full flex gap-10">
-          {/* Left Div */}
-          <div className="w-1/2">
-            <form>
-              <label htmlFor="selectOption">Select Staff</label>
+      <div className="bg-white w-[500px] h-[400px] p-4 rounded-lg shadow-md z-10 flex flex-col justify-between">
+        <div>
+          <p className="text-lg font-bold mb-4">Escalate Issue</p>
+          <form>
+            <div className="mb-4">
+              <label htmlFor="selectOption" className="block mb-1">Select Staff</label>
               <select
                 id="selectOption"
                 name="selectOption"
@@ -70,37 +61,40 @@ useEffect(() => {
                 value={assignedTo}
                 onChange={(e) => setSelectedStaff(e.target.value)}
               >
-                {allStaffs.map((s)=> <option  value={s._id} key={Date.now()}>{s.position}</option>)}
+                {allStaffs.map((staff) => (
+                  <option key={staff._id} value={staff._id}>{staff.position}</option>
+                ))}
               </select>
-              <button
-                className="bg-blue-500 text-white p-2 rounded-md w-full mt-6"
-                onClick={EscalateIssue }
-              >
-                Escalate
-              </button>
-            </form>
-          </div>
-          {/* Right Div */}
-          <div className="w-1/2">
-            <p className="text-lg font-bold">Post in Chat Room</p>
-            <form>
-              <div className="mb-4">
-                <input
-                  type="text"
-                  name="issue"
-                  className="w-full rounded-md"
-                  value={issue}
-                  hidden
-                ></input>
-              </div>
-              <button
-                className="bg-blue-500 text-white p-2 rounded-md w-full"
-                onClick={HandleShare}
-              >
-                Share
-              </button>
-            </form>
-          </div>
+            </div>
+            <button
+              className="bg-blue-500 text-white p-2 rounded-md w-full"
+              onClick={escalateIssue}
+            >
+              Escalate
+            </button>
+          </form>
+        </div>
+        <div>
+          <p className="text-lg font-bold mb-4">Post in Chat Room</p>
+          <form>
+            <div className="mb-4">
+              <label htmlFor="issueInput" className="block mb-1">Issue</label>
+              <input
+                type="text"
+                id="issueInput"
+                name="issue"
+                className="w-full p-2 rounded-md border border-gray-300"
+                value={issue}
+                onChange={(e) => setIssue(e.target.value)}
+              />
+            </div>
+            <button
+              className="bg-blue-500 text-white p-2 rounded-md w-full"
+              onClick={handleShare}
+            >
+              Share
+            </button>
+          </form>
         </div>
         <button
           className="bg-blue-500 text-white p-2 rounded-md mt-4"

@@ -24,42 +24,6 @@ const closeLeng = closedIssues.length
 const [assignedToId, setUserId] = useState(null);
 
 
-
-  const data = [
-    { label: 'Progress', value: progLeng },
-    { label: 'Open', value: newLeng },
-    { label: 'Closed', value: closeLeng },
-  ];
-
-  const labels = data.map(item => item.label);
-  const values = data.map(item => item.value);
-
-
-
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Issues Chart',
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgba(75,192,192,0.6)',
-        hoverBorderColor: 'rgba(75,192,192,1)',
-        data: values
-      },
-    ],
-  };
-
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
-
 // issues 
 
 useEffect(() => {
@@ -114,7 +78,6 @@ useEffect(() => {
             </Link>
           </div>
           <div className="graph py-32">
-            {/* <Bar data={chartData} options={options} /> */}
           </div>
         </div>
       <div className="latest-issue border px-8 py-4">
@@ -126,7 +89,7 @@ useEffect(() => {
             <div className="issue-1 border p-4 rounded-md space-y-2" key={Date.now()}>
               <p className=''>{issue.title}</p>
               {issue.status==='assigned' && <p className='px-3 text-red-500'>{issue.status}</p> }
-              {issue.status==='progress' && <p className='px-3 text-green-500 '>{issue.status}</p>}
+              {issue.status==='new' && <p className='px-3 text-green-500 '>{issue.status}</p>}
               {issue.status==='closed' && <p className='px-3 text-gray-500'>{issue.status}</p>}
             </div>
         ))}

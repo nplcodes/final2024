@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AllIssues from './AllIssues';
 import IssuesInProgress from './Progress';
 import Report from './Report';
+import FeedbackComponent from './timeslots/feedBacks';
 
 function MyStaffPage() {
   const [userInfo, setUserState] = useState(null);
@@ -24,8 +25,8 @@ function MyStaffPage() {
         return <AllIssues />;
       case 'new-issue':
         return <IssuesInProgress />;
-        case 'report':
-        return <Report />;
+      case 'feedback':
+        return <FeedbackComponent />;
       default:
         return null;
     }
@@ -43,12 +44,12 @@ function MyStaffPage() {
           Issues
         </div>
         <div
-          className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
-            selectedSetting === 'report' ? 'bg-blue-500 text-white' : ''
+          className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
+            selectedSetting === 'feedback' ? 'bg-blue-500 text-white' : ''
           }`}
-          onClick={() => handleSettingClick('report')}
+          onClick={() => handleSettingClick('feedback')}
         >
-           Feedbacks
+          Feedbacks
         </div>
         <div
           className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
@@ -56,16 +57,15 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('new-issue')}
         >
-         Busting issues
+          Busting issues
         </div>
       </div>
-      {/* Main part with MyStaffPage   */}
       <div className="col-span-5 border h-screen px-8">
         <div className="pb-10">
           {/* Your other content */}
         </div>
         <div className="overflow-auto">
-          <AllIssues />
+          {renderMenuSelection()}
         </div>
       </div>
     </div>
