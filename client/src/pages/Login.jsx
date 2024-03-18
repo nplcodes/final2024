@@ -6,7 +6,7 @@ import { authActions } from '../redux/auth/authSlice';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '../authService';
-const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
+const backgroundImageUrl = 'https://www.npc.ac.rw/fileadmin/user_upload/1H9A5050.jpg';
 
 const containerStyle = {
   backgroundImage: `url(${backgroundImageUrl})`,
@@ -78,7 +78,7 @@ const LoginForm = () => {
   return (
 <form onSubmit={handleLogin}>
 <div className="bg-no-repeat bg-cover bg-center relative " style={containerStyle}>
-    <div className="absolute bg-gradient-to-b from-blue-700 to-black opacity-75 inset-0 z-0"></div>
+    <div className="absolute bg-gradient-to-b from-[#1F3365] to-black opacity-80 inset-0 z-0"></div>
   <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
       <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
         <div className="self-start hidden lg:flex flex-col  text-white">
@@ -122,24 +122,24 @@ const LoginForm = () => {
             </div>
               <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded" />
+                <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 bg-[#1F3365] focus:ring-blue-400 border-gray-300 rounded" />
                 <label  htmlFor="remember_me" className="ml-2 block text-sm text-gray-800">
                   Remember me
                 </label>
               </div>
               <div className="text-sm">
-                <div className="text-gray-400 hover:text-blue-500">
+                <div className="text-gray-400 hover:text-[#1F3365]">
                   Forgot your password?
                 </div>
               </div>
             </div>
             <div>
-              <button onClick={handleLogin} type="submit" className="w-full flex justify-center bg-blue-500  hover:bg-black text-gray-100 p-3  rounded-md tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+              <button onClick={handleLogin} type="submit" className="w-full flex justify-center bg-[#1F3365]  hover:bg-black text-gray-100 p-3  rounded-md tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
                 {loading ? 'Logging in...' : 'Login'}
 
               </button>
             </div>
-            <p>Don't Have account? <Link to='/register' className='text-blue-500'>Sign Up</Link></p>
+            <p>Don't Have account? <Link to='/register' className='text-[#1F3365]'>Sign Up</Link></p>
             </div>
             {error && <div style={{ color: 'red' }}>{ error }</div>}
             <div className='flex items-center justify-center'>

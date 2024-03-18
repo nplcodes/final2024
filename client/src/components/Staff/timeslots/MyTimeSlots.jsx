@@ -198,13 +198,15 @@ function MyTimeSlots() {
               <form onSubmit={handleCommentSubmit}>
                 <div>
                   <textarea
+                    cols={120}
+                    rows={7}
                     required
                     onChange={(e) => setComment(e.target.value)}
                     value={commentText}
                     className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
                     placeholder="Type your comment ...."
                   ></textarea>
-                </div>
+                </div> 
                 <div>
                   <input type="text" value={authorId} hidden readOnly />
                 </div>

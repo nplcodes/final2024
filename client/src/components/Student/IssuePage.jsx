@@ -16,7 +16,7 @@ function IssuePage() {
   }, []);
 
 
-    const [selectedSetting, setSelectedSetting] = useState('new-issue');
+    const [selectedSetting, setSelectedSetting] = useState('all-issues');
     const handleSettingClick = (setting) => {
       setSelectedSetting(setting);
     };

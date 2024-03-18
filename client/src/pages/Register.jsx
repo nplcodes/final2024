@@ -35,7 +35,7 @@ password: string()
 
 });
 
-const backgroundImageUrl = 'https://igihe.com/IMG/arton54068.jpg?1406050788';
+const backgroundImageUrl = 'https://www.npc.ac.rw/fileadmin/user_upload/1H9A5050.jpg';
 
 const containerStyle = {
   backgroundImage: `url(${backgroundImageUrl})`,
