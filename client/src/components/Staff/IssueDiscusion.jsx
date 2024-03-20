@@ -3,6 +3,8 @@ import { CiChat2 } from 'react-icons/ci';
 import MyTimeSlots from './timeslots/MyTimeSlots';
 import SingleFeedback from './timeslots/SingleFeedback';
 import { VscFeedback } from "react-icons/vsc";
+import { IoDocumentsOutline } from "react-icons/io5";
+import SharedDocs from './timeslots/SharedDocs';
 
 
 function TimeSlots() {
@@ -17,6 +19,8 @@ function TimeSlots() {
         return <MyTimeSlots />
       case 'feedback':
           return <SingleFeedback />;
+      case 'sharedDocs':
+          return <SharedDocs />;
       default:
         return null;
     }
@@ -26,11 +30,14 @@ function TimeSlots() {
     <div className="p-5">
       <div className="flex pt-3">
         <div className="w-[10%] flex flex-col items-center gap-2 pt-5">
-          <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 text-white bg-blue-500 hover:text-white" onClick={() => handleSettingClick('my-slots')}>
+          <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('my-slots')}>
             <CiChat2 />
           </p>
-          <p className="text-2xl cursor-pointer p-2 hover:bg-blue-500 text-white bg-blue-500 hover:text-white" onClick={() => handleSettingClick('feedback')}>
+          <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('feedback')}>
             <VscFeedback />
+          </p>
+          <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('sharedDocs')}>
+            <IoDocumentsOutline />
           </p>
         </div>
         <div className="w-[90%] ml-4">

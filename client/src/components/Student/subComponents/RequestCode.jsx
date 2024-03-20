@@ -162,14 +162,14 @@ function RequestCode() {
                   </div>
                   <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    className="bg-[#1F3365] hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                   >
                     Request Code
                   </button>
                 </div>
               </div>
               <p>
-                <Link to='#' className='text-blue-500 max-w-64'>Back</Link>
+                <Link to='#' className='text-[#1F3365] max-w-64'>Back</Link>
               </p>
             </form>
             {errorMessage && <div className="error-message text-red-500">{errorMessage}</div>}

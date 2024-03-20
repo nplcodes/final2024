@@ -59,20 +59,17 @@ function ManageSystem() {
 
   return (
     <div className='bg-gray-100'>
-      <div className='bg-slate-200 p-5'>
-        <p>Welcome: {userInfo.fullName} </p>
-      </div>
       <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
         <Link to="/Home/admin/users">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
-            <p><FiUsers className='text-6xl text-blue-500'/></p>
+            <p><FiUsers className='text-6xl text-[#1F3365]'/></p>
             <p className='text-xl text-red-500'>{pendingUsersCount}</p>
             <p className='text-2xl'>Manage Users</p>
           </div>
         </Link>
         <Link to="/Home/middleman-issue-page">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
-            <p><AiOutlineIssuesClose className='text-6xl text-blue-500'/></p>
+            <p><AiOutlineIssuesClose className='text-6xl text-[#1F3365]'/></p>
             <p className='text-xl text-red-500'>{total_number_issues}</p>
             <p className='text-2xl'>Pending Issues</p>
           </div>
@@ -80,7 +77,7 @@ function ManageSystem() {
 
         <Link to="requests">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
-            <p><GrChannel  className='text-6xl text-blue-500'/></p>
+            <p><GrChannel  className='text-6xl text-[#1F3365]'/></p>
             <p className='text-xl text-red-500'>10</p>
             <p className='text-2xl text-center'>Private Channels</p>
           </div>

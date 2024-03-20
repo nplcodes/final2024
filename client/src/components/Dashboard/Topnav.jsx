@@ -7,6 +7,8 @@ import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { issueActions } from '../../redux/issue/issueSlice';
+import { MdDynamicFeed } from "react-icons/md";
+
 
 
 
@@ -66,7 +68,7 @@ const Topnav = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
+    <div className="bg-[#1F3365] text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
       <div className="flex items-center">
         <button
           className="text-gray-700 focus:outline-none mr-3 md:hidden"
@@ -74,14 +76,14 @@ const Topnav = ({ toggleSidebar }) => {
         >
           <FaBars />
         </button>
-        <div className="flex items-center flex-grow justify-center">
+        <div className="flex items-center text-white flex-grow justify-center">
         <p>NPC</p>
         </div>
       </div>
       <div className="flex items-center">
         <div className="relative group">
             <div className="mr-3 flex items-center gap-3">
-              <IoMdNotificationsOutline className="text-3xl relative" 
+              <IoMdNotificationsOutline className="text-3xl relative text-white" 
                 onClick={toggleDropdown}
 
               />
@@ -90,7 +92,16 @@ const Topnav = ({ toggleSidebar }) => {
                   {notifications.length}
                 </span>
               )}
-                    {notifications.length > 0 && isDropdownOpen && (
+              {/* Feedbacks */}
+              <MdDynamicFeed  className="text-3xl relative text-white" 
+                onClick={toggleDropdown}
+              />
+              {notifications.length > 0 && (
+                <span className="bg-red-500 text-white rounded-full px-2 ml-3 absolute top-[-6px] left-0" onClick={toggleDropdown}>
+                  {notifications.length}
+                </span>
+              )}
+        {notifications.length > 0 && isDropdownOpen && (
         <div className="relative right-0 mt-10 bg-white border rounded shadow-md py-10">
           {notifications.map((notification) => (
             <div key={notification._id} onClick={()=> handleRead(notification._id, notification.relatedIssue)} className='cursor-pointer hover:bg-red-500'>
@@ -100,7 +111,7 @@ const Topnav = ({ toggleSidebar }) => {
         </div>
       )}
           <button className="focus:outline-none" onClick={handleLogout}>
-              <MdPowerSettingsNew className="text-2xl" />
+              <MdPowerSettingsNew className="text-2xl text-white" />
           </button>
             </div>
         </div>

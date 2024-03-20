@@ -10,8 +10,6 @@ import { FaPersonMilitaryToPerson } from "react-icons/fa6";
 
 
 
-
-
 const Sidebar = ({ isSidebarOpen }) => {
   const userInfo = useSelector((state)=> state.auth.user);
 
@@ -36,7 +34,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >
-      <div className="flex flex-col items-center p-4">
+      <div className="flex flex-col items-center p-4 bg-[#1F3365]">
         <Link to="#">
         <div className="p-3 border-b border-1">
           <div className='text-black text-4xl font-bold'><img src="https://www.npc.ac.rw/fileadmin/templates/assets/images/NPC_LOGO.png" alt="" className='w-16 h-16'/></div>
@@ -48,28 +46,28 @@ const Sidebar = ({ isSidebarOpen }) => {
           to={link}
           className="text-gray-500"
         >
-          <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+          <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
             <AiOutlineHome className="text-xl" />Home
           </div>
         </Link>
 
         {userInfo.role === 'Staff' && (
             <Link to="/Home/board-issues" className="text-gray-500">
-                    <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+                    <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
                       <GiConvergenceTarget className="text-xl" />Chat Room
                     </div>
             </Link>
         )}
 
         <Link to="/Home/settings" className="text-gray-500">
-          <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+          <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
             <BsInfoCircle className="text-xl" /> Info
           </div>
           
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school" className="text-gray-500">
-            <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
-              <PiStudentLight className="text-xl" /> Students
+            <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
+              <PiStudentLight className="text-xl text-[#1F3365]" /> Students
             </div>
           </Link>
 
@@ -77,15 +75,15 @@ const Sidebar = ({ isSidebarOpen }) => {
           
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school/staff" className="text-gray-500">
-            <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
-              <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
+            <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
+              <FaPersonMilitaryToPerson  className="text-xl text-[#1F3365]" /> Staffs
             </div>
           </Link>
           )}
 
         </Link>
         <Link to="/Home/admin/setting" className="text-gray-500">
-              <div className='p-3  rounded-md hover:bg-blue-300 hover:text-white flex gap-2 items-center'>
+              <div className='p-3  rounded-md hover:bg-[#1F3365] hover:text-white flex gap-2 items-center'>
                   <GrUserSettings className="text-xl" />Settings
               </div>
         </Link>

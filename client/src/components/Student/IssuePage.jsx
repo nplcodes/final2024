@@ -40,7 +40,7 @@ function IssuePage() {
     <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
       <div
         className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
-          selectedSetting === 'new-issue' ? 'bg-blue-500 text-white' : ''
+          selectedSetting === 'new-issue' ? 'bg-[#1F3365] text-white' : ''
         }`}
         onClick={() => handleSettingClick('new-issue')}
       >
@@ -48,7 +48,7 @@ function IssuePage() {
       </div>
       <div
         className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
-          selectedSetting === 'all-issues' ? 'bg-blue-500 text-white' : ''
+          selectedSetting === 'all-issues' ? 'bg-[#1F3365] text-white' : ''
         }`}
         onClick={() => handleSettingClick('all-issues')}
       >
@@ -56,7 +56,7 @@ function IssuePage() {
       </div>
       <div
         className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
-          selectedSetting === 'requestCode' ? 'bg-blue-500 text-white' : ''
+          selectedSetting === 'requestCode' ? 'bg-[#1F3365] text-white' : ''
         }`}
         onClick={() => handleSettingClick('requestCode')}
       >
