@@ -23,28 +23,19 @@ const ClaimFormModal = ({ onClose }) => {
   return (
     <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-md shadow-md w-[50%]" >
-        <h2 className="text-lg font-bold mb-4">Claim Form</h2>
+        <h2 className="text-lg font-bold mb-4">Feedback Form</h2>
         <form className=''>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              placeholder="Enter your full name"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Reason for Claim</label>
+            <label className="block text-sm font-medium text-gray-700">Reason for feedback</label>
             <textarea
               name="claimReason"
               rows={4}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              placeholder="Enter reason for claim"
+              placeholder="Enter reason for feedback"
             ></textarea>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">How did you hear about us?</label>
+            <label className="block text-sm font-medium text-gray-700">What can we do improve resolution of issue?</label>
             <div className="mt-1 grid grid-cols-2 gap-4">
               <label className="flex items-center">
                 <input
@@ -85,12 +76,12 @@ const ClaimFormModal = ({ onClose }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Additional Comments</label>
+            <label className="block text-sm font-medium text-gray-700">Add Feedback </label>
             <textarea
               name="additionalComments"
               rows={4}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-              placeholder="Enter additional comments"
+              placeholder="Enter feedback"
             ></textarea>
           </div>
           <div className="mb-4">
@@ -100,7 +91,7 @@ const ClaimFormModal = ({ onClose }) => {
                 name="agreeTerms"
                 className="mr-2"
               />
-              I agree to the terms and conditions
+              Do you want to meet Higher level Staff?
             </label>
           </div>
           <div className="flex justify-end">
