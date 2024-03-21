@@ -45,6 +45,7 @@ const issueSchema = new mongoose.Schema({
   staffStudentDiscussion: [StaffStudentcommentSchema],
   inChatRoom: { type: Boolean, default: false },
   inDiscussion: { type: String, default: 'new' },
+  priority: { type: String, default: 'Low' },
   groupComments: [commentSchema], 
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   attachments: [attachmentSchema],

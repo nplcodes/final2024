@@ -62,9 +62,9 @@ function IssueDetailsPage() {
                  <p className=''>"{issueDetails?.issue?.description}"</p>
                  <button
                   onClick={() => assignIssueToStaff(issueDetails?.issue?._id, issueDetails?.issue?.reporter)}
-                  className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mt-5"
+                  className="bg-[#1F3365] text-white p-2 rounded hover:bg-blue-700 mt-5"
                 >
-                   Dispatch
+                   Assign To
                 </button>
               </div>
         </div>
@@ -76,7 +76,7 @@ function IssueDetailsPage() {
           <div>
             <p className='text-xl font-bold'>{reporter.fullName}</p>
             <p className='text-xs text-gray-500'>{reporter.role}</p>
-            <button className='text-white text-xs bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover-bg-black'>More info ...</button>
+            <button className='text-white text-xs bg-[#1f3365b6] rounded-md p-1 pl-2 pr-2 mt-5 hover-bg-black'>More info ...</button>
           </div>
         </div>
         <div className="p-4 border">

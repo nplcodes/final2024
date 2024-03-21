@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
   const navigate = useNavigate()
   const [assignedTo, setSelectedStaff] = useState('');
+  const [priority, setPriority] = useState('');
   const [allStaffs, setAllStaffs] = useState([])
   const dispatch = useDispatch()
   const staff='Staff';
@@ -29,10 +30,11 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
 //   update 
   const handleAssignIssue = async(e) => {
     e.preventDefault()
-    await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, status, issueId})
+    await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, priority, status, issueId})
     .then(()=>{
         dispatch(issueActions.removeAssignedIssue({issueId}))
         navigate('/Home/middleman-issue-page');
+        console.log("Hellooooooooooooooooooooooooooooo", priority)
     })
     .catch((error)=>{
         console.log(error)
@@ -45,7 +47,7 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
   return (
         <div className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-opacity-70 bg-gray-600 ${isOpen ? 'block' : 'hidden'}`}>
         <div className="bg-white p-10 shadow-md rounded-lg w-[500px] h-[400px] flex justify-center flex-col">
-            <h2 className="text-xl font-semibold mb-4">Assign Issue</h2>
+            <h2 className="text-xl font-semibold mb-4">Assign Issue to staff</h2>
             <label htmlFor="staffSelect" className="block mb-2">Select a staff:</label>
             <select
             id="staffSelect"
@@ -56,18 +58,33 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
                 <option value="">Select staff</option>
                 {allStaffs.map((s)=> <option key={s._id} value={s._id}>{s.position}</option>)}
             </select>
-            <div className="mt-4">
+            <div className="div mt-4">
+            <label htmlFor="staffSelect" className="block mb-2">Priority</label>
+              <select
+              required
+              id="staffSelect"
+              name="priority"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              >
+                  <option value="">Select</option>
+                  <option value="Urgent">Urgent</option>
+                  <option value="Low">Low</option>
+              </select>
+            </div>
+            <div className="mt-8">
             <button
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mr-4"
+                className="bg-[#1F3365] text-white px-4 py-2 rounded hover:bg-blue-700 mr-4"
                 onClick={handleAssignIssue}
             >
-                OK
+                Assign to
             </button>
             <button
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
                 onClick={onClose}
             >
-                Cancel
+                No need
             </button>
             </div>
         </div>

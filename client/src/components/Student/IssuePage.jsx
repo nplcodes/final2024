@@ -63,7 +63,6 @@ function IssuePage() {
          Request Code
       </div>
     </div>
-    {/* Main part with MyStaffPage   */}
     <div className="col-span-5 border h-full px-2">
       <div className="pb-5">
       </div>

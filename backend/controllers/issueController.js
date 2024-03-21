@@ -80,43 +80,60 @@ const addAttachment = async (req, res) => {
 
 // Assign issue to Staff
 const updateAssignedTo = async (req, res) => {
-    const { issueId } = req.params;  // Extract the issue ID from the route parameter
-    const { assignedTo, status, senderId } = req.body;
-  
-    try {
-      const issue = await Issue.findByIdAndUpdate(issueId, { assignedTo, status }, { new: true });
-  
-      if (!issue) {
-        return res.status(404).json({ message: 'Issue not found' });
-      }
-  
-      // Send notification to the assigned user
-      const staffNotificationMessage = `new assigned!`;
-      const studentNotificationMessage = `Your issue assigned to staff.`;
-  
-      // Send notification to staff
-      const staffNotification = new Notification({
+  const { issueId } = req.params;
+  const { assignedTo, status, senderId, priority } = req.body;
+
+  try {
+    const issue = await Issue.findByIdAndUpdate(issueId, { assignedTo, status, priority }, { new: true });
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    // Send notification to the assigned user
+    const staffNotificationMessage = `You have been assigned to an issue (ID: ${issue._id}) with priority ${priority}.`;
+    const studentNotificationMessage = `Your issue (ID: ${issue._id}) has been assigned to a staff member.`;
+
+    // Send notification to staff
+    let staffNotification;
+    if (priority === 'Urgent') {
+      // Send an alert notification if priority is 'Urgent'
+      staffNotification = new Notification({
+        notificationType: 'alert',
+        content: "Urgent issue assigned!",
+        recipient: assignedTo,
+        relatedIssue: issue._id
+      });
+    } else {
+      // Send a regular issue assigned notification otherwise
+      staffNotification = new Notification({
         notificationType: 'IssueAssigned',
         content: staffNotificationMessage,
         recipient: assignedTo,
         relatedIssue: issue._id
       });
-      await staffNotification.save();
-  
-      // Send notification to the student who reported the issue
-      const studentNotification = new Notification({
-        notificationType: 'IssueAssigned',
-        content: studentNotificationMessage,
-        recipient: issue.reporter,
-        relatedIssue: issue._id
-      });
-      await studentNotification.save();
-  
-      res.status(200).json(issue);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
     }
-  };
+    await staffNotification.save();
+
+    // Send notification to the student who reported the issue
+    const studentNotification = new Notification({
+      notificationType: 'IssueAssigned',
+      content: studentNotificationMessage,
+      recipient: issue.reporter,
+      relatedIssue: issue._id
+    });
+    await studentNotification.save();
+
+    res.status(200).json(issue);
+  } catch (error) {
+    console.error('Error updating assignment:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
   // Assign issue to Staff
 const EscalateIssue = async (req, res) => {
   const { issueId } = req.params; 

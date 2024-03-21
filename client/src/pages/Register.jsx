@@ -109,7 +109,7 @@ const RegisterForm = () => {
   return (
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative" style={containerStyle}>
-        <div className="absolute bg-gradient-to-b from-blue-700 to-black opacity-75 inset-0 z-0"></div>
+        <div className="absolute bg-gradient-to-b from-[#1F3365] to-black opacity-75 inset-0 z-0"></div>
         <div className="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
@@ -181,7 +181,7 @@ const RegisterForm = () => {
               {error && <div style={{ color: 'red' }}>{ error }</div>}
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                className="bg-[#1F3365] hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               >
                 Create account
               </button>

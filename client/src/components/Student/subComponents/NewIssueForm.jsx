@@ -104,7 +104,7 @@ function NewIssueForm() {
                 <p>Is this issue private?</p>
                 <div className='mt-1 flex gap-2 items-center'>
                   <input type="radio" name='issue' onChange={() => setIsPrivate(true)}/>Yes
-                  <input type="radio" name='issue' onChange={() => setIsPrivate(false)}/>No
+                  <input type="radio" checked name='issue' onChange={() => setIsPrivate(false)}/>No
                 </div>
                 {isPrivate && (
                   <div className='mb-2'>
