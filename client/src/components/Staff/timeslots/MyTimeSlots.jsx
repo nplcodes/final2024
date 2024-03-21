@@ -213,7 +213,7 @@ function MyTimeSlots() {
                 <div className="p-3">
                   <button
                     type="submit"
-                    className="bg-blue-500 hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
+                    className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
                   >
                     <BsSend />
                   </button>
@@ -222,7 +222,7 @@ function MyTimeSlots() {
               {closerInfo?.role === 'Staff' && (
                 <div className='flex gap-3 items-center'>
                   <button
-                    className='bg-blue-500 text-white p-2 rounded-sm focus:border-none'
+                    className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none'
                     onClick={openForm}
                   >Close issue
                   </button>
@@ -267,7 +267,7 @@ function MyTimeSlots() {
                           <button
                             type="button"
                             onClick={handleAddStep}
-                            className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+                            className="bg-[#1F3365] text-white p-2 rounded-md hover:bg-blue-700"
                           >
                             Add Step
                           </button>
@@ -275,7 +275,7 @@ function MyTimeSlots() {
                       </div>
                       <button
                         type="submit"
-                        className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+                        className="bg-[#1F3365] text-white p-2 rounded-md hover:bg-blue-700"
                         onClick={handleCloseIssue}
                       >
                         Submit

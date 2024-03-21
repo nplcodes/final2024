@@ -1,5 +1,6 @@
 // codeRequestController.js
 import CodeRequest from "../models/CodeRequestModel.js";
+import User from "../models/User.js";
 
 const createCodeRequest = async (req, res) => {
   try {
@@ -76,12 +77,25 @@ const confirmCodeRequest = async (req, res) => {
       // Retrieve all code requests from the database
       const codeRequests = await CodeRequest.find();
   
-      res.status(200).json(codeRequests);
+      // Fetch information about the staff members and requesters
+      const populatedCodeRequests = await Promise.all(codeRequests.map(async (codeRequest) => {
+        const staffInfo = await User.findById(codeRequest.staff);
+        const requesterInfo = await User.findById(codeRequest.requester);
+  
+        return {
+          ...codeRequest.toObject(),
+          staffInfo: staffInfo ? { id: staffInfo._id, name: staffInfo.fullName, position: staffInfo.position, email: staffInfo.email } : null,
+          requesterInfo: requesterInfo ? { id: requesterInfo._id, name: requesterInfo.fullName, email: requesterInfo.email } : null
+        };
+      }));
+  
+      res.status(200).json(populatedCodeRequests);
     } catch (error) {
       console.error('Error fetching code requests:', error);
       res.status(500).json({ message: 'Internal Server Error' });
     }
   };
+  
 
   // single code for requester
   const getSingleCodeRequests = async (req, res) => {
@@ -100,4 +114,9 @@ const confirmCodeRequest = async (req, res) => {
   };
   
 
-export { createCodeRequest, confirmCodeRequest, deleteCodeRequest, getAllCodeRequests , getSingleCodeRequests };
+export {
+   createCodeRequest,
+  confirmCodeRequest, 
+  deleteCodeRequest, 
+  getAllCodeRequests , 
+  getSingleCodeRequests };

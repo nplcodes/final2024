@@ -86,12 +86,9 @@ function RequestCode() {
 
       openModal();
     } catch (error) {
-            // Check if the error is an AxiosError and if it has a response with a message
             if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
-              // Set the error message to be displayed to the user
               setErrorMessage(error.response.data.message);
             } else {
-              // If the error does not have a specific message, display a generic error message
               setErrorMessage('An error occurred while creating the code request.');
             }
     }

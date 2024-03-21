@@ -29,6 +29,10 @@ const codeRequestSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  remarkDuringComfirm: {
+    type: String,
+    default: null
+  },
   createdAt: {
     type: Date,
     default: Date.now,

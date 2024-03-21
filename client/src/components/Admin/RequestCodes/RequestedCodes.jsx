@@ -101,16 +101,15 @@ function RequestedCodes() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative pt-10">
         <div className="flex z-10">
-          <div className="p-12 bg-white mx-auto rounded-2xl w-[90%] border">
+          <div className="p-12 bg-white mx-auto rounded-2xl w-[90%] h-screen border">
             <div>
-              <p className="text-2xl pt-5">Requested Codes</p>
-              <p className="pb-5">View and manage code requests</p>
+              <p className="text-2xl pt-5">Private channels requests</p>
             </div>
             {currentCodes.length > 0 ? (
               <table className="min-w-full table-auto">
                 <thead>
                   <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
-                    <th className="py-3 px-6 text-left">Code</th>
+                    <th className="py-3 px-6 text-left">Email</th>
                     <th className="py-3 px-6 text-left">Full Name</th>
                     <th className="py-3 px-6 text-left">Staff Assigned</th>
                     <th className="py-3 px-6 text-left">Actions</th>
@@ -122,13 +121,13 @@ function RequestedCodes() {
                       key={request.requester}
                       className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
                     >
-                      <td className="py-3 px-6 text-left whitespace-nowrap">Leon</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.requester}</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">ci</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">{request?.requesterInfo.email}</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">{request.requesterInfo.name}</td>
+                      <td className="py-3 px-6 text-left whitespace-nowrap">{request?.staffInfo.name}</td>
                       <td className="py-3 px-6 text-left whitespace-nowrap">
                         <button
                           onClick={() => handleConfirm(request._id, request.why, request.reason )}
-                          className="bg-green-500 text-white px-4 py-2 mr-2 rounded-md"
+                          className="bg-[#1F3365] text-white px-4 py-2 mr-2 rounded-md"
                         >
                           Confirm
                         </button>

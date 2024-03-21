@@ -59,6 +59,7 @@ function AllIssues() {
               <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Title</th>
                 <th className="py-3 px-6 text-left">Status</th>
+                <th className="py-3 px-6 text-left">Priority</th>
                 <th className="py-3 px-6 text-left">Actions</th>
               </tr>
             </thead>
@@ -77,8 +78,11 @@ function AllIssues() {
                       </div>
                     </Link>
                   </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">
+                  <td className="py-3 px-6 text-left  whitespace-nowrap">
                     {issue.status}
+                  </td>
+                  <td className="py-3 px-6 text-left text-red-500 whitespace-nowrap font-extrabold">
+                    {issue.priority}
                   </td>
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex flex-col gap-1">
@@ -93,7 +97,7 @@ function AllIssues() {
                       {issue.status !=="closed" && (
                         <button
                             onClick={() => handleIconClick(issue._id)}
-                            className="cursor-pointer text-red-500 text-sx font-semibold"
+                            className="cursor-pointer text-[#1F3365] text-sx font-semibold"
                           >
                            Escalate
                         </button>
@@ -118,7 +122,7 @@ function AllIssues() {
                     <button
                       onClick={() => handlePageClick(number)}
                       className={`${
-                        currentPage === number ? 'bg-blue-500 text-white' : 'hover:bg-blue-300'
+                        currentPage === number ? 'bg-[#1F3365] text-white' : 'hover:bg-blue-300'
                       } px-3 py-1 border rounded-md`}
                     >
                       {number}

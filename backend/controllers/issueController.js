@@ -463,6 +463,8 @@ const closeIssue = async (req, res) => {
     issue.feedback.push(req.body);
 
     const updatedIssue = await issue.save();
+    // delete code after issue is closed
+    await CodeRequest.findByIdAndDelete(issueId);
 
     res.json(updatedIssue);
   } catch (error) {

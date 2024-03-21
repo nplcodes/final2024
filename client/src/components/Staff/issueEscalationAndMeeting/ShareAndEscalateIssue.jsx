@@ -67,7 +67,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
               </select>
             </div>
             <button
-              className="bg-blue-500 text-white p-2 rounded-md w-full"
+              className="bg-[#1F3365] text-white p-2 rounded-md w-full"
               onClick={escalateIssue}
             >
               Escalate
@@ -89,7 +89,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
               />
             </div>
             <button
-              className="bg-blue-500 text-white p-2 rounded-md w-full"
+              className="bg-[#1F3365] text-white p-2 rounded-md w-full"
               onClick={handleShare}
             >
               Share
@@ -97,7 +97,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
           </form>
         </div>
         <button
-          className="bg-blue-500 text-white p-2 rounded-md mt-4"
+          className="bg-[#1F3365] text-white p-2 rounded-md mt-4"
           onClick={onClose}
         >
           Close
