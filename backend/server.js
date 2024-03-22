@@ -32,7 +32,7 @@ app.use('/feedback', feedbackRoutes);
 app.use('/notification', notificationRoutes);
 app.use("/api/school", staffRoutes);
 app.use("/api/school", studentRoutes);
-app.use('/api/code', codeRequestRoutes); 
+app.use('/api/code', codeRequestRoutes);
 
 
 

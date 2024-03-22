@@ -27,9 +27,9 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    satisfied: {
+    wantToGoHigher: {
         type: Boolean,
-        required: true
+        default: false
     },
     isRead: {
         type: Boolean,

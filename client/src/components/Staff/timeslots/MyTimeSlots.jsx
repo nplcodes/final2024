@@ -166,9 +166,7 @@ function MyTimeSlots() {
   };
 
   return (
-    // grid grid-cols-3 gap-4
     <div className="">
-      {/* col-span-2 */}
         <div className="w-[100%] p-5">
           <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
           <p className='text-xs'>"{issueDetails?.issue?.description}"</p>

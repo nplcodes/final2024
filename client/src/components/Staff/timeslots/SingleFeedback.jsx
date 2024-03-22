@@ -3,24 +3,26 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const ClaimFormModal = ({ onClose }) => {
+  const issueDetails = useSelector((state) => state.issue.studentIssues);
   const [formData, setFormData] = useState({
-    issueId:"",
-    reporter:"",
-    assignedStaff:"",
+    issueId: issueDetails?.issue._id,
+    reporter:issueDetails?.issue.reporter,
+    assignedStaff:issueDetails?.issue.assignedTo,
     reason: '',
     feedbackMessage: '',
     whatToImprove: "",
-    satisfied: ""
+    wantToGoHigher: ""
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
-    setFormData({
-      ...formData,
-      [name]: newValue
-    });
+  
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,45 +60,11 @@ const ClaimFormModal = ({ onClose }) => {
                 <input
                   type="radio"
                   name="whatToImprove"
-                  value="Word of Mouth"
+                  value={formData.whatToImprove}
                   className="mr-2"
-                  checked={formData.whatToImprove === 'Word of Mouth'}
                   onChange={handleChange}
                 />
                 Word of Mouth
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="whatToImprove"
-                  value="Social Media"
-                  className="mr-2"
-                  checked={formData.whatToImprove === 'Word of Mouth'}
-                  onChange={handleChange}
-                />
-                Social Media
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="whatToImprove"
-                  value="Advertisement"
-                  className="mr-2"
-                  checked={formData.whatToImprove === 'Word of Mouth'}
-                  onChange={handleChange}
-                />
-                Advertisement
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="whatToImprove"
-                  value="Other"
-                  className="mr-2"
-                  checked={formData.whatToImprove === 'Word of Mouth'}
-                  onChange={handleChange}
-                />
-                Other
               </label>
             </div>
           </div>
@@ -115,9 +83,9 @@ const ClaimFormModal = ({ onClose }) => {
             <label className="flex items-center">
               <input
                 type="checkbox"
-                name="satisfied"
+                name="wantToGoHigher"
                 className="mr-2"
-                checked={formData.satisfied}
+                checked={formData.wantToGoHigher}
                 onChange={handleChange}
               />
               Do you want to meet Higher level Staff?
@@ -132,11 +100,10 @@ const ClaimFormModal = ({ onClose }) => {
               Cancel
             </button>
             <button
-              type="submit"
-              className={`bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${!formData.agreeTerms ? 'opacity-50 cursor-not-allowed' : ''}`}
-              disabled={!formData.satisfied}
+              type="Send feedback"
+              className={`bg-[#1F3365] hover:bg-black text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              Submit
+              Send feedback
             </button>
           </div>
         </form>
@@ -146,7 +113,7 @@ const ClaimFormModal = ({ onClose }) => {
 };
 
 
-const SingleFeedback = ({ feedback }) => {
+const SingleFeedback = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const issueDetails = useSelector((state) => state.issue.studentIssues);
 
@@ -159,16 +126,7 @@ const SingleFeedback = ({ feedback }) => {
     setIsModalOpen(false);
   };
 
-  // Dummy feedback data for testing
-  const dummyFeedback = {
-    reporter: 'John Doe',
-    date: '2024-03-17',
-    status: 'Resolved',
-    description: ' ipsujusto eget lorem consequat.',
-  };
 
-  // If feedback is not provided, use dummy data for testing
-  feedback = feedback || dummyFeedback;
   return (
     <div className="max-w-[100%] bg-white shadow-md rounded-md overflow-hidden my-4">
       <div className="px-6 py-4">
@@ -182,14 +140,14 @@ const SingleFeedback = ({ feedback }) => {
         <div className="font-bold text-lg mt-4 mb-2">Steps to Follow</div>
         <ol className="list-decimal pl-6">
           {issueDetails?.issue.feedback.map(step =>(
-            <li key={Date.now()+Math.random()}>{step.steps}.</li>
+            <li key={Date.now() + Math.random()}>{step.steps}.</li>
           ))}
         </ol>
       </div>
       <div className='flex justify-end px-6 py-4'>
         <button
           onClick={openModal}
-          className='bg-blue-500 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-blue-600'
+          className='bg-[#1F3365] text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-blue-600'
         >
           Want to Claim?
         </button>

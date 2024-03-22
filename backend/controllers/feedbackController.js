@@ -3,7 +3,7 @@ import Feedback from '../models/Feedback.js';
 // Controller to create a new feedback
 const createFeedback = async (req, res) => {
     // Extract data from request
-    const { issueId, reporter, assignedStaff, feedbackMessage, satisfied } = req.body;
+    const { issueId, reporter, assignedStaff, feedbackMessage, reason, wantToGoHigher } = req.body;
 
     try {
         // Create a new feedback instance
@@ -11,8 +11,9 @@ const createFeedback = async (req, res) => {
             issueId,
             reporter,
             assignedStaff,
+            reason,
             feedbackMessage,
-            satisfied
+            wantToGoHigher
         });
 
         // Save the feedback to the database
@@ -29,13 +30,13 @@ const createFeedback = async (req, res) => {
 const updateFeedback = async (req, res) => {
     // Extract parameters from request
     const { feedbackId } = req.params;
-    const { issueId, reporter, assignedStaff, feedbackMessage, satisfied } = req.body;
+    const { issueId, reporter, assignedStaff, feedbackMessage, wantToGoHigher } = req.body;
 
     try {
         // Find the feedback by ID and update it
         const feedback = await Feedback.findByIdAndUpdate(
             feedbackId,
-            { issueId, reporter, assignedStaff, feedbackMessage, satisfied },
+            { issueId, reporter, assignedStaff, feedbackMessage, wantToGoHigher },
             { new: true } // Return the updated feedback
         );
 
