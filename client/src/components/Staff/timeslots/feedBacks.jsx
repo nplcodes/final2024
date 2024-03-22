@@ -41,7 +41,6 @@ const dummyFeedbackData = [
 const FeedbackComponent = () => {
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-4">Staff Feedbacks Page</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {dummyFeedbackData.map((feedback) => (
           <div key={feedback._id} className="bg-white rounded-md shadow-md p-6">
