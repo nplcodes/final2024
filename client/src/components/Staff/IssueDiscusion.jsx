@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CiChat2 } from 'react-icons/ci';
 import MyTimeSlots from './timeslots/MyTimeSlots';
 import SingleFeedback from './timeslots/SingleFeedback';
@@ -9,6 +9,7 @@ import SharedDocs from './timeslots/SharedDocs';
 
 function TimeSlots() {
   const [selectedSetting, setSelectedSetting] = useState('my-slots');
+  const [userInfo, setUserInfo] = useState('');
 
   const handleSettingClick = (setting) => {
     setSelectedSetting(setting);
@@ -26,6 +27,16 @@ function TimeSlots() {
     }
   };
 
+  useEffect(() => {
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserInfo(storedUserInfo.user);
+    } else {
+      console.log('Failed to fetch userID');
+    }
+  }, []);
+
+
   return (
     <div className="p-5">
       <div className="flex pt-3">
@@ -33,9 +44,11 @@ function TimeSlots() {
           <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('my-slots')}>
             <CiChat2 />
           </p>
-          <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('feedback')}>
-            <VscFeedback />
-          </p>
+          {userInfo?.role ==="Student" && (
+              <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('feedback')}>
+                <VscFeedback />
+              </p>
+          )}
           <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('sharedDocs')}>
             <IoDocumentsOutline />
           </p>

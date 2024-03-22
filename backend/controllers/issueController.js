@@ -461,7 +461,7 @@ const closeIssue = async (req, res) => {
       return res.status(404).json({ error: 'Issue not found' });
     }
     issue.feedback.push(req.body);
-
+    issue.status = 'closed';
     const updatedIssue = await issue.save();
     // delete code after issue is closed
     await CodeRequest.findByIdAndDelete(issueId);
