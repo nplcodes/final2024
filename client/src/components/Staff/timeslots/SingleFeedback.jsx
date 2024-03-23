@@ -128,13 +128,16 @@ const SingleFeedback = () => {
 
 
   return (
-    <div className="max-w-[100%] bg-white shadow-md rounded-md overflow-hidden my-4">
+<div className="max-w-[100%] bg-white shadow-md rounded-md overflow-hidden my-4">
+  {issueDetails?.issue.status === 'closed' ? (
+    <div>
       <div className="px-6 py-4">
         <div className="font-bold text-lg mb-2">Feedback Details</div>
         <p className="text-sm mb-2"><strong>Issue title:</strong> {issueDetails?.issue.title}</p>
-        <p className="text-sm mb-2"><strong>Details:</strong>{issueDetails?.issue.description}</p>
-        <p className="text-sm mb-2"><strong>Submited Date:</strong> {new Date( issueDetails?.issue.updatedAt).toLocaleDateString()}</p>
+        <p className="text-sm mb-2"><strong>Submited Date:</strong> {new Date(issueDetails?.issue.updatedAt).toLocaleDateString()}</p>
         <p className="text-sm mb-2"><strong>Status:</strong> {issueDetails?.issue.status}</p>
+        <p className="text-sm mb-2"><strong>FeedBack:</strong>{issueDetails?.issue.text}</p>
+
         
         {/* Steps to be followed */}
         <div className="font-bold text-lg mt-4 mb-2">Steps to Follow</div>
@@ -154,6 +157,13 @@ const SingleFeedback = () => {
       </div>
       {isModalOpen && <ClaimFormModal onClose={closeModal} />}
     </div>
+  ) : (
+    <div className="px-6 py-4">
+      <p className="text-sm">No Feedback yet</p>
+    </div>
+  )}
+</div>
+
   );
 };
 export default SingleFeedback;
