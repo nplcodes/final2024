@@ -27,7 +27,6 @@ function StaffPage() {
   };
 
   const handleReject = (issueId) => {
-    // Implement logic to reject the issue with the given ID
     console.log(`Reject clicked for issue ID: ${issueId}`);
   };
 

@@ -27,21 +27,20 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
     fetchIssuesData();
   }, []);
 
-//   update 
+// update 
   const handleAssignIssue = async(e) => {
     e.preventDefault()
     await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, priority, status, issueId})
     .then(()=>{
         dispatch(issueActions.removeAssignedIssue({issueId}))
         navigate('/Home/middleman-issue-page');
-        console.log("Hellooooooooooooooooooooooooooooo", priority)
     })
     .catch((error)=>{
         console.log(error)
     })
     const response = await axios.get('http://localhost:8080/issue/open');
     dispatch(issueActions.setIssues(response.data));
-    onClose(); // Close the pop-up
+    onClose();
   };
 
   return (

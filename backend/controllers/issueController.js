@@ -473,9 +473,6 @@ const closeIssue = async (req, res) => {
   }
 };
 
-
-
-
   
 
 export default { 

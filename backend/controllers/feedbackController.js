@@ -70,84 +70,33 @@ const deleteFeedback = async (req, res) => {
     }
 };
 
-// Controller to get all feedbacks by user ID
-// const getFeedbackByUserId = async (req, res) => {
-//     // Extract parameters from request
-//     const { userId } = req.params;
-
-//     try {
-//         // Find all feedbacks for the given user ID
-//         const feedbacks = await Feedback.find({ $or: [{ reporter: userId }, { assignedStaff: userId }] });
-
-//         res.json({ feedbacks });
-//     } catch (error) {
-//         console.error('Error getting feedbacks:', error);
-//         res.status(500).json({ error: 'An error occurred while getting feedbacks.' });
-//     }
-// };
-// const getFeedbackByUserId = async (req, res) => {
-//     const { userId } = req.params;
-
-//     try {
-//         // Retrieve all feedbacks from the database
-//         const feedbacks = await Feedback.findById( { assignedStaff: userId });
-
-//         // Fetch information about the corresponding issues and reporters
-//         const populatedFeedbacks = await Promise.all(feedbacks.map(async (feedback) => {
-//             // Fetch issue information
-//             const issue = await Issue.findById(feedback.issueId);
-//             // Fetch reporter information
-//             const reporter = await User.findById(feedback.reporter);
-
-//             // Construct the populated feedback object
-//             const populatedFeedback = {
-//                 _id: feedback._id,
-//                 issueTitle: issue ? issue.title : 'Issue not found',
-//                 feedbackText: feedback.text,
-//                 reporterName: reporter ? reporter.fullName : 'Reporter not found',
-//                 reporterImage: reporter ? reporter.image : null
-//             };
-
-//             return populatedFeedback;
-//         }));
-
-//         res.status(200).json(populatedFeedbacks);
-//     } catch (error) {
-//         console.error('Error fetching feedbacks:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// };
 
 const getFeedbackByUserId = async (req, res) => {
     const { userId } = req.params;
 
     try {
-        // Check if userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ error: 'Invalid userId' });
         }
 
         // Convert userId to ObjectId
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-
-        // Retrieve all feedbacks from the database where assignedStaff matches userId
         const feedbacks = await Feedback.find({ assignedStaff: userIdObjectId });
 
         // Fetch information about the corresponding issues and reporters
         const populatedFeedbacks = await Promise.all(feedbacks.map(async (feedback) => {
-            // Fetch issue information
             const issue = await Issue.findById(feedback.issueId);
-            // Fetch reporter information
             const reporter = await User.findById(feedback.reporter);
 
-            // Construct the populated feedback object
+            // Construct the populated feedback object profile
             const populatedFeedback = {
                 _id: feedback._id,
                 issueTitle: issue ? issue.title : 'Issue not found',
                 feedbackText: feedback.feedbackMessage,
+                wantToGoHigher: feedback.wantToGoHigher,
                 createdAt:feedback.createdAt,
                 reporterName: reporter ? reporter.fullName : 'Reporter not found',
-                reporterImage: reporter ? reporter.image : null
+                reporterImage: reporter ? reporter.profile : null
             };
 
             return populatedFeedback;
@@ -160,11 +109,38 @@ const getFeedbackByUserId = async (req, res) => {
     }
 };
 
+// when user read feedback
+const updateFeedbackIsRead = async (req, res) => {
+    try {
+      const { feedbackId } = req.params;
+  
+      await Feedback.findByIdAndUpdate(feedbackId, { isRead: true }, {new: true});
+  
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error updating feedback Read:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  const updateAssignedToDuringEscalation = async (req, res) => {
+    try {
+        const { issueId, assignedToUserId } = req.params;
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId, { assignedTo: assignedToUserId }, { new: true });
+  
+        res.json(updatedIssue);
+    } catch (error) {
+        console.error('Error updating assignedTo field:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 
 export default {
+    updateAssignedToDuringEscalation,
     createFeedback,
     updateFeedback,
     deleteFeedback,
     getFeedbackByUserId,
+    updateFeedbackIsRead
 };
