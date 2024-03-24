@@ -30,7 +30,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`bg-[#1F3365] text-white h-screen w-48 border border-r-1${
+      className={`bg-[#1F3365] text-white h-screen w-64 border border-r-1${
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >

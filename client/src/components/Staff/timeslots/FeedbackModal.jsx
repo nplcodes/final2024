@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const FeedbackModal = ({ feedback, onClose }) => {
@@ -6,7 +6,6 @@ const FeedbackModal = ({ feedback, onClose }) => {
     const staff = 'Staff';
     const [assignedTo, setSelectedStaff] = useState('');
     const [allStaffs, setAllStaffs] = useState([]);
-    // const [isReadUpdated, setIsReadUpdated] = useState(false);
 
     useEffect(() => {
         const fetchIssuesData = async () => {
@@ -21,31 +20,19 @@ const FeedbackModal = ({ feedback, onClose }) => {
         fetchIssuesData();
     }, []);
 
-    // const handleAssignTo = async () => {
-    //     try {
-    //         if (assignedTo && feedback?._id) {
-    //             await axios.put(`http://localhost:8080/feedback/assign/${feedback._id}/${assignedTo}`);
-    //             // Add any additional logic after successful update if needed
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating assignedTo:', error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     const updateIsRead = async () => {
-    //         try {
-    //             if (!isReadUpdated && feedback?._id) {
-    //                 await axios.put(`http://localhost:8080/feedback/read/${feedback._id}`);
-    //                 setIsReadUpdated(true);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error updating isRead:', error);
-    //         }
-    //     };
-
-    //     updateIsRead();
-    // }, [feedback, isReadUpdated]);
+    const handleAssignTo = async () => {
+        try {
+            if (feedback?.issueId && assignedTo) { // Check if feedback.issueId is defined
+                const response = await axios.put(`http://localhost:8080/feedback/assign/${feedback.issueId}/${assignedTo}`);
+                console.log("Assigned to:", response);
+            } else {
+                console.log('Invalid feedback or assignedTo value', feedback);
+            }
+        } catch (error) {
+            console.log('Error assigning to staff:', error);
+        }
+    };
+    
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-75 z-50">
@@ -80,7 +67,7 @@ const FeedbackModal = ({ feedback, onClose }) => {
                     <div>
                         <button className="mt-4 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600" onClick={onClose}>Close</button>
                         {feedback?.wantToGoHigher && (
-                            <button className="mt-4 text-white bg-blue-500 px-4 py-2 rounded hover:bg-black">Assign To</button>
+                            <button className="mt-4 text-white bg-blue-500 px-4 py-2 rounded hover:bg-black" onClick={handleAssignTo}>Assign To</button>
                         )}
                         <button className="mt-2 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600">Delete</button>
                     </div>

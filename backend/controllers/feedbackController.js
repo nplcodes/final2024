@@ -33,14 +33,14 @@ const createFeedback = async (req, res) => {
 const updateFeedback = async (req, res) => {
     // Extract parameters from request
     const { feedbackId } = req.params;
-    const { issueId, reporter, assignedStaff, feedbackMessage, wantToGoHigher } = req.body;
+    const { assignedStaff } = req.body;
 
     try {
         // Find the feedback by ID and update it
         const feedback = await Feedback.findByIdAndUpdate(
             feedbackId,
-            { issueId, reporter, assignedStaff, feedbackMessage, wantToGoHigher },
-            { new: true } // Return the updated feedback
+            { assignedStaff },
+            { new: true }
         );
 
         res.json({ message: 'Feedback updated successfully.', feedback });
@@ -91,6 +91,7 @@ const getFeedbackByUserId = async (req, res) => {
             // Construct the populated feedback object profile
             const populatedFeedback = {
                 _id: feedback._id,
+                issueId:issue._id,
                 issueTitle: issue ? issue.title : 'Issue not found',
                 feedbackText: feedback.feedbackMessage,
                 wantToGoHigher: feedback.wantToGoHigher,
@@ -125,15 +126,18 @@ const updateFeedbackIsRead = async (req, res) => {
 
   const updateAssignedToDuringEscalation = async (req, res) => {
     try {
-        const { issueId, assignedToUserId } = req.params;
-        const updatedIssue = await Issue.findByIdAndUpdate(issueId, { assignedTo: assignedToUserId }, { new: true });
-  
+        const { issueId, assignedTo } = req.params;
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId, { assignedTo: assignedTo }, { new: true });
+
+        // Assuming the feedback document has a field named 'issueId' to reference the related issue
+       await Feedback.findOneAndUpdate({ issueId: issueId }, { assignedStaff: assignedTo }, { new: true });
+
         res.json(updatedIssue);
     } catch (error) {
         console.error('Error updating assignedTo field:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-  };
+};
 
 
 export default {
