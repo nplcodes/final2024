@@ -6,8 +6,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // Store images in the uploads folder
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + file.originalname);
+    cb(null,file.originalname);
   }
 });
 

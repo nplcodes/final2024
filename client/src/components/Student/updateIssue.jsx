@@ -24,7 +24,6 @@ const validationSchema = object().shape({
 
 function UpdateIssue() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPrivate, setIsPrivate] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -69,11 +68,10 @@ function UpdateIssue() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative pt-10">
         <div className="flex z-10 px-2">
-          <div className="p-12 mx-auto rounded-2xl w-[60%] border">
-           <p className='pb-8 text-2xl font-bold'>Update Issue Here </p>
+          <div className="p-2 mx-auto rounded-2xl w-[90%] border">
+           <p className='pb-8 text-2xl font-bold'>Update Issue </p>
             <form  onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="grid grid-cols-2 gap-4">
-                {/* fields */}
                 <div>
                   <div className=''>
                     <input

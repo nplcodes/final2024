@@ -12,22 +12,18 @@ const initialState = {
   comments: [],
   loading: false,
   error: null,
-  posts: [],
   assignedTo: null,
   chatRoomIssue: [],
   IssueReporter: [],
   groupComment: [],
   StudentStaffComment:[],
-  unassignedIssues: [], // Issues not assigned to staff
-  assignedIssues: [], // Issues assigned to staff
+  unassignedIssues: [],
+  assignedIssues: [],
 
   // Notification on issue
   notifications: [],
   unReadNots: [],
-  // Post notification
   
-
-
 };
 
 const issueSlice = createSlice({

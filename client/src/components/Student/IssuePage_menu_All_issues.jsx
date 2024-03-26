@@ -81,6 +81,7 @@ function IssuePageMenuAllIssues() {
               <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Title</th>
                 <th className="py-3 px-6 text-left">Category</th>
+                <th className="py-3 px-6 text-left">Status</th>
                 <th className="py-3 px-6 text-left">Actions</th>
               </tr>
             </thead>
@@ -100,6 +101,7 @@ function IssuePageMenuAllIssues() {
                     </Link>
                   </td>
                   <td className="py-3 px-6 text-left whitespace-nowrap">{issue.category}</td>
+                  <td className="py-3 px-6 text-left whitespace-nowrap">{issue.status}</td>
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex gap-2">
                       <Link to={`/Home/update-issue/${issue._id}`}>
